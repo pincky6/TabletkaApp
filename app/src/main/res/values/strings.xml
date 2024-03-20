@@ -6,7 +6,7 @@
     <string name="title_notifications">Профиль</string>
 
     <string name="sign_in_text">Войти</string>
-    <string name="sign_out_text">Зарегистрироваться</string>
+    <string name="sign_up_text">Зарегистрироваться</string>
     <string name="reset_password_text">Восстановить Пароль</string>
 
     <string name="gmail_hint">Gmail</string>
