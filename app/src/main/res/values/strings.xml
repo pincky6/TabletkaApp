@@ -11,4 +11,6 @@
 
     <string name="gmail_hint">Gmail</string>
     <string name="password_hint">Пароль</string>
+
+    <string name="sign_up_register_text">Зарегистрироваться</string>
 </resources>
