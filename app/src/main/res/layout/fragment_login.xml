@@ -47,10 +47,10 @@
             tools:layout_editor_absoluteY="490dp" />
 
         <Button
-            android:id="@+id/sign_out_button"
+            android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sign_out_text"
+            android:text="@string/sign_up_text"
             tools:layout_editor_absoluteX="299dp"
             tools:layout_editor_absoluteY="579dp" />
 
