@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import com.diplom.tabletkaapp.databinding.FragmentLoginBinding
+import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentRegisterBinding
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSignUpRepository
-import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
-import com.diplom.tabletkaapp.firebase.authentication.OnCompleteSignListener
 import com.diplom.tabletkaapp.firebase.authentication.OnFailrueSignListener
 import com.diplom.tabletkaapp.util.EditorsUtil
 
@@ -22,10 +21,11 @@ class RegisterFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         initButtons()
         initEditTexts()
+        initToolbar()
         return binding.root
     }
 
@@ -43,13 +43,13 @@ class RegisterFragment: Fragment() {
                 binding.passwordEditText.getText().toString().trim(),
                 { successful ->
                     if (successful) {
-                        Toast.makeText(context, "You registered", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Вы зарегестрированы", Toast.LENGTH_SHORT).show()
                         binding.getRoot().findNavController().popBackStack()
                     } else {
                         EditorsUtil.setErrorState(binding.passwordEditText)
                         Toast.makeText(
                             context,
-                            "Something was wrong. Try sign up latter or check gmail and password",
+                            "Ошибка. Попытайтесь зарегистрироваться позже или проверьте gmail и пароль",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -69,5 +69,11 @@ class RegisterFragment: Fragment() {
     fun initEditTexts(){
         EditorsUtil.initTextWatchers(binding.gmailEditText, binding.passwordEditText)
         EditorsUtil.initTextFilters(binding.gmailEditText, binding.passwordEditText)
+    }
+    private fun initToolbar() {
+        binding.toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+        binding.toolbar.setNavigationOnClickListener { v: View ->
+            Navigation.findNavController(binding.root).popBackStack()
+        }
     }
 }

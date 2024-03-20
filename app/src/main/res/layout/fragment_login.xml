@@ -9,7 +9,7 @@
         android:id="@+id/gmail_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="256dp"
         android:ems="10"
         android:hint="@string/gmail_hint"
         android:inputType="text"

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/showRegisterFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/showResetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/contentFragment"
@@ -27,4 +30,9 @@
         android:name="com.diplom.tabletkaapp.ui.authentication.login.RegisterFragment"
         tools:layout="@layout/fragment_register"
         android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.diplom.tabletkaapp.ui.authentication.login.ResetPasswordFragment"
+        android:label="ResetPasswordFragment"
+        tools:layout="@layout/fragment_reset_password"/>
 </navigation>
