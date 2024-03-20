@@ -1,4 +1,4 @@
-package parsers
+package com.diplom.tabletkaapp.parser
 
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements

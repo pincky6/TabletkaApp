@@ -1,6 +1,6 @@
-package parsers
+package com.diplom.tabletkaapp.parser
 
-import UrlStrings
+import com.diplom.tabletkaapp.util.UrlStrings
 import models.Medicine
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements

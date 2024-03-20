@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation("org.jsoup:jsoup:1.17.2")
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
     testImplementation(libs.junit)
