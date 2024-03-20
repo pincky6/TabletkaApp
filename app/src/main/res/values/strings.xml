@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">TabletkaApp</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
+    <string name="title_home">Лекарства</string>
+    <string name="title_dashboard">Избранное</string>
+    <string name="title_notifications">Профиль</string>
+
+    <string name="sign_in_text">Войти</string>
+    <string name="sign_out_text">Зарегистрироваться</string>
+    <string name="reset_password_text">Восстановить Пароль</string>
 </resources>
