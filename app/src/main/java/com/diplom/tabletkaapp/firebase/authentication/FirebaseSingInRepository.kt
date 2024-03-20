@@ -1,5 +1,6 @@
 package com.diplom.tabletkaapp.firebase.authentication
 
+import android.text.BoringLayout
 import android.widget.Toast
 import androidx.navigation.findNavController
 import com.diplom.tabletkaapp.databinding.FragmentLoginBinding
@@ -14,16 +15,12 @@ import com.google.firebase.auth.FirebaseAuth
 object FirebaseSingInRepository {
     private var _auth: FirebaseAuth? = null
     val auth get() = _auth!!
-
+    val isVerified: Boolean
+        get() = auth.currentUser?.isEmailVerified ?: false
+    val isUserExist:Boolean
+        get() = auth.currentUser != null
     init {
         _auth = FirebaseAuth.getInstance()
-    }
-    fun checkUserExist(): Boolean {
-        return auth.currentUser != null
-    }
-
-    fun isVerified(): Boolean {
-        return auth.currentUser?.isEmailVerified ?: false
     }
     fun signInWithGmailAndPassword(
         binding: FragmentLoginBinding,
@@ -33,11 +30,11 @@ object FirebaseSingInRepository {
         auth.signInWithEmailAndPassword(gmail, password)
             .addOnCompleteListener { task: Task<AuthResult?> ->
                 if (task.isSuccessful) {
-                    if (!isVerified()) {
+                    if (!isVerified) {
                         Toast.makeText(
                             binding.root.context,
                             "Check your gmail",
-                            Toast.LENGTH_SHORT
+                            Toast.LENGTH_LONG
                         ).show()
                         sendVerification(binding)
                     } else {
@@ -63,11 +60,11 @@ object FirebaseSingInRepository {
     }
 
     private fun sendVerification(binding: FragmentLoginBinding) {
-        auth.getCurrentUser()?.sendEmailVerification()
-            ?.addOnCompleteListener { task: Task<Void?>? ->
-                auth.getCurrentUser()?.sendEmailVerification()!!.addOnCompleteListener { task1: Task<Void?> ->
-                    if (task1.isSuccessful) {
-                        binding.getRoot().findNavController().navigate(
+        auth.currentUser?.sendEmailVerification()
+            ?.addOnCompleteListener {
+                auth.currentUser?.sendEmailVerification()!!.addOnCompleteListener { task: Task<Void?> ->
+                    if (task.isSuccessful) {
+                        binding.root.findNavController().navigate(
                             LoginFragmentDirections.showContentFragment()
                         )
                     } else {
@@ -84,6 +81,7 @@ object FirebaseSingInRepository {
                         e.message,
                         Toast.LENGTH_LONG
                     ).show()
+                    e.printStackTrace()
                 }
             }
     }

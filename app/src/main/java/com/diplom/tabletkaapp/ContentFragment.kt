@@ -4,17 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.diplom.tabletkaapp.databinding.FragmentContentBinding
-import com.diplom.tabletkaapp.databinding.FragmentHomeBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ContentFragment: Fragment() {
     private var _binding: FragmentContentBinding? = null
@@ -24,13 +18,15 @@ class ContentFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentContentBinding.inflate(inflater, container, false)
-        val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(binding.root)
-        setupActionBarWithNavController(activity as AppCompatActivity, navController)
-        navView.setupWithNavController(navController)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val navController =  Navigation.findNavController(requireActivity(), R.id.content_navigation)
+        NavigationUI.setupWithNavController(binding.navView, navController)
     }
 
     override fun onDestroyView() {
