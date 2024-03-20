@@ -1,4 +1,4 @@
-package com.diplom.tabletkaapp.ui.home
+package com.diplom.tabletkaapp.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

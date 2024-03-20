@@ -1,4 +1,4 @@
-package com.diplom.tabletkaapp.ui.home
+package com.diplom.tabletkaapp.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
