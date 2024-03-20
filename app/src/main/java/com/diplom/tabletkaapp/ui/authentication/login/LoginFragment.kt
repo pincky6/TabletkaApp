@@ -5,14 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import com.diplom.tabletkaapp.databinding.FragmentLoginBinding
+import com.diplom.tabletkaapp.firebase.authentication.FirebaseSignUpRepository
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.util.EditorsUtil
 
 class LoginFragment: Fragment() {
     private var _binding: FragmentLoginBinding? = null
     val binding get() = _binding!!
+    override fun onStart() {
+        super.onStart()
+        EditorsUtil.initTextWatchers(binding.gmailEditText, binding.passwordEditText)
+        if (FirebaseSingInRepository.isUserExist && FirebaseSingInRepository.isVerified) {
+            findNavController(binding.root).navigate(
+                LoginFragmentDirections.showContentFragment()
+            )
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,9 +51,9 @@ class LoginFragment: Fragment() {
                 )
             }
             binding.signUpButton.setOnClickListener { v ->
-//                binding.getRoot().findNavController().navigate(
-//                    LoginFragmentDirections.showRegisterFragment()
-//                )
+                binding.getRoot().findNavController().navigate(
+                    LoginFragmentDirections.showRegisterFragment()
+                )
             }
 //            binding.resetButton.setOnClickListener { v ->
 //                binding.getRoot().findNavController().navigate(
