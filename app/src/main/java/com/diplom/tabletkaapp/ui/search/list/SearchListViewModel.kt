@@ -6,10 +6,15 @@ import androidx.lifecycle.ViewModel
 import com.diplom.tabletkaapp.models.AbstractFirebaseModel
 
 class SearchListViewModel: ViewModel() {
-    private var _list = MutableLiveData<MutableList<AbstractFirebaseModel>>().apply {
+    private var _medicineList = MutableLiveData<MutableList<AbstractFirebaseModel>>()
+    val medicineList: LiveData<MutableList<AbstractFirebaseModel>> = _medicineList
+
+    private var _pharmacyList = MutableLiveData<MutableList<AbstractFirebaseModel>>()
+    val pharmacyList: LiveData<MutableList<AbstractFirebaseModel>> = _pharmacyList
+    fun setMedicineList(list: MutableList<AbstractFirebaseModel>){
+        _medicineList.postValue(list)
     }
-    val list: LiveData<MutableList<AbstractFirebaseModel>> = _list
-    fun setList(list: MutableList<AbstractFirebaseModel>){
-        _list.postValue(list)
+    fun setPharmacyList(list: MutableList<AbstractFirebaseModel>){
+        _pharmacyList.postValue(list)
     }
 }

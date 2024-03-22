@@ -5,20 +5,23 @@ import android.view.View.OnClickListener
 import androidx.recyclerview.widget.RecyclerView
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.ItemMedicineBinding
+import com.diplom.tabletkaapp.ui.search.listeners.OnMedicineClickListener
 import models.Medicine
 
 class MedicineHolder(
     val binding: ItemMedicineBinding
 ): RecyclerView.ViewHolder(binding.root) {
-    fun bind(medicine: Medicine){
+    fun bind(medicine: Medicine,
+             onCompanyNameClicked: OnMedicineClickListener?,
+             onMedicineNameClicked: OnMedicineClickListener?){
         binding.name.text = medicine.name
         binding.name.setOnClickListener {
-
+            onMedicineNameClicked?.click(medicine.medicineReference)
         }
         binding.compound.text = medicine.compound
         binding.companyName.text = medicine.companyName
         binding.companyName.setOnClickListener{
-
+            onCompanyNameClicked?.click(medicine.companyName)
         }
         binding.recipe.text = medicine.recipe
         binding.recipeInfo.text = medicine.recipeInfo

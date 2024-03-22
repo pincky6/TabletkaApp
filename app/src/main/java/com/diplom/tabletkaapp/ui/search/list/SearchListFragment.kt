@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.diplom.tabletkaapp.databinding.FragmentListBinding
 import com.diplom.tabletkaapp.models.AbstractFirebaseModel
 import com.diplom.tabletkaapp.parser.MedicineParser
-import com.diplom.tabletkaapp.ui.search.adapters.MedicineAdapter
+import com.diplom.tabletkaapp.parser.PharmacyParser
+import com.diplom.tabletkaapp.ui.search.adapters.TabletkaAdapter
+import com.diplom.tabletkaapp.ui.search.listeners.OnMedicineClickListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +19,9 @@ import kotlinx.coroutines.withContext
 
 class SearchListFragment: Fragment() {
     private var _binding: FragmentListBinding? = null
+    var onCompanyNameClicked: OnMedicineClickListener? = null
+    var onMedicineNameClicked: OnMedicineClickListener? = null
+    var onRecipeNameClicked: OnMedicineClickListener? = null
     val binding get() = _binding!!
     var searchListViewModel: SearchListViewModel = SearchListViewModel()
     override fun onCreateView(
@@ -33,19 +38,31 @@ class SearchListFragment: Fragment() {
     }
     fun loadMedicineFromName(name: String, onCompleteListener: () -> Unit){
         CoroutineScope(Dispatchers.IO).launch {
-                searchListViewModel.setList(MedicineParser.getMedicineListFromUrl(name))
+                searchListViewModel.setMedicineList(MedicineParser.getMedicineListFromUrl(name))
                 withContext(Dispatchers.Main) {
-                    binding.recyclerView.adapter = searchListViewModel.list.value?.let {
-                        MedicineAdapter(it)
+                    binding.recyclerView.adapter = searchListViewModel.medicineList.value?.let {
+                        TabletkaAdapter(it, onCompanyNameClicked, onMedicineNameClicked)
                     }
                     updateUI()
                     onCompleteListener()
                 }
         }
     }
+    fun loadPharmacyFromName(name: String, onCompleteListener: () -> Unit){
+        CoroutineScope(Dispatchers.IO).launch {
+            searchListViewModel.setPharmacyList(PharmacyParser.getPharmacyListFromUrl(name))
+            withContext(Dispatchers.Main) {
+                binding.recyclerView.adapter = searchListViewModel.pharmacyList.value?.let {
+                    TabletkaAdapter(it, onCompanyNameClicked, onMedicineNameClicked)
+                }
+                updateUI()
+                onCompleteListener()
+            }
+        }
+    }
     fun setAdapterList(list: MutableList<AbstractFirebaseModel>){
         binding.recyclerView.adapter?.let {
-            (it as MedicineAdapter).list = arrayListOf()
+            (it as TabletkaAdapter).list = list
         }
     }
     fun updateUI(){
