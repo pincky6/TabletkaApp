@@ -8,6 +8,7 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentSearchBinding
+import com.diplom.tabletkaapp.ui.search.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.ui.search.filter.Filter
 import com.diplom.tabletkaapp.ui.search.list.SearchListFragment
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +17,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SearchFragment : Fragment() {
-
     private var _binding: FragmentSearchBinding? = null
     val binding get() = _binding!!
     private var searchView: SearchView? = null
@@ -54,8 +54,14 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                filter.title = newText
-              //  resetAdapterList(filter.filterByTitle(taskListViewModel.taskList))
-                return false
+               if(showMedicineList || showPharmacyList){
+                   searchListFragment?.searchListViewModel?.list?.value?.let {
+                       (searchListFragment?.binding?.recyclerView?.adapter as MedicineAdapter)
+                           .list = filter.filterByTitle(it)
+                       searchListFragment?.binding?.recyclerView?.adapter?.notifyDataSetChanged()
+                   }
+               }
+               return false
             }
         })
     }

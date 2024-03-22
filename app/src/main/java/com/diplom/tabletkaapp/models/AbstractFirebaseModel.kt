@@ -5,7 +5,8 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.io.Serializable
 
-abstract class AbstractFirebaseModel: Serializable {
+abstract class AbstractFirebaseModel(open val name: String): Serializable {
+
     @Throws(IOException::class)
     private fun writeObject(out: ObjectOutputStream) {
         out.defaultWriteObject()

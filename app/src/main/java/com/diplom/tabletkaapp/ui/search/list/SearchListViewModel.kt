@@ -9,7 +9,7 @@ class SearchListViewModel: ViewModel() {
     private var _list = MutableLiveData<MutableList<AbstractFirebaseModel>>().apply {
     }
     val list: LiveData<MutableList<AbstractFirebaseModel>> = _list
-    suspend fun setList(list: MutableList<AbstractFirebaseModel>){
+    fun setList(list: MutableList<AbstractFirebaseModel>){
         _list.postValue(list)
     }
 }
