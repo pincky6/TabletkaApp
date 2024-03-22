@@ -1,4 +1,4 @@
-package com.diplom.tabletkaapp.ui.authentication.login
+package com.diplom.tabletkaapp.ui.authentication
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.diplom.tabletkaapp.ui.authentication.login.LoginFragment"
+        android:name="com.diplom.tabletkaapp.ui.authentication.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -27,12 +27,12 @@
         tools:layout="@layout/fragment_content"/>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.diplom.tabletkaapp.ui.authentication.login.RegisterFragment"
+        android:name="com.diplom.tabletkaapp.ui.authentication.RegisterFragment"
         tools:layout="@layout/fragment_register"
         android:label="RegisterFragment" />
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.diplom.tabletkaapp.ui.authentication.login.ResetPasswordFragment"
+        android:name="com.diplom.tabletkaapp.ui.authentication.ResetPasswordFragment"
         android:label="ResetPasswordFragment"
         tools:layout="@layout/fragment_reset_password"/>
 </navigation>

@@ -1,4 +1,4 @@
-package com.diplom.tabletkaapp.ui.authentication.login
+package com.diplom.tabletkaapp.ui.authentication
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -40,7 +40,7 @@ class LoginFragment: Fragment() {
         _binding = null
     }
     private fun initButtons() {
-        binding.signInButton.setOnClickListener { v ->
+        binding.signIn.setOnClickListener { v ->
             if (EditorsUtil.checkEditors(binding.gmailEditText, binding.passwordEditText)) {
                 EditorsUtil.setErrorBackground(binding.gmailEditText, binding.passwordEditText)
                 return@setOnClickListener

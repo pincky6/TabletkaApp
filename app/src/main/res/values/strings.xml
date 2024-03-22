@@ -13,4 +13,8 @@
     <string name="password_hint">Пароль</string>
 
     <string name="sign_up_register_text">Зарегистрироваться</string>
+
+    <string name="search_hint">Поиск</string>
+    <string name="filter_hint">Фильтр</string>
+    <string name="unknown">Unknown</string>
 </resources>

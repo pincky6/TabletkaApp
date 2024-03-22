@@ -1,12 +1,15 @@
 package com.diplom.tabletkaapp.parser
 
+import com.diplom.tabletkaapp.models.AbstractFirebaseModel
 import com.diplom.tabletkaapp.util.UrlStrings
 import models.Medicine
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 
 object MedicineParser: TabletkaParser()  {
-    fun getMedicineListFromUrl(url: String): MutableList<Medicine>{
+    const val COMPOUNDS_EMPTY = "Прочее"
+    const val ERROR_REFERENCE = "ERROR-REFERENCE"
+    fun getMedicineListFromUrl(url: String): MutableList<AbstractFirebaseModel>{
         val doc = Jsoup.connect("${UrlStrings.REQUEST_URL}${url}").get()
         val table = doc.select("tbody")
 
@@ -30,11 +33,17 @@ object MedicineParser: TabletkaParser()  {
                 .map { it.trim() }
                 .filter { it.isNotEmpty() } as MutableList<String>
         }
+        if(compounds.size == 0){
+            repeat(names.size){compounds.add(COMPOUNDS_EMPTY)}
+        }
         val compoundReference = getTooltipInfo(table, bodyBaseTableString, "name tooltip-info", "capture",
             "a"){ info, element ->
             element.getElementsByTag(info).flatMap {
                 listOf(it.attr("href").trim().substring(1))
             } as MutableList<String>
+        }
+        if(compoundReference.size == 0){
+            repeat(names.size){compoundReference.add(ERROR_REFERENCE)}
         }
         val recipes = getTooltipInfo(table, bodyBaseTableString, "form tooltip-info", "tooltip-info-header",
             "a") { info, element ->
@@ -67,14 +76,14 @@ object MedicineParser: TabletkaParser()  {
         val prices = getMedicinePriceInfo(table, "price-value")
         val hospitalsCount = getHospitalsCount(table, "price", "capture")
         val size = names.size
-        var medicineList: MutableList<Medicine> = arrayListOf()
+        var medicineList: MutableList<AbstractFirebaseModel> = arrayListOf()
         for(i in 0 until size){
             medicineList.add(
                 Medicine(names[i], medicinesReference[i],
                 compounds[i], compoundReference[i],
                 recipes[i], recipesInfo[i],
                 companies[i], companiesReference[i],
-                countries[i], prices[i], hospitalsCount[i])
+                countries[i], prices[i], hospitalsCount[i],false)
             )
         }
         return medicineList
