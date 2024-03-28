@@ -16,8 +16,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentMapBinding
+import com.diplom.tabletkaapp.models.PointModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,8 +39,10 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 class MapFragment: Fragment() {
     private var _binding: FragmentMapBinding? = null
     val binding get() = _binding!!
-    var locationOverlay: MyLocationNewOverlay? = null
     var locationManager: LocationManager? = null
+    private var geoPoints: MutableList<PointModel>? = arrayListOf()
+    private var currentGeoPoint: GeoPoint = GeoPoint(0.0, 0.0)
+    private var showBottomSheet: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -46,25 +52,29 @@ class MapFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
-        registerForActivityResult(ActivityResultContracts.RequestPermission()){
-            if(it){
-                getLocation()
-            }
-        }.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.mapVew.setTileSource(TileSourceFactory.MAPNIK)
-        registerForActivityResult(ActivityResultContracts.RequestPermission()){
-            if(it){
-                getLocation()
-            }
-        }.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        setMarkers(GeoPoint(53.138429, 29.207931), "noth")
+        initBottomSheetButtons()
         binding.mapVew.setMultiTouchControls(true)
         binding.mapVew.overlays.add(RotationGestureOverlay(binding.mapVew))
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            if(it){
+                initLocation()
+            }
+        }.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        geoPoints = (arguments?.getSerializable("pharmacyGeoPoints") as GeoPointsListArgs).geoPointsList
+        geoPoints?.let {
+            for(point in it)
+                setMarker(GeoPoint(point.geoPoint.latitude, point.geoPoint.longitude), point.name)
+        }
+        binding.toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+        binding.toolbar.setNavigationOnClickListener { v: View ->
+            findNavController().popBackStack()
+        }
 //        setMarkers(startPoint, "")
     }
 
@@ -72,7 +82,7 @@ class MapFragment: Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    private fun getLocation(){
+    private fun initLocation(){
         val gpsProvider = GpsMyLocationProvider(context)
         gpsProvider.locationSources.add(LocationManager.NETWORK_PROVIDER)
         val locationOverlay = MyLocationNewOverlay(gpsProvider, binding.mapVew)
@@ -92,13 +102,13 @@ class MapFragment: Fragment() {
             location?.let {
                 val point: GeoPoint = GeoPoint(location.latitude, location.longitude)
                 binding.mapVew.controller.setCenter(point)
-                binding.mapVew.controller.setZoom(22.0)
+                binding.mapVew.controller.setZoom(12.0)
             }
             locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 0.0f, object:
                 LocationListener {
                 override fun onLocationChanged(location: Location){
                     val point: GeoPoint = GeoPoint(location.latitude, location.longitude)
-                   // binding.mapVew.controller.setCenter(point)
+                    // binding.mapVew.controller.setCenter(point)
                 }
 
 
@@ -116,23 +126,34 @@ class MapFragment: Fragment() {
             })
         }
     }
-    private fun setMarkers(geoPoint: GeoPoint, name: String)
+    private fun setMarker(geoPoint: GeoPoint, name: String)
     {
         context?.let {
             val marker = Marker(binding.mapVew)
             marker.position = geoPoint
             marker.icon = ContextCompat.getDrawable(it, R.drawable.baseline_location_on_24)
-            marker.title = "text mark"
-            marker.setOnMarkerClickListener({marker, mapview->
-                buildRoadMap(geoPoint)
-            return@setOnMarkerClickListener true
-            })
+            marker.title = name
+            marker.setOnMarkerClickListener { _, _ ->
+                if (!showBottomSheet) {
+                    currentGeoPoint = geoPoint
+                    buildRoadMap(geoPoint, OSRMRoadManager.MEAN_BY_FOOT)
+                    binding.include.buildRoadMapLayout.visibility = View.VISIBLE
+                    showBottomSheet = true
+                } else {
+                    binding.mapVew.overlays.removeAll {
+                        it is Polyline
+                    }
+                    binding.include.buildRoadMapLayout.visibility = View.GONE
+                    showBottomSheet = false
+                }
+                return@setOnMarkerClickListener true
+            }
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
             binding.mapVew.overlays.add(marker)
             binding.mapVew.invalidate()
         }
     }
-    private fun buildRoadMap(endPoint: GeoPoint) {
+    private fun buildRoadMap(endPoint: GeoPoint, roadManagerRoadChoose: String) {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -146,11 +167,12 @@ class MapFragment: Fragment() {
             }
             CoroutineScope(Dispatchers.IO).launch {
                 val roadManager = OSRMRoadManager(context, System.getProperty("http.agent"))
-                roadManager.setMean(OSRMRoadManager.MEAN_BY_FOOT)
+                roadManager.setMean(roadManagerRoadChoose)
                 val location: Location? = locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
                 location?.let {
-                    val geoPoint = GeoPoint(it.latitude, it.longitude)
-                    val wayPoints = arrayListOf<GeoPoint>(geoPoint, GeoPoint(53.138429, 29.207931))
+                    currentGeoPoint = endPoint
+                    val userLocation = GeoPoint(it.latitude, it.longitude)
+                    val wayPoints = arrayListOf(userLocation, currentGeoPoint)
                     val road = roadManager.getRoad(wayPoints)
                     val roadOverlay = RoadManager.buildRoadOverlay(road)
                     withContext(Dispatchers.Main) {
@@ -160,6 +182,16 @@ class MapFragment: Fragment() {
                 }
             }
         }
-
+    }
+    private fun initBottomSheetButtons(){
+        binding.include.buildOnFootRoadButton.setOnClickListener {
+            buildRoadMap(currentGeoPoint, OSRMRoadManager.MEAN_BY_FOOT)
+        }
+        binding.include.buildBikeRoadButton.setOnClickListener {
+            buildRoadMap(currentGeoPoint, OSRMRoadManager.MEAN_BY_BIKE)
+        }
+        binding.include.buildOnCarButton.setOnClickListener {
+            buildRoadMap(currentGeoPoint, OSRMRoadManager.MEAN_BY_CAR)
+        }
     }
 }

@@ -51,8 +51,4 @@ class MainActivity : AppCompatActivity() {
         permissionManager.onActivityResult(requestCode, resultCode)
 
     }
-
-    override fun onResume() {
-        super.onResume()
-    }
 }

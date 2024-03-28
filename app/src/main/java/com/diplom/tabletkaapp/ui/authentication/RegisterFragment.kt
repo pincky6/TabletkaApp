@@ -39,7 +39,8 @@ class RegisterFragment: Fragment() {
                 EditorsUtil.setErrorBackground(binding.gmailEditText, binding.passwordEditText)
                 return@setOnClickListener
             }
-            FirebaseSignUpRepository.createUserWithGmailAndPassword(    binding.gmailEditText.getText().toString().trim(),
+            FirebaseSignUpRepository.createUserWithGmailAndPassword(
+                binding.gmailEditText.getText().toString().trim(),
                 binding.passwordEditText.getText().toString().trim(),
                 { successful ->
                     if (successful) {

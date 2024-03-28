@@ -9,7 +9,11 @@
         android:id="@+id/navigation_search"
         android:name="com.diplom.tabletkaapp.ui.search.SearchFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/showMapFragment"
+            app:destination="@id/map_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -21,4 +25,13 @@
         android:name="com.diplom.tabletkaapp.ui.search.MapFragment"
         android:label="MapFragment"
         tools:layout="@layout/fragment_map"/>
+    <fragment android:id="@+id/map_fragment"
+        android:name="com.diplom.tabletkaapp.ui.search.MapFragment"
+        tools:layout="@layout/fragment_map"
+        >
+        <argument
+            android:name="pharmacyGeoPoints"
+            app:argType="com.diplom.tabletkaapp.ui.search.GeoPointsListArgs"
+            />
+    </fragment>
 </navigation>

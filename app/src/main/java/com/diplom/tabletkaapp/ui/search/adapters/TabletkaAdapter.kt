@@ -10,13 +10,16 @@ import com.diplom.tabletkaapp.models.AbstractFirebaseModel
 import com.diplom.tabletkaapp.ui.search.holders.MedicineHolder
 import com.diplom.tabletkaapp.ui.search.holders.PharmacyHolder
 import com.diplom.tabletkaapp.ui.search.listeners.OnMedicineClickListener
+import com.diplom.tabletkaapp.ui.search.listeners.OnNavigationButtonClicked
 import models.Medicine
 import models.Pharmacy
 
 class TabletkaAdapter(
     var list: MutableList<AbstractFirebaseModel>,
     val onCompanyNameClicked: OnMedicineClickListener? = null,
-    val onMedicineNameClicked: OnMedicineClickListener? = null
+    val onMedicineNameClicked: OnMedicineClickListener? = null,
+    val onRecipeNameClicked: OnMedicineClickListener? = null,
+    val onNavigationButtonClicked: OnNavigationButtonClicked? = null
 ): RecyclerView.Adapter<ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         if((list[position] is Medicine)){
@@ -38,9 +41,10 @@ class TabletkaAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if(holder is MedicineHolder) {
-            holder.bind(list[position] as Medicine, onCompanyNameClicked, onMedicineNameClicked)
+            holder.bind(list[position] as Medicine, onCompanyNameClicked, onMedicineNameClicked,
+                onRecipeNameClicked)
         } else if(holder is PharmacyHolder){
-            holder.bind(list[position] as Pharmacy)
+            holder.bind(list[position] as Pharmacy, onNavigationButtonClicked)
         }
     }
 

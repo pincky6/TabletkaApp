@@ -17,4 +17,8 @@
     <string name="search_hint">Поиск</string>
     <string name="filter_hint">Фильтр</string>
     <string name="unknown">Unknown</string>
+
+    <string name="build_on_foot_road_text">Пешком</string>
+    <string name="build_on_bike_text">На велосипеде</string>
+    <string name="build_car_road_text">На машине</string>
 </resources>

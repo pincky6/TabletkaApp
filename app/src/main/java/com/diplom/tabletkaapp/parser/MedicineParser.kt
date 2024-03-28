@@ -17,7 +17,7 @@ object MedicineParser: TabletkaParser()  {
             "a") { info, element ->
             element.getElementsByTag(info).text()
                 .split("\n")
-                .map { it.trim() }
+                .map {it.trim() }
                 .filter { it.isNotEmpty() } as MutableList<String>
         }
         val medicinesReference = getTooltipInfo(table, bodyBaseTableString,"name tooltip-info", "tooltip-info-header",

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.ItemMedicineBinding
 import com.diplom.tabletkaapp.ui.search.listeners.OnMedicineClickListener
+import com.diplom.tabletkaapp.ui.search.listeners.OnNavigationButtonClicked
 import models.Medicine
 
 class MedicineHolder(
@@ -13,12 +14,16 @@ class MedicineHolder(
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind(medicine: Medicine,
              onCompanyNameClicked: OnMedicineClickListener?,
-             onMedicineNameClicked: OnMedicineClickListener?){
+             onMedicineNameClicked: OnMedicineClickListener?,
+             onCompoundClicked: OnMedicineClickListener?){
         binding.name.text = medicine.name
         binding.name.setOnClickListener {
             onMedicineNameClicked?.click(medicine.medicineReference)
         }
         binding.compound.text = medicine.compound
+        binding.compound.setOnClickListener {
+            onCompoundClicked?.click(medicine.compoundReference)
+        }
         binding.companyName.text = medicine.companyName
         binding.companyName.setOnClickListener{
             onCompanyNameClicked?.click(medicine.companyName)
