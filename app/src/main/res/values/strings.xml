@@ -21,4 +21,17 @@
     <string name="build_on_foot_road_text">Пешком</string>
     <string name="build_on_bike_text">На велосипеде</string>
     <string name="build_car_road_text">На машине</string>
+
+    <string name="filter_title">Фильтры</string>
+    <string name="sort_title">Сортировка</string>
+
+    <string name="from_price">Цена: От</string>
+    <string name="to_price">До</string>
+    <string name="price_string">Цена</string>
+
+    <string name="distance_title">По расстроянию</string>
+    <string name="price_sort_title">По минимальной цене</string>
+
+    <string name="ok_button">Ок</string>
+    <string name="cancel_button">Закрыть</string>
 </resources>

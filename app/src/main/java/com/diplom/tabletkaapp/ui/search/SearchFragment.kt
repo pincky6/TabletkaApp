@@ -1,16 +1,22 @@
 package com.diplom.tabletkaapp.ui.search
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentSearchBinding
 import com.diplom.tabletkaapp.models.PointModel
-import com.diplom.tabletkaapp.ui.search.filter.Filter
+import com.diplom.tabletkaapp.ui.search.filter.ListSettingsDialogFragment
+import com.diplom.tabletkaapp.ui.search.filter.ListSettingsViewModel
 import com.diplom.tabletkaapp.ui.search.list.SearchListFragment
 import com.diplom.tabletkaapp.ui.search.listeners.OnMedicineClickListener
 import com.diplom.tabletkaapp.ui.search.listeners.OnNavigationButtonClicked
@@ -25,7 +31,7 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     val binding get() = _binding!!
     private var searchView: SearchView? = null
-    private val filter: Filter = Filter()
+    private val listSettings: ListSettingsViewModel = ListSettingsViewModel()
     private var searchListFragment: SearchListFragment? = null
     private val model: SearchViewModel = SearchViewModel()
     override fun onCreateView(
@@ -36,6 +42,31 @@ class SearchFragment : Fragment() {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         if(model.showMedicineList || model.showPharmacyList)
             initBackButton()
+        getParentFragmentManager().setFragmentResultListener(
+            ListSettingsDialogFragment.KEYS.LIST_SETTINGS_KEY_ADD, getViewLifecycleOwner()
+        ) { requestKey: String?, result: Bundle ->
+            listSettings.sortMask = result.getInt("sortMask")
+            listSettings.minPrice = result.getDouble("minPrice")
+            listSettings.maxPrice = result.getDouble("maxPrice")
+            val list = searchListFragment?.searchListViewModel?.getList(model.showPharmacyList && model.showMedicineList)
+            if(model.showMedicineList && !model.showPharmacyList){
+                searchListFragment?.searchListViewModel?.medicineList?.value?.let {
+                    listSettings.sortMedicine(
+                        it
+                    )
+                }
+            } else {
+                searchListFragment?.searchListViewModel?.pharmacyList?.value?.let {
+                    listSettings.sortPharmacy(
+                        it
+                    )
+                }
+            }
+            list?.let {
+                searchListFragment?.setAdapterList(list)
+                searchListFragment?.updateUI()
+            }
+        }
         return binding.root
     }
 
@@ -44,13 +75,14 @@ class SearchFragment : Fragment() {
         initSearchView()
         initSearchList()
         initMapButton();
+        initMenus()
     }
     private fun initSearchView(){
         searchView = binding.toolbar.findViewById(R.id.app_bar_search)
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 if(!model.showMedicineList && !model.showPharmacyList) {
-                    searchListFragment?.loadMedicineFromName(filter.title){
+                    searchListFragment?.loadMedicineFromName(listSettings.title){
                         model.showMedicineList = true
                         initBackButton()
                     }
@@ -59,11 +91,11 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                filter.title = newText
+                listSettings.title = newText
                 val list = searchListFragment?.searchListViewModel?.getList(model.showMedicineList &&
                         model.showPharmacyList)
                 list?.let {
-                    searchListFragment?.setAdapterList(filter.filterByTitle(it))
+                    searchListFragment?.setAdapterList(listSettings.filterByTitle(it))
                     searchListFragment?.updateUI()
                 }
                return false
@@ -137,7 +169,24 @@ class SearchFragment : Fragment() {
             )
         }
     }
-    private fun initMapButton(){
+    private fun initMenus()
+    {
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.app_bar_filter) {
+                    val geoPoint = getUserLocation()
+                    findNavController(binding.root).navigate(
+                        SearchFragmentDirections.showListSettingsDialog(
+                            geoPoint,
+                            listSettings.sortMask,
+                            listSettings.minPrice,
+                            listSettings.maxPrice
+                        )
+                    )
+            }
+            false
+        }
+    }
+        private fun initMapButton(){
         binding.floatingActionButton.setOnClickListener {
             if(model.showMedicineList && model.showPharmacyList){
                 searchListFragment?.searchListViewModel?.pharmacyList?.value.let {
@@ -158,4 +207,21 @@ class SearchFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun getUserLocation(): GeoPoint {
+        val locationManager  = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            val location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            return location?.let { GeoPoint(it.latitude, location.longitude) } ?: GeoPoint(0.0, 0.0)
+        }
+        return GeoPoint(0.0, 0.0)
+    }
+
 }
