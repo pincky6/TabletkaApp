@@ -24,7 +24,7 @@
         android:id="@+id/contentFragment"
         android:name="com.diplom.tabletkaapp.ContentFragment"
         android:label="ContentFragment"
-        tools:layout="@layout/fragment_content"/>
+        tools:layout="@layout/fragment_application_content"/>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.diplom.tabletkaapp.ui.authentication.RegisterFragment"

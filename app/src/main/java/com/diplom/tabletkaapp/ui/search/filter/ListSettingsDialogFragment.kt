@@ -40,13 +40,16 @@ class ListSettingsDialogFragment: DialogFragment() {
         binding.distanceSortCheckBox.isChecked = (listSettings.sortMask and 2) == 2
     }
     private fun initButtons(){
-        binding.cancelButton.setOnClickListener { findNavController().popBackStack() }
+        binding.cancelButton.setOnClickListener { dismiss() }
         binding.okButton.setOnClickListener {
             val bundle = Bundle()
+            listSettings.minPrice = binding.minPrice.text.toString().toDouble()
+            listSettings.maxPrice = binding.maxPrice.text.toString().toDouble()
             bundle.putInt("sortMask", listSettings.sortMask)
             bundle.putDouble("minPrice", listSettings.minPrice)
             bundle.putDouble("maxPrice", listSettings.maxPrice)
             getParentFragmentManager().setFragmentResult(LIST_SETTINGS_KEY_ADD, bundle);
+            dismiss()
         }
     }
 

@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.diplom.tabletkaapp.databinding.FragmentContentBinding
+import com.diplom.tabletkaapp.databinding.FragmentApplicationContentBinding
 
 class ContentFragment: Fragment() {
-    private var _binding: FragmentContentBinding? = null
+    private var _binding: FragmentApplicationContentBinding? = null
     val binding get() = _binding!!
 
     override fun onCreateView(
@@ -19,7 +19,7 @@ class ContentFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentContentBinding.inflate(inflater, container, false)
+        _binding = FragmentApplicationContentBinding.inflate(inflater, container, false)
         return binding.root
     }
 

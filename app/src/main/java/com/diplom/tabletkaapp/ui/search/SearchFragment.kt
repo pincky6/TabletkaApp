@@ -13,7 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.diplom.tabletkaapp.R
-import com.diplom.tabletkaapp.databinding.FragmentSearchBinding
+import com.diplom.tabletkaapp.databinding.FragmentMedicineContentBinding
 import com.diplom.tabletkaapp.models.PointModel
 import com.diplom.tabletkaapp.ui.search.filter.ListSettingsDialogFragment
 import com.diplom.tabletkaapp.ui.search.filter.ListSettingsViewModel
@@ -28,7 +28,7 @@ import models.Pharmacy
 import org.osmdroid.util.GeoPoint
 
 class SearchFragment : Fragment() {
-    private var _binding: FragmentSearchBinding? = null
+    private var _binding: FragmentMedicineContentBinding? = null
     val binding get() = _binding!!
     private var searchView: SearchView? = null
     private val listSettings: ListSettingsViewModel = ListSettingsViewModel()
@@ -39,39 +39,13 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        if(model.showMedicineList || model.showPharmacyList)
-            initBackButton()
-        getParentFragmentManager().setFragmentResultListener(
-            ListSettingsDialogFragment.KEYS.LIST_SETTINGS_KEY_ADD, getViewLifecycleOwner()
-        ) { requestKey: String?, result: Bundle ->
-            listSettings.sortMask = result.getInt("sortMask")
-            listSettings.minPrice = result.getDouble("minPrice")
-            listSettings.maxPrice = result.getDouble("maxPrice")
-            val list = searchListFragment?.searchListViewModel?.getList(model.showPharmacyList && model.showMedicineList)
-            if(model.showMedicineList && !model.showPharmacyList){
-                searchListFragment?.searchListViewModel?.medicineList?.value?.let {
-                    listSettings.sortMedicine(
-                        it
-                    )
-                }
-            } else {
-                searchListFragment?.searchListViewModel?.pharmacyList?.value?.let {
-                    listSettings.sortPharmacy(
-                        it
-                    )
-                }
-            }
-            list?.let {
-                searchListFragment?.setAdapterList(list)
-                searchListFragment?.updateUI()
-            }
-        }
+        _binding = FragmentMedicineContentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initGetFilter()
         initSearchView()
         initSearchList()
         initMapButton();
@@ -223,5 +197,36 @@ class SearchFragment : Fragment() {
         }
         return GeoPoint(0.0, 0.0)
     }
+    private fun initGetFilter(){
+        if(model.showMedicineList || model.showPharmacyList)
+            initBackButton()
+        getParentFragmentManager().setFragmentResultListener(
+            ListSettingsDialogFragment.LIST_SETTINGS_KEY_ADD, getViewLifecycleOwner()
+        ) { _: String?, result: Bundle ->
+            listSettings.sortMask = result.getInt("sortMask")
+            listSettings.minPrice = result.getDouble("minPrice")
+            listSettings.maxPrice = result.getDouble("maxPrice")
+            val list = searchListFragment?.searchListViewModel?.getList(model.showPharmacyList && model.showMedicineList)
+            if(model.showMedicineList && !model.showPharmacyList){
+                searchListFragment?.searchListViewModel?.medicineList?.value?.let {
+                    val lst = listSettings.filterList(it)
+                    listSettings.sortMedicine(lst)
+                    list?.let {medicineList->
+                        searchListFragment?.setAdapterList(lst)
+                        searchListFragment?.updateUI()
+                    }
+                }
+            } else {
+                searchListFragment?.searchListViewModel?.pharmacyList?.value?.let { it ->
+                    val lst = listSettings.filterList(it)
+                    listSettings.sortPharmacy(lst)
+                    list?.let {pharmacyList ->
+                        searchListFragment?.setAdapterList(lst)
+                        searchListFragment?.updateUI()
+                    }
+                }
+            }
 
+        }
+    }
 }

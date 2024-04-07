@@ -5,6 +5,7 @@ import android.view.View.OnClickListener
 import androidx.recyclerview.widget.RecyclerView
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.ItemMedicineBinding
+import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
 import com.diplom.tabletkaapp.ui.search.listeners.OnMedicineClickListener
 import com.diplom.tabletkaapp.ui.search.listeners.OnNavigationButtonClicked
 import models.Medicine
@@ -39,8 +40,10 @@ class MedicineHolder(
         }
         binding.addWishListButton.setOnClickListener {
             if(!medicine.wish){
+                FirebaseMedicineDatabase.add(medicine)
                 binding.addWishListButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
+                FirebaseMedicineDatabase.delete(medicine)
                 binding.addWishListButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
             medicine.wish = !medicine.wish

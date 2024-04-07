@@ -9,7 +9,7 @@
         android:id="@+id/navigation_search"
         android:name="com.diplom.tabletkaapp.ui.search.SearchFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_medicine_content" >
         <action
             android:id="@+id/showMapFragment"
             app:destination="@id/map_fragment" />
@@ -19,15 +19,11 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.diplom.tabletkaapp.ui.notifications.NotificationsFragment"
+        android:id="@+id/navigation_wish_list"
+        android:name="com.diplom.tabletkaapp.ui.wishlists.fragments.WishListsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.diplom.tabletkaapp.ui.search.MapFragment"
-        android:label="MapFragment"
-        tools:layout="@layout/fragment_map"/>
+        tools:layout="@layout/fragment_wish_lists" />
+
     <fragment android:id="@+id/map_fragment"
         android:name="com.diplom.tabletkaapp.ui.search.MapFragment"
         tools:layout="@layout/fragment_map"

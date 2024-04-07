@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView.GONE
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.ItemPharmacyBinding
+import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
+import com.diplom.tabletkaapp.firebase.database.FirebasePharmacyDatabase
 import com.diplom.tabletkaapp.models.PointModel
 import com.diplom.tabletkaapp.ui.search.adapters.MedicineInfoAdapter
 import com.diplom.tabletkaapp.ui.search.listeners.OnNavigationButtonClicked
@@ -28,6 +30,16 @@ class PharmacyHolder(
         binding.showGeolocationButton.setOnClickListener {
             onNavigationButtonClicked?.click(PointModel(pharmacy.name,
                 GeoPoint(pharmacy.latitude, pharmacy.longitude)))
+        }
+        binding.addWishListButton.setOnClickListener {
+            if(!pharmacy.wish){
+                FirebasePharmacyDatabase.add(pharmacy)
+                binding.addWishListButton.setImageResource(android.R.drawable.btn_star_big_on)
+            } else {
+                FirebasePharmacyDatabase.delete(pharmacy)
+                binding.addWishListButton.setImageResource(android.R.drawable.btn_star_big_off)
+            }
+            pharmacy.wish = !pharmacy.wish
         }
         initShowMedicineButton(pharmacy)
     }
