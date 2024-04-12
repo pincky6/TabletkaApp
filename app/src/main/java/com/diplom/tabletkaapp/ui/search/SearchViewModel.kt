@@ -7,6 +7,7 @@ import com.diplom.tabletkaapp.ui.search.listeners.OnMedicineClickListener
 class SearchViewModel: ViewModel() {
     var showMedicineList: Boolean = false
     var showPharmacyList: Boolean = false
+    val choosedList get() = showMedicineList && showPharmacyList
 
     var floatButtonVisibleStatus: Int = View.GONE
 

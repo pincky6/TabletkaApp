@@ -20,8 +20,8 @@ import com.diplom.tabletkaapp.models.PointModel
 import com.diplom.tabletkaapp.parser.MedicineParser
 import com.diplom.tabletkaapp.parser.PharmacyParser
 import com.diplom.tabletkaapp.parser.TabletkaParser
-import com.diplom.tabletkaapp.ui.search.filter.ListSettingsDialogFragment
-import com.diplom.tabletkaapp.ui.search.filter.ListSettingsViewModel
+import com.diplom.tabletkaapp.ui.search.filter.ListFilterDialogFragment
+import com.diplom.tabletkaapp.ui.search.filter.ListFilterViewModel
 import com.diplom.tabletkaapp.ui.search.list.SearchListFragment
 import com.diplom.tabletkaapp.ui.search.listeners.OnMedicineClickListener
 import com.diplom.tabletkaapp.ui.search.listeners.OnNavigationButtonClicked
@@ -36,7 +36,7 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentMedicineContentBinding? = null
     val binding get() = _binding!!
     private var searchView: SearchView? = null
-    private val listSettings: ListSettingsViewModel = ListSettingsViewModel()
+    private val listSettings: ListFilterViewModel = ListFilterViewModel()
     private var searchListFragment: SearchListFragment? = null
     private val model: SearchViewModel = SearchViewModel()
     override fun onCreateView(
@@ -71,7 +71,6 @@ class SearchFragment : Fragment() {
                 }
                 return false
             }
-
             override fun onQueryTextChange(newText: String): Boolean {
                 listSettings.title = newText
                 val list = searchListFragment?.getList(
@@ -174,7 +173,8 @@ class SearchFragment : Fragment() {
             if (item.itemId == R.id.app_bar_filter) {
                 val geoPoint = getUserLocation()
                 findNavController(binding.root).navigate(
-                    SearchFragmentDirections.showListSettingsDialog(
+                    SearchFragmentDirections.showListFilterDialog(
+                        model.choosedList,
                         geoPoint,
                         listSettings.sortMask,
                         listSettings.minPrice,
@@ -234,7 +234,7 @@ class SearchFragment : Fragment() {
         if (model.showMedicineList || model.showPharmacyList)
             initBackButton()
         getParentFragmentManager().setFragmentResultListener(
-            ListSettingsDialogFragment.LIST_SETTINGS_KEY_ADD, getViewLifecycleOwner()
+            ListFilterDialogFragment.LIST_SETTINGS_KEY_ADD, getViewLifecycleOwner()
         ) { _: String?, result: Bundle ->
             listSettings.sortMask = result.getInt("sortMask")
             listSettings.minPrice = result.getDouble("minPrice")
@@ -244,8 +244,8 @@ class SearchFragment : Fragment() {
                      model.showMedicineList
             )
             list?.let {
-                val lst = listSettings.filterList(it)
-                listSettings.sortMedicine(lst)
+                val lst = listSettings.sort(listSettings.filter(it, model.choosedList),
+                    model.choosedList)
                     searchListFragment?.setAdapterList(lst)
                     searchListFragment?.updateUI()
             }

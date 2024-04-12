@@ -14,8 +14,8 @@
             android:id="@+id/showMapFragment"
             app:destination="@id/map_fragment" />
         <action
-            android:id="@+id/showListSettingsDialog"
-            app:destination="@id/listSettingsDialogFragment" />
+            android:id="@+id/showListFilterDialog"
+            app:destination="@id/listFilterDialogFragment" />
     </fragment>
 
     <fragment
@@ -34,14 +34,16 @@
             />
     </fragment>
     <dialog
-        android:id="@+id/listSettingsDialogFragment"
-        android:name="com.diplom.tabletkaapp.ui.search.filter.ListSettingsDialogFragment"
+        android:id="@+id/listFilterDialogFragment"
+        android:name="com.diplom.tabletkaapp.ui.search.filter.ListFilterDialogFragment"
         android:label="ListSettingsDialogFragment" >
+        <argument android:name="showDistanceSort"
+            app:argType="java.lang.Boolean"/>
         <argument
-            android:name="showDistanceSort"
+            android:name="userGeoPoint"
             app:argType="org.osmdroid.util.GeoPoint"/>
         <argument
-            android:name="checkBoxMask"
+            android:name="sortMask"
             app:argType="integer"/>
         <argument
             android:name="min_price"
