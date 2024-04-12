@@ -1,6 +1,7 @@
 package com.diplom.tabletkaapp.ui.search
 
 import android.Manifest
+import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -40,9 +41,8 @@ class MapFragment: Fragment() {
     private var _binding: FragmentMapBinding? = null
     val binding get() = _binding!!
     var locationManager: LocationManager? = null
-    private var geoPoints: MutableList<PointModel>? = arrayListOf()
-    private var currentGeoPoint: GeoPoint = GeoPoint(0.0, 0.0)
     private var showBottomSheet: Boolean = false
+    val model = MapViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -66,8 +66,8 @@ class MapFragment: Fragment() {
                 initLocation()
             }
         }.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-        geoPoints = (arguments?.getSerializable("pharmacyGeoPoints") as GeoPointsListArgs).geoPointsList
-        geoPoints?.let {
+        model.geoPoints = (arguments?.getSerializable("pharmacyGeoPoints") as GeoPointsListArgs).geoPointsList
+        model.geoPoints?.let {
             for(point in it)
                 setMarker(GeoPoint(point.geoPoint.latitude, point.geoPoint.longitude), point.name)
         }
@@ -100,15 +100,17 @@ class MapFragment: Fragment() {
         ) {
             val location = locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
             location?.let {
-                val point: GeoPoint = GeoPoint(location.latitude, location.longitude)
-                binding.mapVew.controller.setCenter(point)
+                model.currentMapGeoPoint = GeoPoint(location.latitude, location.longitude)
+                binding.mapVew.controller.setCenter(model.currentMapGeoPoint)
                 binding.mapVew.controller.setZoom(12.0)
             }
-            locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 0.0f, object:
+            locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 10.0f, object:
                 LocationListener {
                 override fun onLocationChanged(location: Location){
-                    val point: GeoPoint = GeoPoint(location.latitude, location.longitude)
-                    // binding.mapVew.controller.setCenter(point)
+                    if(model.currentMapGeoPoint != GeoPoint(location.latitude, location.longitude)) {
+                        model.currentMapGeoPoint = GeoPoint(location.latitude, location.longitude)
+                        binding.mapVew.controller.setCenter(model.currentMapGeoPoint)
+                    }
                 }
 
 
@@ -133,13 +135,23 @@ class MapFragment: Fragment() {
             marker.position = geoPoint
             marker.icon = ContextCompat.getDrawable(it, R.drawable.baseline_location_on_24)
             marker.title = name
-            marker.setOnMarkerClickListener { _, _ ->
+            marker.setOnMarkerClickListener { marker, _ ->
                 if (!showBottomSheet) {
-                    currentGeoPoint = geoPoint
-                    buildRoadMap(geoPoint, OSRMRoadManager.MEAN_BY_FOOT)
+                    model.currentGeoPoint = geoPoint
+                    buildRoadMap(geoPoint, OSRMRoadManager.MEAN_BY_CAR)
                     binding.include.buildRoadMapLayout.visibility = View.VISIBLE
                     showBottomSheet = true
-                } else {
+                } else if(model.currentMarker?.position != marker.position){
+                    binding.mapVew.overlays.removeAll {
+                        it is Polyline
+                    }
+                    model.currentGeoPoint = geoPoint
+                    model.currentMarker = marker
+                    buildRoadMap(model.currentGeoPoint, OSRMRoadManager.MEAN_BY_CAR)
+                    binding.include.buildRoadMapLayout.visibility = View.VISIBLE
+                    showBottomSheet = true
+                }
+                else{
                     binding.mapVew.overlays.removeAll {
                         it is Polyline
                     }
@@ -162,20 +174,20 @@ class MapFragment: Fragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            binding.mapVew.overlays.removeAll{
-                it is Polyline
-            }
             CoroutineScope(Dispatchers.IO).launch {
                 val roadManager = OSRMRoadManager(context, System.getProperty("http.agent"))
                 roadManager.setMean(roadManagerRoadChoose)
                 val location: Location? = locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
                 location?.let {
-                    currentGeoPoint = endPoint
+                    model.currentGeoPoint = endPoint
                     val userLocation = GeoPoint(it.latitude, it.longitude)
-                    val wayPoints = arrayListOf(userLocation, currentGeoPoint)
+                    val wayPoints = arrayListOf(userLocation, model.currentGeoPoint)
                     val road = roadManager.getRoad(wayPoints)
-                    val roadOverlay = RoadManager.buildRoadOverlay(road)
                     withContext(Dispatchers.Main) {
+                        binding.mapVew.overlays.removeAll{
+                            it is Polyline
+                        }
+                        val roadOverlay = RoadManager.buildRoadOverlay(road)
                         binding.mapVew.overlays.add(roadOverlay)
                         binding.mapVew.invalidate()
                     }
@@ -185,13 +197,17 @@ class MapFragment: Fragment() {
     }
     private fun initBottomSheetButtons(){
         binding.include.buildOnFootRoadButton.setOnClickListener {
-            buildRoadMap(currentGeoPoint, OSRMRoadManager.MEAN_BY_FOOT)
+            buildRoadMap(model.currentGeoPoint, OSRMRoadManager.MEAN_BY_FOOT)
         }
         binding.include.buildBikeRoadButton.setOnClickListener {
-            buildRoadMap(currentGeoPoint, OSRMRoadManager.MEAN_BY_BIKE)
+            buildRoadMap(model.currentGeoPoint, OSRMRoadManager.MEAN_BY_BIKE)
         }
         binding.include.buildOnCarButton.setOnClickListener {
-            buildRoadMap(currentGeoPoint, OSRMRoadManager.MEAN_BY_CAR)
+            buildRoadMap(model.currentGeoPoint, OSRMRoadManager.MEAN_BY_CAR)
         }
+    }
+    fun onLocationChanged(location: Location) {
+        val point: GeoPoint = GeoPoint(location.latitude, location.longitude)
+        binding.mapVew.controller.setCenter(point)
     }
 }

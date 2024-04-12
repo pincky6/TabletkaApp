@@ -1,5 +1,7 @@
 package com.diplom.tabletkaapp.parser
 
+import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
+import com.diplom.tabletkaapp.firebase.database.FirebasePharmacyDatabase
 import com.diplom.tabletkaapp.models.AbstractFirebaseModel
 import com.diplom.tabletkaapp.util.UrlStrings
 import models.Pharmacy
@@ -10,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object PharmacyParser: TabletkaParser() {
-    fun getPharmacyListFromUrl(url : String): MutableList<AbstractFirebaseModel>{
+    override fun parse(url : String): MutableList<AbstractFirebaseModel>{
         val doc = Jsoup.connect("${UrlStrings.BASIC_URL}${url}").get()
         val table = doc.select("tbody")
 
@@ -43,7 +45,7 @@ object PharmacyParser: TabletkaParser() {
         val pharmacyList: MutableList<AbstractFirebaseModel> = arrayListOf()
         for(i in 0 until names.size){
             pharmacyList.add(
-                Pharmacy(names[i], hospitalsReference[i],
+                Pharmacy(FirebasePharmacyDatabase.generateKey(), names[i], hospitalsReference[i],
                 hospitalsCoordinates[i][0], hospitalsCoordinates[i][1],
                 addresses[i], phones[i],
                 expirationDates[i], packageNumber[i], prices[i], false

@@ -5,14 +5,6 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.io.Serializable
 
-abstract class AbstractFirebaseModel(open val name: String): Serializable {
-    @Throws(IOException::class)
-    private fun writeObject(out: ObjectOutputStream) {
-        out.defaultWriteObject()
-    }
+abstract class AbstractFirebaseModel(open var id: String, open val name: String, open var wish: Boolean) {
 
-    @Throws(IOException::class, ClassNotFoundException::class)
-    private fun readObject(`in`: ObjectInputStream) {
-        `in`.defaultReadObject()
-    }
 }

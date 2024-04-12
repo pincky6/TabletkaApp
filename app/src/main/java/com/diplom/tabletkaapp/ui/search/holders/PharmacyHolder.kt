@@ -31,6 +31,12 @@ class PharmacyHolder(
             onNavigationButtonClicked?.click(PointModel(pharmacy.name,
                 GeoPoint(pharmacy.latitude, pharmacy.longitude)))
         }
+        binding.addWishListButton.setImageResource(
+            if(pharmacy.wish) {
+                android.R.drawable.btn_star_big_on
+            } else {
+                android.R.drawable.btn_star_big_off
+            })
         binding.addWishListButton.setOnClickListener {
             if(!pharmacy.wish){
                 FirebasePharmacyDatabase.add(pharmacy)

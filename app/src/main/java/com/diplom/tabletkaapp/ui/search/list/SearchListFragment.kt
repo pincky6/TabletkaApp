@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.diplom.tabletkaapp.databinding.FragmentListBinding
+import com.diplom.tabletkaapp.firebase.database.OnCompleteListener
+import com.diplom.tabletkaapp.firebase.database.OnReadCancelled
+import com.diplom.tabletkaapp.firebase.database.TabletkaDatabase
 import com.diplom.tabletkaapp.models.AbstractFirebaseModel
-import com.diplom.tabletkaapp.parser.MedicineParser
-import com.diplom.tabletkaapp.parser.PharmacyParser
+import com.diplom.tabletkaapp.parser.TabletkaParser
 import com.diplom.tabletkaapp.ui.search.adapters.TabletkaAdapter
 import com.diplom.tabletkaapp.ui.search.listeners.OnMedicineClickListener
 import com.diplom.tabletkaapp.ui.search.listeners.OnNavigationButtonClicked
@@ -20,12 +22,60 @@ import kotlinx.coroutines.withContext
 
 class SearchListFragment: Fragment() {
     private var _binding: FragmentListBinding? = null
+    val binding get() = _binding!!
+
+    private var searchListViewModel: SearchListViewModel = SearchListViewModel()
     var onCompanyNameClicked: OnMedicineClickListener? = null
     var onMedicineNameClicked: OnMedicineClickListener? = null
     var onRecipeNameClicked: OnMedicineClickListener? = null
     var onNavigationButtonClicked: OnNavigationButtonClicked? = null
-    val binding get() = _binding!!
-    var searchListViewModel: SearchListViewModel = SearchListViewModel()
+
+    fun getList(flag: Boolean): MutableList<AbstractFirebaseModel>? {
+        if(!flag){
+            return searchListViewModel.medicineList.value
+        }
+        return searchListViewModel.pharmacyList.value
+    }
+    fun setList(list: MutableList<AbstractFirebaseModel>, flag: Boolean){
+        if(!flag){
+            searchListViewModel.setMedicineList(list)
+        } else {
+            searchListViewModel.setPharmacyList(list)
+        }
+    }
+    fun loadFromTabletka(parser: TabletkaParser, loader: TabletkaDatabase , url: String,
+                         flag: Boolean, onCompleteListener: () -> Unit){
+        CoroutineScope(Dispatchers.IO).launch {
+            val parsedList = parser.parse(url)
+            val loadedList: MutableList<AbstractFirebaseModel> = arrayListOf()
+            loader.readAll(loadedList,
+                object : OnCompleteListener{
+                    override fun complete(list: MutableList<AbstractFirebaseModel>) {
+                        for(loadedTabletkaObject in list){
+                            val index = parsedList.indexOf(loadedTabletkaObject)
+                            if(index >= 0){
+                                parsedList[index].id = loadedTabletkaObject.id
+                                parsedList[index].wish = true
+                            }
+                        }
+                        binding.recyclerView.adapter =
+                            parsedList.let {
+                                TabletkaAdapter(
+                                    it, onCompanyNameClicked, onMedicineNameClicked,
+                                    onRecipeNameClicked, onNavigationButtonClicked
+                                )
+                            }
+                        setList(parsedList, flag)
+                        updateUI()
+                        onCompleteListener()
+                    }
+                },
+                object : OnReadCancelled {
+                override fun cancel() {
+                }
+            })
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +87,7 @@ class SearchListFragment: Fragment() {
     }
     private fun initRecyclerView(){
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
+
         if(searchListViewModel.pharmacyList.value?.isEmpty() == false){
             searchListViewModel.pharmacyList.value?.let {
                 if(binding.recyclerView.adapter == null)
@@ -52,32 +103,6 @@ class SearchListFragment: Fragment() {
                         onRecipeNameClicked, onNavigationButtonClicked)
                 setAdapterList(it)
                 updateUI()
-            }
-        }
-    }
-    fun loadMedicineFromName(name: String, onCompleteListener: () -> Unit){
-        CoroutineScope(Dispatchers.IO).launch {
-                searchListViewModel.setMedicineList(MedicineParser.getMedicineListFromUrl(name))
-                withContext(Dispatchers.Main) {
-                    binding.recyclerView.adapter = searchListViewModel.medicineList.value?.let {
-                        TabletkaAdapter(it, onCompanyNameClicked, onMedicineNameClicked,
-                                            onRecipeNameClicked, onNavigationButtonClicked)
-                    }
-                    updateUI()
-                    onCompleteListener()
-                }
-        }
-    }
-    fun loadPharmacyFromName(name: String, onCompleteListener: () -> Unit){
-        CoroutineScope(Dispatchers.IO).launch {
-            searchListViewModel.setPharmacyList(PharmacyParser.getPharmacyListFromUrl(name))
-            withContext(Dispatchers.Main) {
-                binding.recyclerView.adapter = searchListViewModel.pharmacyList.value?.let {
-                    TabletkaAdapter(it, onCompanyNameClicked, onMedicineNameClicked,
-                                        onRecipeNameClicked, onNavigationButtonClicked)
-                }
-                updateUI()
-                onCompleteListener()
             }
         }
     }

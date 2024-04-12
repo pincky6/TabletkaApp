@@ -17,8 +17,4 @@ class SearchListViewModel: ViewModel() {
     fun setPharmacyList(list: MutableList<AbstractFirebaseModel>){
         _pharmacyList.postValue(list)
     }
-    fun getList(isPharmacyList: Boolean): MutableList<AbstractFirebaseModel> {
-        if(isPharmacyList) return _pharmacyList.value ?: arrayListOf()
-        return _medicineList.value ?: arrayListOf()
-    }
 }

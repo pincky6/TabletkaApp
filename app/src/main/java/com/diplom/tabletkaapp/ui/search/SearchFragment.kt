@@ -14,7 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation.findNavController
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentMedicineContentBinding
+import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
+import com.diplom.tabletkaapp.firebase.database.FirebasePharmacyDatabase
 import com.diplom.tabletkaapp.models.PointModel
+import com.diplom.tabletkaapp.parser.MedicineParser
+import com.diplom.tabletkaapp.parser.PharmacyParser
+import com.diplom.tabletkaapp.parser.TabletkaParser
 import com.diplom.tabletkaapp.ui.search.filter.ListSettingsDialogFragment
 import com.diplom.tabletkaapp.ui.search.filter.ListSettingsViewModel
 import com.diplom.tabletkaapp.ui.search.list.SearchListFragment
@@ -40,24 +45,27 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMedicineContentBinding.inflate(inflater, container, false)
+        binding.floatingActionButton.visibility = model.floatButtonVisibleStatus
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViewModel()
         initGetFilter()
         initSearchView()
         initSearchList()
         initMapButton();
         initMenus()
     }
-    private fun initSearchView(){
+
+    private fun initSearchView() {
         searchView = binding.toolbar.findViewById(R.id.app_bar_search)
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                if(!model.showMedicineList && !model.showPharmacyList) {
-                    searchListFragment?.loadMedicineFromName(listSettings.title){
-                        model.showMedicineList = true
+                if (!model.showMedicineList && !model.showPharmacyList) {
+                    loadFromTabletka(MedicineParser, listSettings.title,
+                                     true, false,){
                         initBackButton()
                     }
                 }
@@ -66,109 +74,132 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 listSettings.title = newText
-                val list = searchListFragment?.searchListViewModel?.getList(model.showMedicineList &&
-                        model.showPharmacyList)
+                val list = searchListFragment?.getList(
+                    model.showMedicineList &&
+                            model.showPharmacyList
+                )
                 list?.let {
                     searchListFragment?.setAdapterList(listSettings.filterByTitle(it))
                     searchListFragment?.updateUI()
                 }
-               return false
+                return false
             }
         })
     }
-    private fun initBackButton(){
+
+    private fun initBackButton() {
         binding.toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
         binding.toolbar.setNavigationOnClickListener { v: View ->
-            if(model.showMedicineList && !model.showPharmacyList) {
+            searchListFragment?.setAdapterList(arrayListOf())
+            searchListFragment?.setList(arrayListOf(),
+                model.showMedicineList && model.showPharmacyList)
+
+            if (model.showMedicineList && !model.showPharmacyList) {
                 model.showMedicineList = false
                 CoroutineScope(Dispatchers.IO).launch {
-                    searchListFragment?.setAdapterList(arrayListOf())
-                    searchListFragment?.searchListViewModel?.setMedicineList(arrayListOf())
                     searchListFragment?.updateUI()
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         binding.toolbar.navigationIcon = null
                         binding.toolbar.setNavigationOnClickListener(null)
                     }
                 }
-            } else if(model.showMedicineList && model.showPharmacyList){
-                model.showPharmacyList = false
-                searchListFragment?.searchListViewModel?.setPharmacyList(arrayListOf())
-                searchListFragment?.searchListViewModel?.medicineList?.value?.let {
-                    searchListFragment?.setAdapterList(it)
-                    searchListFragment?.updateUI()
+                return@setNavigationOnClickListener
+            }
+            model.floatButtonVisibleStatus = View.GONE
+            binding.floatingActionButton.visibility =
+                model.floatButtonVisibleStatus
+            model.showPharmacyList = false
+            searchListFragment?.getList(MEDICINE_LIST)?.let {
+                        searchListFragment?.setAdapterList(it)
+                        searchListFragment?.updateUI()
                 }
+        }
+    }
+
+    private fun initViewModel() {
+        model.onPharmacySwitchListener = OnMedicineClickListener { name: String ->
+            loadFromTabletka(PharmacyParser, name, true, true){
+                model.floatButtonVisibleStatus = View.VISIBLE
+                binding.floatingActionButton.visibility = model.floatButtonVisibleStatus
+                searchView?.setQuery("", false)
+                initBackButton()
+            }
+        }
+        model.onRecipeNameClicked = OnMedicineClickListener { name: String ->
+            loadFromTabletka(MedicineParser, name, true, false){
+                searchView?.setQuery("", false)
+                initBackButton()
             }
         }
     }
-    private fun initSearchList(){
+    private fun loadFromTabletka(parser: TabletkaParser,
+                                 url: String,
+                                 medicineFlag: Boolean,
+                                 pharmacyFlag: Boolean,
+                                 onCompleteListener: () -> Unit){
+        searchListFragment?.setAdapterList(arrayListOf())
+        searchListFragment?.updateUI()
+        model.showMedicineList = medicineFlag
+        model.showPharmacyList = pharmacyFlag
+        val database = if(medicineFlag && !pharmacyFlag){
+            FirebaseMedicineDatabase
+        } else if(medicineFlag && pharmacyFlag){
+            FirebasePharmacyDatabase
+        } else {
+            null
+        }
+        if(database == null) return
+        searchListFragment?.loadFromTabletka(parser, database, url,
+            medicineFlag && pharmacyFlag,
+            onCompleteListener)
+    }
+    private fun initSearchList() {
         searchListFragment =
             getChildFragmentManager().findFragmentById(R.id.search_list_fragment) as SearchListFragment?
-        searchListFragment?.onCompanyNameClicked = OnMedicineClickListener{name: String ->
-            searchListFragment?.setAdapterList(arrayListOf())
-            searchListFragment?.updateUI()
-            searchListFragment?.loadMedicineFromName(name){
-                model.showMedicineList = true
-                model.showPharmacyList = false
-                searchView?.setQuery("", false)
-                initBackButton()
+        searchListFragment?.onCompanyNameClicked = model.onRecipeNameClicked
+        searchListFragment?.onMedicineNameClicked = model.onPharmacySwitchListener
+        searchListFragment?.onRecipeNameClicked = model.onPharmacySwitchListener
+        searchListFragment?.onNavigationButtonClicked =
+            OnNavigationButtonClicked { pointModel: PointModel ->
+                val arg = GeoPointsListArgs(arrayListOf())
+                arg.geoPointsList.add(pointModel)
+                findNavController(binding.root).navigate(
+                    SearchFragmentDirections.showMapFragment(arg)
+                )
             }
-        }
-        searchListFragment?.onMedicineNameClicked = OnMedicineClickListener { name: String ->
-            searchListFragment?.setAdapterList(arrayListOf())
-            searchListFragment?.updateUI()
-            searchListFragment?.loadPharmacyFromName(name){
-                model.showMedicineList = true
-                model.showPharmacyList = true
-                binding.floatingActionButton.visibility = View.VISIBLE
-                searchView?.setQuery("", false)
-                initBackButton()
-            }
-        }
-        searchListFragment?.onRecipeNameClicked = OnMedicineClickListener { name: String ->
-            searchListFragment?.setAdapterList(arrayListOf())
-            searchListFragment?.updateUI()
-            searchListFragment?.loadPharmacyFromName(name){
-                model.showMedicineList = true
-                model.showPharmacyList = true
-                binding.floatingActionButton.visibility = View.VISIBLE
-                searchView?.setQuery("", false)
-                initBackButton()
-            }
-        }
-        searchListFragment?.onNavigationButtonClicked = OnNavigationButtonClicked{pointModel: PointModel ->
-            val arg = GeoPointsListArgs(arrayListOf())
-            arg.geoPointsList.add(pointModel)
-            findNavController(binding.root).navigate(
-                SearchFragmentDirections.showMapFragment(arg)
-            )
-        }
     }
-    private fun initMenus()
-    {
+
+    private fun initMenus() {
         binding.toolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.app_bar_filter) {
-                    val geoPoint = getUserLocation()
-                    findNavController(binding.root).navigate(
-                        SearchFragmentDirections.showListSettingsDialog(
-                            geoPoint,
-                            listSettings.sortMask,
-                            listSettings.minPrice,
-                            listSettings.maxPrice
-                        )
+                val geoPoint = getUserLocation()
+                findNavController(binding.root).navigate(
+                    SearchFragmentDirections.showListSettingsDialog(
+                        geoPoint,
+                        listSettings.sortMask,
+                        listSettings.minPrice,
+                        listSettings.maxPrice
                     )
+                )
             }
             false
         }
     }
-        private fun initMapButton(){
+
+    private fun initMapButton() {
         binding.floatingActionButton.setOnClickListener {
-            if(model.showMedicineList && model.showPharmacyList){
-                searchListFragment?.searchListViewModel?.pharmacyList?.value.let {
+            if (model.showMedicineList && model.showPharmacyList) {
+                searchListFragment?.getList(PHARMACY_LIST).let {
                     if (it == null) return@let
                     val arg = GeoPointsListArgs(arrayListOf())
-                    for(model in it){
+                    for (model in it) {
                         val pharmacy = model as Pharmacy
-                        arg.geoPointsList.add(PointModel(pharmacy.name, GeoPoint(pharmacy.latitude, pharmacy.longitude)))
+                        arg.geoPointsList.add(
+                            PointModel(
+                                pharmacy.name,
+                                GeoPoint(pharmacy.latitude, pharmacy.longitude)
+                            )
+                        )
                     }
                     findNavController(binding.root).navigate(
                         SearchFragmentDirections.showMapFragment(arg)
@@ -177,13 +208,14 @@ class SearchFragment : Fragment() {
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     private fun getUserLocation(): GeoPoint {
-        val locationManager  = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -197,8 +229,9 @@ class SearchFragment : Fragment() {
         }
         return GeoPoint(0.0, 0.0)
     }
-    private fun initGetFilter(){
-        if(model.showMedicineList || model.showPharmacyList)
+
+    private fun initGetFilter() {
+        if (model.showMedicineList || model.showPharmacyList)
             initBackButton()
         getParentFragmentManager().setFragmentResultListener(
             ListSettingsDialogFragment.LIST_SETTINGS_KEY_ADD, getViewLifecycleOwner()
@@ -206,27 +239,20 @@ class SearchFragment : Fragment() {
             listSettings.sortMask = result.getInt("sortMask")
             listSettings.minPrice = result.getDouble("minPrice")
             listSettings.maxPrice = result.getDouble("maxPrice")
-            val list = searchListFragment?.searchListViewModel?.getList(model.showPharmacyList && model.showMedicineList)
-            if(model.showMedicineList && !model.showPharmacyList){
-                searchListFragment?.searchListViewModel?.medicineList?.value?.let {
-                    val lst = listSettings.filterList(it)
-                    listSettings.sortMedicine(lst)
-                    list?.let {medicineList->
-                        searchListFragment?.setAdapterList(lst)
-                        searchListFragment?.updateUI()
-                    }
-                }
-            } else {
-                searchListFragment?.searchListViewModel?.pharmacyList?.value?.let { it ->
-                    val lst = listSettings.filterList(it)
-                    listSettings.sortPharmacy(lst)
-                    list?.let {pharmacyList ->
-                        searchListFragment?.setAdapterList(lst)
-                        searchListFragment?.updateUI()
-                    }
-                }
+            val list = searchListFragment?.getList(
+                model.showPharmacyList &&
+                     model.showMedicineList
+            )
+            list?.let {
+                val lst = listSettings.filterList(it)
+                listSettings.sortMedicine(lst)
+                    searchListFragment?.setAdapterList(lst)
+                    searchListFragment?.updateUI()
             }
-
         }
+    }
+    companion object ActiveList{
+        const val MEDICINE_LIST = false
+        const val PHARMACY_LIST = true
     }
 }
