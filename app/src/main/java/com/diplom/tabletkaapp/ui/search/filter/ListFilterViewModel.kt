@@ -66,10 +66,10 @@ class ListFilterViewModel: ViewModel() {
         }
         if(sortMask and 2 == 2){
             sortedList.sortBy {
-                val R = 6371
-                val dLat = Math.toRadians(userGeoPoint.latitude - (it as Pharmacy).latitude)
-                val dLon = Math.toRadians(userGeoPoint.longitude - (it as Pharmacy).longitude)
-                val lat1 = Math.toRadians((it as Pharmacy).latitude)
+                val pharmacy = it as Pharmacy
+                val dLat = Math.toRadians(userGeoPoint.latitude - pharmacy.latitude)
+                val dLon = Math.toRadians(userGeoPoint.longitude - pharmacy.longitude)
+                val lat1 = Math.toRadians(pharmacy.latitude)
                 val lat2 = Math.toRadians(userGeoPoint.latitude)
                 val a = sin(dLat / 2.0).pow(2.0) +
                         cos(lat1) * cos(lat2) * sin(dLon / 2.0).pow(2.0)
