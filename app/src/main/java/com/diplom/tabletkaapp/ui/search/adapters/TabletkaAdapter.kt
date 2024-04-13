@@ -19,7 +19,8 @@ class TabletkaAdapter(
     val onCompanyNameClicked: OnMedicineClickListener? = null,
     val onMedicineNameClicked: OnMedicineClickListener? = null,
     val onRecipeNameClicked: OnMedicineClickListener? = null,
-    val onNavigationButtonClicked: OnNavigationButtonClicked? = null
+    val onNavigationButtonClicked: OnNavigationButtonClicked? = null,
+    val OnWishButtonClicked: OnMedicineClickListener? = null
 ): RecyclerView.Adapter<ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         if((list[position] is Medicine)){
