@@ -244,10 +244,9 @@ class SearchFragment : Fragment() {
                      model.showMedicineList
             )
             list?.let {
-                val lst = listSettings.sort(listSettings.filter(it, model.choosedList),
-                    model.choosedList)
-                    searchListFragment?.setAdapterList(lst)
-                    searchListFragment?.updateUI()
+                val lst = listSettings.sort(listSettings.filter(it, model.choosedList), model.choosedList)
+                searchListFragment?.setAdapterList(lst)
+                searchListFragment?.updateUI()
             }
         }
     }

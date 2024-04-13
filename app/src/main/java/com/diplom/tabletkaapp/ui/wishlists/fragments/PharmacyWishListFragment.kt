@@ -4,32 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.diplom.tabletkaapp.databinding.FragmentListBinding
+import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
+import com.diplom.tabletkaapp.firebase.database.FirebasePharmacyDatabase
+import com.diplom.tabletkaapp.firebase.database.OnCompleteListener
+import com.diplom.tabletkaapp.firebase.database.OnReadCancelled
 import com.diplom.tabletkaapp.models.AbstractFirebaseModel
-import com.diplom.tabletkaapp.ui.wishlists.viewmodels.MedicineWishListViewModel
 
 class PharmacyWishListFragment: AbstractListFragment() {
-    var _binding: FragmentListBinding? = null
-    val binding get() = _binding!!
-    override fun getList(): MutableList<AbstractFirebaseModel> {
-        TODO("Not yet implemented")
-    }
-
-    override fun setList(list: MutableList<AbstractFirebaseModel>) {
-        TODO("Not yet implemented")
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(MedicineWishListViewModel::class.java)
-
         _binding = FragmentListBinding.inflate(inflater, container, false)
+        model.database = FirebasePharmacyDatabase
+        model.list.clear()
+        model.loadFromDatabase(object : OnCompleteListener {
+            override fun complete(list: MutableList<AbstractFirebaseModel>) {
+                initRecyclerView()
+            }
+        },
+            object : OnReadCancelled {
+                override fun cancel() {
+
+                }
+
+            })
         return binding.root
     }
 

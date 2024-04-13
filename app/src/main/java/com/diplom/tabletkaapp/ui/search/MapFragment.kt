@@ -109,7 +109,7 @@ class MapFragment: Fragment() {
                 override fun onLocationChanged(location: Location){
                     if(model.currentMapGeoPoint != GeoPoint(location.latitude, location.longitude)) {
                         model.currentMapGeoPoint = GeoPoint(location.latitude, location.longitude)
-                        binding.mapVew.controller.setCenter(model.currentMapGeoPoint)
+                        _binding?.mapVew?.controller?.setCenter(model.currentMapGeoPoint)
                     }
                 }
 

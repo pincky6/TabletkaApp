@@ -80,13 +80,13 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="listSettingsDialogFragment">
+                  <entry key="listFilterDialogFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="146" />
-                            <option name="y" value="-380" />
+                            <option name="x" value="693" />
+                            <option name="y" value="-303" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -97,20 +97,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-76" />
-                            <option name="y" value="-396" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="navigation_dashboard">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="368" />
+                            <option name="x" value="585" />
+                            <option name="y" value="452" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -121,13 +109,13 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="34" />
-                            <option name="y" value="-41" />
+                            <option name="x" value="299" />
+                            <option name="y" value="26" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="showListSettingsDialog">
+                            <entry key="showListFilterDialog">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -150,6 +138,20 @@
                             <option name="x" value="496" />
                             <option name="y" value="35" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="showListFilterDialog">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="showMapFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

@@ -20,9 +20,16 @@
 
     <fragment
         android:id="@+id/navigation_wish_list"
-        android:name="com.diplom.tabletkaapp.ui.wishlists.fragments.WishListsFragment"
+        android:name="com.diplom.tabletkaapp.ui.wishlists.fragments.WishListFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_wish_lists" />
+        tools:layout="@layout/fragment_wish_lists" >
+        <action
+            android:id="@+id/showListFilterDialog"
+            app:destination="@id/listFilterDialogFragment" />
+        <action
+            android:id="@+id/showMapFragment"
+            app:destination="@id/map_fragment" />
+    </fragment>
 
     <fragment android:id="@+id/map_fragment"
         android:name="com.diplom.tabletkaapp.ui.search.MapFragment"
