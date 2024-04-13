@@ -166,6 +166,8 @@ class SearchFragment : Fragment() {
                     SearchFragmentDirections.showMapFragment(arg)
                 )
             }
+        searchListFragment?.onWishListButtonClicked =  {
+        }
     }
 
     private fun initMenus() {

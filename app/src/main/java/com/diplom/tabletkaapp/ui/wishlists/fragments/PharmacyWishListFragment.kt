@@ -22,7 +22,20 @@ class PharmacyWishListFragment: AbstractListFragment() {
         model.list.clear()
         model.loadFromDatabase(object : OnCompleteListener {
             override fun complete(list: MutableList<AbstractFirebaseModel>) {
-                initRecyclerView()
+                initRecyclerView{
+                    model.loadFromDatabase(object : OnCompleteListener{
+                        override fun complete(list: MutableList<AbstractFirebaseModel>) {
+                            initRecyclerView{
+                                updateUI()
+                            }
+                        }
+                    },
+                        object : OnReadCancelled{
+                            override fun cancel() {
+
+                            }
+                        })
+                }
             }
         },
             object : OnReadCancelled {

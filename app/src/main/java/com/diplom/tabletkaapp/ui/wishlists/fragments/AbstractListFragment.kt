@@ -24,7 +24,7 @@ abstract class AbstractListFragment: Fragment() {
         model.list = list
     }
 
-    fun initRecyclerView(){
+    fun initRecyclerView(onWishListButtonClicked: ()->Unit){
         _binding?.recyclerView?.layoutManager = LinearLayoutManager(context)
         _binding?.recyclerView?.adapter = TabletkaAdapter(model.list, {}, {}, {},
             { pointModel: PointModel ->
@@ -33,7 +33,7 @@ abstract class AbstractListFragment: Fragment() {
                 Navigation.findNavController(binding.root).navigate(
                     WishListFragmentDirections.showMapFragment(arg)
                 )
-            })
+            }, onWishListButtonClicked)
         setAdapterList(model.list)
         updateUI()
     }

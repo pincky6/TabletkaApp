@@ -16,7 +16,8 @@ class MedicineHolder(
     fun bind(medicine: Medicine,
              onCompanyNameClicked: OnMedicineClickListener?,
              onMedicineNameClicked: OnMedicineClickListener?,
-             onCompoundClicked: OnMedicineClickListener?){
+             onCompoundClicked: OnMedicineClickListener?,
+             onWishListButtonClicked: (()->Unit)?){
         binding.name.text = medicine.name
         binding.name.setOnClickListener {
             onMedicineNameClicked?.click(medicine.medicineReference)
@@ -45,6 +46,7 @@ class MedicineHolder(
                 android.R.drawable.btn_star_big_off
             })
         binding.addWishListButton.setOnClickListener {
+            medicine.wish = !medicine.wish
             if(!medicine.wish){
                 FirebaseMedicineDatabase.add(medicine)
                 binding.addWishListButton.setImageResource(android.R.drawable.btn_star_big_on)
@@ -52,7 +54,9 @@ class MedicineHolder(
                 FirebaseMedicineDatabase.delete(medicine)
                 binding.addWishListButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
-            medicine.wish = !medicine.wish
+            if (onWishListButtonClicked != null) {
+                onWishListButtonClicked()
+            }
         }
     }
 }

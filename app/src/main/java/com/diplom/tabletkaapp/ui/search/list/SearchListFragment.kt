@@ -29,6 +29,7 @@ class SearchListFragment: Fragment() {
     var onMedicineNameClicked: OnMedicineClickListener? = null
     var onRecipeNameClicked: OnMedicineClickListener? = null
     var onNavigationButtonClicked: OnNavigationButtonClicked? = null
+    var onWishListButtonClicked: (()->Unit)? = null
 
     fun getList(flag: Boolean): MutableList<AbstractFirebaseModel>? {
         if(!flag){
@@ -100,7 +101,7 @@ class SearchListFragment: Fragment() {
             searchListViewModel.medicineList.value?.let {
                 if(binding.recyclerView.adapter == null)
                     binding.recyclerView.adapter = TabletkaAdapter(it, onCompanyNameClicked, onMedicineNameClicked,
-                        onRecipeNameClicked, onNavigationButtonClicked)
+                        onRecipeNameClicked, onNavigationButtonClicked, onWishListButtonClicked)
                 setAdapterList(it)
                 updateUI()
             }

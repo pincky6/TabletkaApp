@@ -20,7 +20,8 @@ class PharmacyHolder(
     var show: Boolean
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind(pharmacy: Pharmacy,
-             onNavigationButtonClicked: OnNavigationButtonClicked?){
+             onNavigationButtonClicked: OnNavigationButtonClicked?,
+             onWishListButtonClicked: (()->Unit)?){
         show = false
         binding.name.text = pharmacy.name
         binding.address.text = pharmacy.address
@@ -46,6 +47,9 @@ class PharmacyHolder(
             } else {
                 FirebasePharmacyDatabase.delete(pharmacy)
                 binding.addWishListButton.setImageResource(android.R.drawable.btn_star_big_off)
+            }
+            if (onWishListButtonClicked != null) {
+                onWishListButtonClicked()
             }
         }
         initShowMedicineButton(pharmacy)

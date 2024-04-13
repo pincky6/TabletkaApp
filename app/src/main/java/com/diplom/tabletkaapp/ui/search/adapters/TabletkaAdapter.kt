@@ -20,7 +20,7 @@ class TabletkaAdapter(
     val onMedicineNameClicked: OnMedicineClickListener? = null,
     val onRecipeNameClicked: OnMedicineClickListener? = null,
     val onNavigationButtonClicked: OnNavigationButtonClicked? = null,
-    val OnWishButtonClicked: OnMedicineClickListener? = null
+    val onWishButtonClicked: (()->Unit)? = null
 ): RecyclerView.Adapter<ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
         if((list[position] is Medicine)){
@@ -43,9 +43,9 @@ class TabletkaAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if(holder is MedicineHolder) {
             holder.bind(list[position] as Medicine, onCompanyNameClicked, onMedicineNameClicked,
-                onRecipeNameClicked)
+                onRecipeNameClicked, onWishButtonClicked)
         } else if(holder is PharmacyHolder){
-            holder.bind(list[position] as Pharmacy, onNavigationButtonClicked)
+            holder.bind(list[position] as Pharmacy, onNavigationButtonClicked, onWishButtonClicked)
         }
     }
 
