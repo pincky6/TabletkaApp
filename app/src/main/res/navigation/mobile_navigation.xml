@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.diplom.tabletkaapp.ui.search.HomeFragment"
+        android:name="com.diplom.tabletkaapp.views.search.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.diplom.tabletkaapp.ui.dashboard.DashboardFragment"
+        android:name="com.diplom.tabletkaapp.views.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.diplom.tabletkaapp.ui.notifications.NotificationsFragment"
+        android:name="com.diplom.tabletkaapp.views.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

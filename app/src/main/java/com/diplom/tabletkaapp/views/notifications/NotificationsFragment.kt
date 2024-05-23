@@ -1,4 +1,4 @@
-package com.diplom.tabletkaapp.ui.notifications
+package com.diplom.tabletkaapp.views.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater
