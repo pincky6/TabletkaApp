@@ -4,7 +4,7 @@ import com.diplom.tabletkaapp.models.AbstractModel
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
-abstract class TabletkaHealthParser {
+abstract class ITabletkaHealthParser {
     protected val bodyBaseTableString: String = "tbody-base-tbl"
     protected val pharmacyBodyTableString: String = "tr-border"
     protected val textWrapString: String = "text-wrap"

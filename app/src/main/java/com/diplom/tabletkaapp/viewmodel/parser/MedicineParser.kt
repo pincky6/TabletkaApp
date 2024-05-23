@@ -7,7 +7,7 @@ import org.jsoup.Jsoup
 import org.jsoup.select.Elements
 import java.util.UUID
 
-object MedicineParser: TabletkaHealthParser()  {
+object MedicineParser: ITabletkaHealthParser()  {
     override fun parsePageFromUrl(url: String, regionId: Int, page: Int): MutableList<AbstractModel>{
         val pagedUrl = "${url}${UrlStrings.PAGE_CONDITION}${page}"
         return PharmacyParser.parseFromUrl(pagedUrl, regionId)
