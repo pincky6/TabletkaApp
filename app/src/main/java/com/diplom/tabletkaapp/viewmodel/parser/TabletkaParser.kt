@@ -1,6 +1,7 @@
 package com.diplom.tabletkaapp.parser
 
 import com.diplom.tabletkaapp.models.AbstractModel
+import com.diplom.tabletkaapp.util.UrlStrings
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
@@ -29,5 +30,6 @@ abstract class TabletkaParser {
             }
         } as MutableList<String>
     }
-    abstract fun parseFromUrl(url: String): MutableList<AbstractModel>
+    abstract fun parseFromUrl(url: String, regionId: Int): MutableList<AbstractModel>
+    abstract fun parsePageFromUrl(url: String, regionId: Int, page: Int): MutableList<AbstractModel>
 }

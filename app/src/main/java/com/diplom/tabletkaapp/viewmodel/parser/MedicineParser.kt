@@ -8,8 +8,13 @@ import org.jsoup.select.Elements
 import java.util.UUID
 
 object MedicineParser: TabletkaParser()  {
-    override fun parseFromUrl(url: String): MutableList<AbstractModel>{
-        val doc = Jsoup.connect("${UrlStrings.REQUEST_URL}${url}").get()
+    override fun parsePageFromUrl(url: String, regionId: Int, page: Int): MutableList<AbstractModel>{
+        val pagedUrl = "${url}${UrlStrings.PAGE_CONDITION}${page}"
+        return PharmacyParser.parseFromUrl(pagedUrl, regionId)
+    }
+    override fun parseFromUrl(url: String, regionId: Int): MutableList<AbstractModel>{
+        val doc = Jsoup.connect("${UrlStrings.BASIC_URL}${url}" +
+                "${UrlStrings.REGION_CONDITION}${regionId}").get()
         val table = doc.select("tbody")
 
         val names = getTooltipInfo(table, bodyBaseTableString, "name tooltip-info", "tooltip-info-header",
