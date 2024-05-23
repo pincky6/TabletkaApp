@@ -1,9 +1,10 @@
 package com.diplom.tabletkaapp.parser
 
+import com.diplom.tabletkaapp.models.AbstractModel
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
-open class TabletkaParser {
+abstract class TabletkaParser {
     protected val bodyBaseTableString: String = "tbody-base-tbl"
     protected val pharmacyBodyTableString: String = "tr-border"
     protected val textWrapString: String = "text-wrap"
@@ -28,4 +29,5 @@ open class TabletkaParser {
             }
         } as MutableList<String>
     }
+    abstract fun parseFromUrl(url: String): MutableList<AbstractModel>
 }

@@ -1,5 +1,6 @@
 package com.diplom.tabletkaapp.parser
 
+import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.util.UrlStrings
 import models.Pharmacy
 import org.jsoup.Jsoup
@@ -9,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object PharmacyParser: TabletkaParser() {
-    fun getPharmacyListFromUrl(url : String): MutableList<Pharmacy>{
+    override fun parseFromUrl(url : String): MutableList<AbstractModel>{
         val doc = Jsoup.connect("${UrlStrings.BASIC_URL}${url}").get()
         val table = doc.select("tbody")
 
@@ -39,13 +40,15 @@ object PharmacyParser: TabletkaParser() {
         val expirationDates = parseExpirationDates(pricesInfo)
         val packageNumber = parsePackageNumber(pricesInfo)
         val prices = parsePrice(pricesInfo)
-        val pharmacyList: MutableList<Pharmacy> = arrayListOf()
+        val pharmacyList: MutableList<AbstractModel> = arrayListOf()
         for(i in 0 until names.size){
             pharmacyList.add(
-                Pharmacy(names[i], hospitalsReference[i],
-                hospitalsCoordinates[i][0], hospitalsCoordinates[i][1],
-                addresses[i], phones[i],
-                expirationDates[i], packageNumber[i], prices[i]
+                Pharmacy(
+                    UUID.randomUUID().toString(),
+                    names[i], hospitalsReference[i],
+                    hospitalsCoordinates[i][0], hospitalsCoordinates[i][1],
+                    addresses[i], phones[i],
+                    expirationDates[i], packageNumber[i], prices[i]
             )
             )
         }

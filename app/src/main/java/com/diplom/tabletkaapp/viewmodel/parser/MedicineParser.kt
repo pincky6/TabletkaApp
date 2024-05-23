@@ -1,12 +1,14 @@
 package com.diplom.tabletkaapp.parser
 
+import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.util.UrlStrings
 import models.Medicine
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
+import java.util.UUID
 
 object MedicineParser: TabletkaParser()  {
-    fun getMedicineListFromUrl(url: String): MutableList<Medicine>{
+    override fun parseFromUrl(url: String): MutableList<AbstractModel>{
         val doc = Jsoup.connect("${UrlStrings.REQUEST_URL}${url}").get()
         val table = doc.select("tbody")
 
@@ -67,14 +69,16 @@ object MedicineParser: TabletkaParser()  {
         val prices = getMedicinePriceInfo(table, "price-value")
         val hospitalsCount = getHospitalsCount(table, "price", "capture")
         val size = names.size
-        var medicineList: MutableList<Medicine> = arrayListOf()
+        var medicineList: MutableList<AbstractModel> = arrayListOf()
         for(i in 0 until size){
             medicineList.add(
-                Medicine(names[i], medicinesReference[i],
-                compounds[i], compoundReference[i],
-                recipes[i], recipesInfo[i],
-                companies[i], companiesReference[i],
-                countries[i], prices[i], hospitalsCount[i])
+                Medicine(
+                    UUID.randomUUID().toString(),
+                    names[i], medicinesReference[i],
+                    compounds[i], compoundReference[i],
+                    recipes[i], recipesInfo[i],
+                    companies[i], companiesReference[i],
+                    countries[i], prices[i], hospitalsCount[i])
             )
         }
         return medicineList
