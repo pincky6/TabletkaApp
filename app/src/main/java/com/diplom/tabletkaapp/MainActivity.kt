@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.diplom.tabletkaapp.databinding.ActivityMainBinding
 import com.diplom.tabletkaapp.viewmodel.parser.RegionParser
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,9 +19,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        val regions = RegionParser.parseRegion()
-        for(region in regions){
-            Log.d("REGION", region.toString())
+        CoroutineScope(Dispatchers.IO).launch {
+            val regions = RegionParser.parseRegion()
+            for(region in regions){
+                Log.d("REGION", region.toString())
+            }
         }
     }
 }
