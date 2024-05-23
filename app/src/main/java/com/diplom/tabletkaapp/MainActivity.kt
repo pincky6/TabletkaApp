@@ -18,12 +18,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
-        CoroutineScope(Dispatchers.IO).launch {
-            val regions = RegionParser.parseRegion()
-            for(region in regions){
-                Log.d("REGION", region.toString())
-            }
-        }
     }
 }

@@ -13,4 +13,8 @@
     <string name="password_hint">Пароль</string>
 
     <string name="sign_up_register_text">Зарегистрироваться</string>
+
+    <string name="all_regions_string">Все регионы</string>
+    <string name="search_hint">Введите название лекарства</string>
+    <string name="select_region_string">Выберите регион</string>
 </resources>
