@@ -9,7 +9,7 @@ import org.jsoup.select.Elements
 import java.text.SimpleDateFormat
 import java.util.*
 
-object PharmacyParser: TabletkaParser() {
+object PharmacyParser: TabletkaHealthParser() {
     override fun parsePageFromUrl(url: String, regionId: Int, page: Int): MutableList<AbstractModel>{
         val pagedUrl = "${url}${UrlStrings.PAGE_CONDITION}${page}"
         return parseFromUrl(pagedUrl, regionId)

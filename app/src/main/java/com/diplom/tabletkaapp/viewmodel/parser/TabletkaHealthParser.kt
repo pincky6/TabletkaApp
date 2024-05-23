@@ -1,11 +1,10 @@
 package com.diplom.tabletkaapp.parser
 
 import com.diplom.tabletkaapp.models.AbstractModel
-import com.diplom.tabletkaapp.util.UrlStrings
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
-abstract class TabletkaParser {
+abstract class TabletkaHealthParser {
     protected val bodyBaseTableString: String = "tbody-base-tbl"
     protected val pharmacyBodyTableString: String = "tr-border"
     protected val textWrapString: String = "text-wrap"
