@@ -1,9 +1,12 @@
 package com.diplom.tabletkaapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.diplom.tabletkaapp.databinding.ActivityMainBinding
+import com.diplom.tabletkaapp.viewmodel.parser.RegionParser
+import kotlinx.coroutines.Dispatchers
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,5 +16,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        val regions = RegionParser.parseRegion()
+        for(region in regions){
+            Log.d("REGION", region.toString())
+        }
     }
 }

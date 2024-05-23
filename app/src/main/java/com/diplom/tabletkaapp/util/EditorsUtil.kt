@@ -41,7 +41,7 @@ object EditorsUtil {
     }
     fun <Editor : EditText> initTextFilters(vararg editors: Editor) {
         for (editor in editors) {
-            editor.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
+            editor.filters = arrayOf(InputFilter { source, start,end, dest, dstart, dend ->
                  var updatedSource = source
                 if (source.isNotEmpty() && " " in source) {
                     updatedSource = source.toString().replace(" ", "")

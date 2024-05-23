@@ -82,7 +82,7 @@ class LoginFragment: Fragment() {
                 })
         }
 
-        binding.signUpButton.setOnClickListener { v ->
+        binding.signInButton.setOnClickListener { v ->
             findNavController(binding.root).navigate(
                 LoginFragmentDirections.showRegisterFragment()
             )
