@@ -15,6 +15,12 @@
     <string name="sign_up_register_text">Зарегистрироваться</string>
 
     <string name="all_regions_string">Все регионы</string>
-    <string name="search_hint">Введите название лекарства</string>
+    <string name="search_medicine_hint">Введите лекарство</string>
     <string name="select_region_string">Выберите регион</string>
+
+
+    <string name="wish_row_string">Избранное</string>
+    <string name="pharmacy_string">Аптеки</string>
+    <string name="move_to_site_string">Перейти на сайт</string>
+    <string name="enter_string">Вход</string>
 </resources>

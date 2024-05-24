@@ -45,6 +45,8 @@ class DashboardFragment : Fragment() {
                     regions.add(0, allRegion)
                 }
                 withContext(Dispatchers.Main){
+                    binding.regionsSpinner.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
+                    binding.regionsSpinner.setPadding(0, 0, 50, 0)
                     binding.regionsSpinner.setPromptId(R.string.select_region_string)
                     binding.regionsSpinner.adapter = RegionAdapter(it, regions)
                 }
