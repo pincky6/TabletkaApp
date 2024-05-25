@@ -6,33 +6,8 @@
     app:startDestination="@id/contentFragment">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.diplom.tabletkaapp.views.authentication.login.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/show_content_fragment"
-            app:destination="@id/contentFragment" />
-        <action
-            android:id="@+id/showRegisterFragment"
-            app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/showResetPasswordFragment"
-            app:destination="@id/resetPasswordFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/contentFragment"
         android:name="com.diplom.tabletkaapp.ContentFragment"
         android:label="ContentFragment"
         tools:layout="@layout/fragment_content"/>
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.diplom.tabletkaapp.views.authentication.login.RegisterFragment"
-        tools:layout="@layout/fragment_register"
-        android:label="RegisterFragment" />
-    <fragment
-        android:id="@+id/resetPasswordFragment"
-        android:name="com.diplom.tabletkaapp.views.authentication.login.ResetPasswordFragment"
-        android:label="ResetPasswordFragment"
-        tools:layout="@layout/fragment_reset_password"/>
 </navigation>

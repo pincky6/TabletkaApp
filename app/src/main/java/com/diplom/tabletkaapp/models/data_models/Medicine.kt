@@ -2,6 +2,7 @@ package models
 
 import com.diplom.tabletkaapp.models.AbstractModel
 
+
 data class Medicine(
     override val id: String,
     val name: String, val medicineReference: String,

@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
+import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentLoginBinding
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.authentication.OnFailrueSignListener
@@ -28,10 +30,11 @@ class LoginFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         initButtons()
         initEditTexts()
+        initToolbar()
         return binding.root
     }
 
@@ -91,6 +94,12 @@ class LoginFragment: Fragment() {
             findNavController(binding.root).navigate(
                 LoginFragmentDirections.showResetPasswordFragment()
             )
+        }
+    }
+    private fun initToolbar() {
+        binding.toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
+        binding.toolbar.setNavigationOnClickListener { v: View ->
+            Navigation.findNavController(binding.root).popBackStack()
         }
     }
     private fun initEditTexts(){

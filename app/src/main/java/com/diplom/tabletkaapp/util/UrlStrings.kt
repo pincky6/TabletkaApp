@@ -7,5 +7,5 @@ object UrlStrings {
     const val REGION_CONDITION: String = "&region="
     const val PAGE_CONDITION: String = "&page="
 
-
+    const val SITE_REFERENCE = "https://m.tabletka.by/"
 }
