@@ -11,11 +11,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.CursorAdapter
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.SearchView.OnSuggestionListener
 import android.widget.SimpleCursorAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.room.Room
 import com.diplom.tabletkaapp.R
@@ -28,6 +33,7 @@ import com.diplom.tabletkaapp.viewmodel.adapters.mainmenu.RegionAdapter
 import com.diplom.tabletkaapp.viewmodel.parser.RegionParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -62,7 +68,7 @@ class MainMenuFragment : Fragment() {
         return binding.root
     }
 
-    private fun initSpinner(){
+    private fun initSpinner() {
         context?.let {
             CoroutineScope(Dispatchers.IO).launch {
                 val regions = RegionParser.parseRegion()
@@ -74,11 +80,26 @@ class MainMenuFragment : Fragment() {
                     regions.removeAt(regions.indexOf(allRegion))
                     regions.add(0, allRegion)
                 }
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     binding.regionsSpinner.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
                     binding.regionsSpinner.setPadding(0, 0, 50, 0)
                     binding.regionsSpinner.setPromptId(R.string.select_region_string)
                     binding.regionsSpinner.adapter = RegionAdapter(it, regions)
+
+                    binding.regionsSpinner.onItemSelectedListener =
+                        object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>?,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+                                model.regionId = regions[position].id
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                            }
+                        }
                 }
             }
         }
@@ -93,12 +114,11 @@ class MainMenuFragment : Fragment() {
         binding.searchMedicines.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query == null) return false
-                findNavController(binding.root).navigate(
-                    MainMenuFragmentDirections.actionNavigationMainMenuToMedicineModelList(query)
-                )
                 CoroutineScope(Dispatchers.IO).launch {
-                    model.addRequestToDatabase(requireContext(),
-                            RequestEntity(0, query, 0))
+                    val requestId = model.addRequestToDatabase(RequestEntity(0, query, 0))
+                    withContext(Dispatchers.Main){
+                        navigateToMedicineList(query, requestId)
+                    }
                 }
                 return false
             }
@@ -127,6 +147,11 @@ class MainMenuFragment : Fragment() {
             }
 
         })
+    }
+    private fun navigateToMedicineList(query: String, requestId: Int) {
+        findNavController(binding.root).navigate(
+            MainMenuFragmentDirections.showMedicineModelList(query, requestId, model.regionId)
+        )
     }
     private fun initButtons(){
         binding.moveToSiteButton.setOnClickListener {

@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$PROJECT_DIR$/../../../../IDEs/AndroidStudio/SDK/icons/material/materialicons/expand_more/baseline_expand_more_24.xml" />
+                                      <entry key="url" value="file:/$PROJECT_DIR$/../../../../IDEs/AndroidStudio/SDK/icons/material/materialicons/expand_less/baseline_expand_less_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_expand_more_24" />
+                            <entry key="outputName" value="baseline_expand_less_24" />
                             <entry key="sourceFile" value="D:\Study\Android Development\projects\TabletkaApp" />
                           </map>
                         </option>

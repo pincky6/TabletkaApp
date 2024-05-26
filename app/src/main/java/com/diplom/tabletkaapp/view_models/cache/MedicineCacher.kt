@@ -1,45 +1,48 @@
 package com.diplom.tabletkaapp.view_models.cache
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.models.MedicineEntity
 import models.Medicine
 
-//@Entity(tableName = "medicine")
-//data class MedicineEntity(
-//    @PrimaryKey
-//    val id: String,
-//    val name: String,
-//    @ColumnInfo(name = "medicine_reference")
-//    val medicineReference: String,
-//    val compound: String,
-//    @ColumnInfo(name = "compound_reference")
-//    val compoundReference: String,
-//    val recipe: String,
-//    @ColumnInfo(name = "recipe_info")
-//    val recipeInfo: String,
-//    @ColumnInfo(name = "company_name")
-//    val companyName: String,
-//    @ColumnInfo(name = "company_reference")
-//    val companyReference: String,
-//    val country: String,
-//    @ColumnInfo(name = "price_range")
-//    val priceRange: MutableList<Double>,
-//    @ColumnInfo(name = "hospital_count")
-//    val hospitalCount: Int,
-//    @ColumnInfo(name = "record_id")
-//    val record_id: Long
-//)
-
 object MedicineCacher {
-    suspend fun add(appDatabase: AppDatabase, medicine: Medicine, requestId: Long){
+    fun add(appDatabase: AppDatabase, medicine: Medicine, requestId: Long){
         val medicineDao = appDatabase.medicineDao()
-
         val medicineEntity = MedicineEntity(medicine.id, medicine.name, medicine.medicineReference,
             medicine.compound, medicine.compoundReference, medicine.recipe, medicine.recipeInfo, medicine.companyName,
             medicine.companyReference, medicine.country, medicine.priceRange, medicine.hospitalCount, requestId)
         medicineDao.insertMedicine(medicineEntity)
+    }
+    suspend fun deleteById(appDatabase: AppDatabase, requestId: Long){
+        val medicineDao = appDatabase.medicineDao()
+        medicineDao.deleteByRecordId(requestId)
+    }
+    suspend fun addMedicineList(appDatabase: AppDatabase, medicineList: MutableList<AbstractModel>, requestId: Long){
+        for(medicine in medicineList){
+            add(appDatabase, medicine as Medicine, requestId)
+        }
+    }
+    suspend fun isValidData(appDatabase: AppDatabase, medicineList: MutableList<AbstractModel>): Boolean{
+        val medicineEntities = appDatabase.medicineDao().getAllMedicines()
+        if(medicineList.size != medicineEntities.size) return false
+        for(i in medicineEntities.indices){
+            val medicine = medicineList[i] as Medicine
+            val medicineEntity = medicineEntities[i]
+            if(medicine.name              != medicineEntity.name ||
+               medicine.medicineReference != medicineEntity.medicineReference ||
+               medicine.compound          != medicineEntity.compound ||
+               medicine.compoundReference != medicineEntity.compoundReference ||
+               medicine.recipe            != medicineEntity.recipe ||
+               medicine.recipeInfo        != medicineEntity.recipeInfo ||
+               medicine.companyName       != medicineEntity.companyName ||
+               medicine.companyReference  != medicineEntity.companyReference ||
+               medicine.country           != medicineEntity.country ||
+               medicine.priceRange        != medicineEntity.priceRange ||
+               medicine.hospitalCount     != medicineEntity.hospitalCount
+              ){
+                return false
+            }
+        }
+        return true
     }
 
 }

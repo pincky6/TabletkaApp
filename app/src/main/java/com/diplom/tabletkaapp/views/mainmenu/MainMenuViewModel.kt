@@ -11,20 +11,20 @@ import com.diplom.tabletkaapp.models.cache_data_models.RequestEntity
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.cache.RequestDao
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
 class MainMenuViewModel : ViewModel() {
 
     var database: AppDatabase? = null
-    suspend fun addRequestToDatabase(context: Context, request: RequestEntity): Int{
+    var regionId: Int = -1
+    fun addRequestToDatabase(request: RequestEntity): Int{
         var requestId = 0
         database?.let {
             val requestDao: RequestDao = it.requestDao()
-            requestDao.getRequestsLikeRequest(request.request).collect{requestEntities ->
-                if(requestEntities.isEmpty()) {
-                    requestId = requestDao.insertRequest(request).toInt()
-                }
-
+            if(requestDao.getRequestsLikeRequest(request.request).isEmpty()) {
+                requestId = requestDao.insertRequest(request).toInt()
             }
         }
         return requestId

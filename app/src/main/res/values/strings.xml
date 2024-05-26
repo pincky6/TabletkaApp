@@ -29,4 +29,5 @@
     <string name="hospital_search_hint">Введите название аптеки</string>
     <string name="hospital_filter_and_sort_button">Сортировка</string>
 
+    <string name="unknown">Неизвестно</string>
 </resources>

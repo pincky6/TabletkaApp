@@ -54,7 +54,7 @@
             android:id="@+id/showLoginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_navigation_main_menu_to_medicineModelList"
+            android:id="@+id/showMedicineModelList"
             app:destination="@id/medicineModelList" />
     </fragment>
 
@@ -70,5 +70,11 @@
         <argument
             android:name="query"
             app:argType="string" />
+        <argument
+            android:name="requestId"
+            app:argType="integer" />
+        <argument
+            android:name="regionId"
+            app:argType="integer" />
     </fragment>
 </navigation>

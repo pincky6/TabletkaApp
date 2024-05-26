@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RequestDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRequest(request: RequestEntity): Long
+    fun insertRequest(request: RequestEntity): Long
 
     @Update
     suspend fun updateRequest(request: RequestEntity)
@@ -33,5 +33,5 @@ interface RequestDao {
     fun getRequestsByTypeAndRequest(request: String, requestType: Int): Flow<List<RequestEntity>>
 
     @Query("SELECT * FROM request WHERE request LIKE :request")
-    fun getRequestsLikeRequest(request: String): Flow<List<RequestEntity>>
+    fun getRequestsLikeRequest(request: String): List<RequestEntity>
 }
