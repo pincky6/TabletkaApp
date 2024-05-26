@@ -29,6 +29,6 @@ abstract class ITabletkaHealthParser {
             }
         } as MutableList<String>
     }
-    abstract fun parseFromUrl(url: String, regionId: Int): MutableList<AbstractModel>
-    abstract fun parsePageFromUrl(url: String, regionId: Int, page: Int): MutableList<AbstractModel>
+    abstract fun parseFromName(name: String, regionId: Int): MutableList<AbstractModel>
+    abstract fun parsePageFromName(name: String, regionId: Int, page: Int): MutableList<AbstractModel>
 }

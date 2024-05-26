@@ -8,12 +8,12 @@ import org.jsoup.select.Elements
 import java.util.UUID
 
 object MedicineParser: ITabletkaHealthParser()  {
-    override fun parsePageFromUrl(url: String, regionId: Int, page: Int): MutableList<AbstractModel>{
-        val pagedUrl = "${url}${UrlStrings.PAGE_CONDITION}${page}"
-        return PharmacyParser.parseFromUrl(pagedUrl, regionId)
+    override fun parsePageFromName(name: String, regionId: Int, page: Int): MutableList<AbstractModel>{
+        val pagedUrl = "${name}${UrlStrings.PAGE_CONDITION}${page}"
+        return PharmacyParser.parseFromName(pagedUrl, regionId)
     }
-    override fun parseFromUrl(url: String, regionId: Int): MutableList<AbstractModel>{
-        val doc = Jsoup.connect("${UrlStrings.BASIC_URL}${url}" +
+    override fun parseFromName(name: String, regionId: Int): MutableList<AbstractModel>{
+        val doc = Jsoup.connect("${UrlStrings.REQUEST_URL}${name}" +
                 "${UrlStrings.REGION_CONDITION}${regionId}").get()
         val table = doc.select("tbody")
 
@@ -78,7 +78,7 @@ object MedicineParser: ITabletkaHealthParser()  {
         for(i in 0 until size){
             medicineList.add(
                 Medicine(
-                    UUID.randomUUID().toString(),
+                    i.toString(),
                     names[i], medicinesReference[i],
                     compounds[i], compoundReference[i],
                     recipes[i], recipesInfo[i],

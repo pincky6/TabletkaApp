@@ -7,6 +7,7 @@ import android.database.MatrixCursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.BaseColumns
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,8 +22,10 @@ import androidx.room.Room
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentDashboardBinding
 import com.diplom.tabletkaapp.models.cache_data_models.RequestEntity
+import com.diplom.tabletkaapp.parser.MedicineParser
 import com.diplom.tabletkaapp.util.UrlStrings
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
+import com.diplom.tabletkaapp.view_models.cache.MedicineCacher
 import com.diplom.tabletkaapp.view_models.cache.RequestDao
 import com.diplom.tabletkaapp.viewmodel.adapters.mainmenu.RegionAdapter
 import com.diplom.tabletkaapp.viewmodel.parser.RegionParser
@@ -30,6 +33,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import models.Medicine
 
 
 class DashboardFragment : Fragment() {
@@ -45,7 +49,7 @@ class DashboardFragment : Fragment() {
             appDatabase = Room.databaseBuilder(
                 it.applicationContext,
                 AppDatabase::class.java,
-                "cache"
+                "cache2"
             ).build()
 
         }
@@ -93,7 +97,6 @@ class DashboardFragment : Fragment() {
                                         null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER)
         binding.searchMedicines.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Toast.makeText(context, "oaoaoa", Toast.LENGTH_SHORT).show()
                 query?.let {subString ->
                     CoroutineScope(Dispatchers.IO).launch {
                         context?.let {
@@ -102,7 +105,16 @@ class DashboardFragment : Fragment() {
                                 if(requestEntities.isEmpty()) {
                                     requestDao.insertRequest(RequestEntity(0, subString, 0))
                                 }
+
+                            val list = appDatabase.medicineDao().getAllMedicines()
+                            for(medicine in list)
+                                Log.d("MEDICINE ${medicine.id}", medicine.toString())
+//                                Log.d("SIZE_LIST", list.size.toString())
+//                                val list = MedicineParser.parseFromName("${query}", 0)
+//                                for(medicine in list)
+//                                    MedicineCacher.add(appDatabase, medicine as Medicine, 0)
                             }
+
                         }
                     }
                 }

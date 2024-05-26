@@ -1,30 +1,35 @@
 package com.diplom.tabletkaapp.models
 
-import androidx.room.Embedded
+import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import androidx.room.Relation
-import com.diplom.tabletkaapp.models.cache_data_models.CompanyEntity
-import com.diplom.tabletkaapp.models.cache_data_models.CompoundEntity
-import com.diplom.tabletkaapp.models.cache_data_models.CountryEntity
-import com.diplom.tabletkaapp.models.cache_data_models.PriceRangeEntity
-import com.diplom.tabletkaapp.models.cache_data_models.RequestEntity
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.diplom.tabletkaapp.models.cache_data_models.medicine_entities.PriceRangeConverter
 
-@Entity(tableName = "medicines")
+@Entity(tableName = "medicine")
 data class MedicineEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey
+    val id: String,
     val name: String,
+    @ColumnInfo(name = "medicine_reference")
     val medicineReference: String,
+    val compound: String,
+    @ColumnInfo(name = "compound_reference")
     val compoundReference: String,
-    @Embedded(prefix = "compound_")
-    val compound: CompoundEntity,
     val recipe: String,
+    @ColumnInfo(name = "recipe_info")
     val recipeInfo: String,
+    @ColumnInfo(name = "company_name")
+    val companyName: String,
+    @ColumnInfo(name = "company_reference")
     val companyReference: String,
-    @Embedded(prefix = "company_")
-    val companyName: CompanyEntity,
-    val countryId: Long,
+    val country: String,
+    @TypeConverters(PriceRangeConverter::class)
+    @ColumnInfo(name = "price_range")
+    val priceRange: MutableList<Double>,
+    @ColumnInfo(name = "hospital_count")
     val hospitalCount: Int,
-    val request_id: Int? = null
+    @ColumnInfo(name = "record_id")
+    val record_id: Long
 )
