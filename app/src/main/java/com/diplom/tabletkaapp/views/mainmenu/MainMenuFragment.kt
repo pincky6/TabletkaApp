@@ -37,7 +37,6 @@ class MainMenuFragment : Fragment() {
     private var _binding: FragmentMainMenuBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var appDatabase: AppDatabase
     private val model: MainMenuViewModel = MainMenuViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,11 +56,10 @@ class MainMenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainMenuBinding.inflate(inflater, container, false)
-        val root: View = binding.root
         initSpinner()
         initSearchView()
         initButtons()
-        return root
+        return binding.root
     }
 
     private fun initSpinner(){

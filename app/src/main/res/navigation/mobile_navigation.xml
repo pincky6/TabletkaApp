@@ -53,6 +53,9 @@
         <action
             android:id="@+id/showLoginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_navigation_main_menu_to_medicineModelList"
+            app:destination="@id/medicineModelList" />
     </fragment>
 
     <fragment
@@ -60,4 +63,8 @@
         android:name="com.diplom.tabletkaapp.views.notifications.NotificationsFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/medicineModelList"
+        android:name="com.diplom.tabletkaapp.views.lists.simple_lists.MedicineModelList"
+        android:label="MedicineModelList" />
 </navigation>
