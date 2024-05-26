@@ -21,7 +21,7 @@ class MedicineModelList:
         binding.updateButton.visibility = View.GONE
         CoroutineScope(Dispatchers.IO).launch {
             val medicineList = MedicineParser.parseFromName("", 0)
-            
+
         }
         initFilterButton {
 
@@ -31,5 +31,5 @@ class MedicineModelList:
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-    on
+
 }

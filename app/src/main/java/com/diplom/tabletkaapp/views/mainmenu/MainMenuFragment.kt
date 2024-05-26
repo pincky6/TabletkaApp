@@ -93,6 +93,9 @@ class MainMenuFragment : Fragment() {
         binding.searchMedicines.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query == null) return false
+                findNavController(binding.root).navigate(
+                    MainMenuFragmentDirections.actionNavigationMainMenuToMedicineModelList(query)
+                )
                 CoroutineScope(Dispatchers.IO).launch {
                     model.addRequestToDatabase(requireContext(),
                             RequestEntity(0, query, 0))

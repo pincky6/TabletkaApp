@@ -66,5 +66,9 @@
     <fragment
         android:id="@+id/medicineModelList"
         android:name="com.diplom.tabletkaapp.views.lists.simple_lists.MedicineModelList"
-        android:label="MedicineModelList" />
+        android:label="MedicineModelList" >
+        <argument
+            android:name="query"
+            app:argType="string" />
+    </fragment>
 </navigation>
