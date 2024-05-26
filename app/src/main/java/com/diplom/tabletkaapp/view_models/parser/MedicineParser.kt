@@ -2,6 +2,7 @@ package com.diplom.tabletkaapp.parser
 
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.util.UrlStrings
+import models.Hospital
 import models.Medicine
 import org.jsoup.Jsoup
 import org.jsoup.select.Elements
@@ -10,7 +11,7 @@ import java.util.UUID
 object MedicineParser: ITabletkaHealthParser()  {
     override fun parsePageFromName(name: String, regionId: Int, page: Int): MutableList<AbstractModel>{
         val pagedUrl = "${name}${UrlStrings.PAGE_CONDITION}${page}"
-        return PharmacyParser.parseFromName(pagedUrl, regionId)
+        return parseFromName(pagedUrl, regionId)
     }
     override fun parseFromName(name: String, regionId: Int): MutableList<AbstractModel>{
         val doc = Jsoup.connect("${UrlStrings.REQUEST_URL}${name}" +

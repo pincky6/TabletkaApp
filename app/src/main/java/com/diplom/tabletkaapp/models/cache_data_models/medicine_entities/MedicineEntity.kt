@@ -3,9 +3,8 @@ package com.diplom.tabletkaapp.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.diplom.tabletkaapp.models.cache_data_models.medicine_entities.PriceRangeConverter
+import com.diplom.tabletkaapp.models.cache_data_models.converters.PriceRangeConverter
 
 @Entity(tableName = "medicine")
 data class MedicineEntity(

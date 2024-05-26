@@ -49,7 +49,7 @@ class DashboardFragment : Fragment() {
             appDatabase = Room.databaseBuilder(
                 it.applicationContext,
                 AppDatabase::class.java,
-                "cache2"
+                "cache3"
             ).build()
 
         }
