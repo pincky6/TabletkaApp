@@ -28,9 +28,9 @@ class ContentFragment: Fragment() {
         val navController =  Navigation.findNavController(requireActivity(), R.id.content_navigation)
         NavigationUI.setupWithNavController(binding.navView, navController)
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (destination.id == R.id.navigation_dashboard ||
-                destination.id == R.id.navigation_search ||
-                destination.id == R.id.navigation_notifications) {
+            if (destination.id == R.id.navigation_main_menu ||
+                destination.id == R.id.navigation_wish_list ||
+                destination.id == R.id.navigation_profile) {
                     binding.navView.setVisibility(View.VISIBLE)
                     return@addOnDestinationChangedListener
             }

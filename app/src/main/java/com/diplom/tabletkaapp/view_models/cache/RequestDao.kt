@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RequestDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRequest(request: RequestEntity)
+    suspend fun insertRequest(request: RequestEntity): Long
 
     @Update
     suspend fun updateRequest(request: RequestEntity)

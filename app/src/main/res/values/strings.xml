@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">TabletkaApp</string>
 
-    <string name="title_home">Лекарства</string>
-    <string name="title_dashboard">Избранное</string>
-    <string name="title_notifications">Профиль</string>
+    <string name="title_main_menu">Главное</string>
+    <string name="title_wish_list">Избранное</string>
+    <string name="title_profile">Профиль</string>
 
     <string name="sign_in_text">Войти</string>
     <string name="sign_up_text">Зарегистрироваться</string>
