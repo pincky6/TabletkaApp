@@ -4,21 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import androidx.navigation.Navigation.findNavController
-import androidx.room.Room
 import com.diplom.tabletkaapp.R
+import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.parser.MedicineParser
 import com.diplom.tabletkaapp.util.CacheMedicineConverter
-import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.cache.MedicineCacher
-import com.diplom.tabletkaapp.view_models.list.adapters.AbstractAdapter
 import com.diplom.tabletkaapp.view_models.list.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.views.lists.AbstractModelList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import models.Medicine
 
 class MedicineModelList:
     AbstractModelList() {
@@ -28,32 +26,21 @@ class MedicineModelList:
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
+        initGetFilter(false)
 
-        binding.updateButton.visibility = View.GONE
+        hideUselessUI()
+
         val query = arguments?.getString("query") ?: ""
         val requestId = arguments?.getInt("requestId")?.toLong() ?: 0
         val regionId = arguments?.getInt("regionId") ?: 0
         CoroutineScope(Dispatchers.IO).launch {
             val medicineEntities = model.database.medicineDao().getMedicineByRecordId(requestId)
-            withContext(Dispatchers.Main){
-                model.medicineList = CacheMedicineConverter.fromEntityListToModelList(medicineEntities)
-                initRecyclerView(MedicineAdapter(model.medicineList))
-            }
+            initRecyclerViewWithMainContext(CacheMedicineConverter.fromEntityListToModelList(medicineEntities))
+
             val medicineList = MedicineParser.parseFromName(query, regionId)
-            if(!MedicineCacher.isValidData(model.database, medicineList)){
-                MedicineCacher.deleteById(model.database, requestId)
-                MedicineCacher.addMedicineList(model.database, medicineList, requestId)
-                withContext(Dispatchers.Main){
-                    model.medicineList = medicineList
-                    initRecyclerView(MedicineAdapter(medicineList))
-                }
-            } else if(medicineEntities.isEmpty()){
-                MedicineCacher.addMedicineList(model.database, medicineList, requestId)
-                withContext(Dispatchers.Main){
-                    model.medicineList = medicineList
-                    initRecyclerView(MedicineAdapter(medicineList))
-                }
-            }
+            MedicineCacher.validateMedicineDatabase(model.database, requestId,
+                                                    medicineList, medicineEntities)
+            initRecyclerViewWithMainContext(medicineList)
         }
         binding.filterButton.text = context?.getString(R.string.medicine_filter_and_sort_button)
         initFilterButton()
@@ -64,16 +51,19 @@ class MedicineModelList:
         initFilterButton {
             findNavController(binding.root).navigate(
                 MedicineModelListDirections.showListFilterDialogFragment(false,
-                    model.listFilterViewModel.minPrice.toFloat(),
-                    model.listFilterViewModel.minPrice.toFloat(),
-                    model.listFilterViewModel.sortMask)
+                    model.listFilter.minPrice.toFloat(),
+                    model.listFilter.minPrice.toFloat(),
+                    model.listFilter.sortMask)
             )
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun hideUselessUI(){
+        binding.updateButton.visibility = View.GONE
+        binding.medicineInfo.visibility = View.GONE
+    }
 }

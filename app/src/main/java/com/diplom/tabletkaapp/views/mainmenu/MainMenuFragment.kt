@@ -26,6 +26,7 @@ import androidx.room.Room
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentMainMenuBinding
 import com.diplom.tabletkaapp.models.cache_data_models.RequestEntity
+import com.diplom.tabletkaapp.util.DatabaseInfo
 import com.diplom.tabletkaapp.util.UrlStrings
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.cache.RequestDao
@@ -51,7 +52,7 @@ class MainMenuFragment : Fragment() {
             model.database = Room.databaseBuilder(
                 it.applicationContext,
                 AppDatabase::class.java,
-                "cache4"
+                DatabaseInfo.DATABASE_NAME
             ).build()
 
         }

@@ -3,7 +3,6 @@ package models
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.util.UrlStrings
 
-
 data class Medicine(
     override val id: String,
     override var wish: Boolean,

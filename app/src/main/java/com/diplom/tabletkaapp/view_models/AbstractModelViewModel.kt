@@ -7,6 +7,6 @@ import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 
 class AbstractModelViewModel: ViewModel() {
     lateinit var database: AppDatabase
-    lateinit var medicineList: MutableList<AbstractModel>
-    val listFilterViewModel = ListFilterViewModel()
+    var modelList: MutableList<AbstractModel> = mutableListOf()
+    val listFilter = ListFilterViewModel()
 }

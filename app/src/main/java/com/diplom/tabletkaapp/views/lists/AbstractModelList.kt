@@ -13,29 +13,36 @@ import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.room.Room
 import com.diplom.tabletkaapp.R
+import com.diplom.tabletkaapp.databinding.FragmentHospitalListBinding
 import com.diplom.tabletkaapp.databinding.FragmentListBinding
+import com.diplom.tabletkaapp.models.AbstractModel
+import com.diplom.tabletkaapp.ui.search.filter.ListFilterDialogFragment
+import com.diplom.tabletkaapp.util.DatabaseInfo
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.list.adapters.AbstractAdapter
+import com.diplom.tabletkaapp.view_models.list.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.views.lists.simple_lists.AbstractModelViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import models.Medicine
 
 abstract class AbstractModelList: Fragment() {
-    private var binding_: FragmentListBinding? = null
+    private var binding_: FragmentHospitalListBinding? = null
     val binding get() = binding_!!
 
-    lateinit var model: AbstractModelViewModel
+    var model: AbstractModelViewModel = AbstractModelViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding_ = FragmentListBinding.inflate(inflater, container, false)
-        model = AbstractModelViewModel()
+        binding_ = FragmentHospitalListBinding.inflate(inflater, container, false)
         context?.let {
             model.database = Room.databaseBuilder(
-                it.applicationContext,
+                requireContext().applicationContext,
                 AppDatabase::class.java,
-                "cache4"
+                DatabaseInfo.DATABASE_NAME
             ).build()
 
         }
@@ -52,7 +59,6 @@ abstract class AbstractModelList: Fragment() {
         super.onDestroyView()
         binding_ = null
     }
-
     protected fun initRecyclerView(adapter: RecyclerView.Adapter<ViewHolder>){
         if (binding_ == null) return
         binding.recyclerView.layoutManager = LinearLayoutManager(context, VERTICAL, false)
@@ -82,15 +88,37 @@ abstract class AbstractModelList: Fragment() {
                 return false
             }
             override fun onQueryTextChange(newText: String): Boolean {
-                model.listFilterViewModel.title = newText
-                val list = model.listFilterViewModel.filterByTitle(model.medicineList)
+                if(binding_ == null || binding.recyclerView.adapter == null) return false
+                model.listFilter.title = newText
+                val list = model.listFilter.filterByTitle(model.modelList)
                 (binding.recyclerView.adapter as AbstractAdapter).resetList(list)
                 updateUI()
                 return false
             }
         })
     }
+    protected fun initGetFilter(listType: Boolean) {
+        getParentFragmentManager().setFragmentResultListener(
+            ListFilterDialogFragment.LIST_SETTINGS_KEY_ADD, getViewLifecycleOwner()
+        ) { _: String?, result: Bundle ->
+            model.listFilter.sortMask = result.getInt("sortMask")
+            model.listFilter.minPrice = result.getDouble("minPrice")
+            model.listFilter.maxPrice = result.getDouble("maxPrice")
+            val list = model.listFilter.filter(model.modelList, listType)
+            list?.let {
+                val lst = model.listFilter.sort(model.listFilter.filter(it, listType), listType)
+                (binding.recyclerView.adapter as AbstractAdapter).resetList(lst)
+                updateUI()
+            }
+        }
+    }
 
+    protected suspend fun initRecyclerViewWithMainContext(medicineList: MutableList<AbstractModel>){
+        withContext(Dispatchers.Main){
+            model.modelList = medicineList
+            initRecyclerView(MedicineAdapter(model.modelList))
+        }
+    }
 
     public fun updateUI(){
         binding.recyclerView.adapter?.notifyDataSetChanged()

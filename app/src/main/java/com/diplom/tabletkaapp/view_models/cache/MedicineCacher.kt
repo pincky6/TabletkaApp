@@ -45,4 +45,18 @@ object MedicineCacher {
         return true
     }
 
+    suspend fun validateMedicineDatabase(
+        appDatabase: AppDatabase, requestId: Long,
+        medicineList: MutableList<AbstractModel>,
+        medicineEntities: List<MedicineEntity>
+    ){
+        if(!isValidData(appDatabase, medicineList)){
+            deleteById(appDatabase, requestId)
+            addMedicineList(appDatabase, medicineList, requestId)
+
+        } else if(medicineEntities.isEmpty()){
+            addMedicineList(appDatabase, medicineList, requestId)
+        }
+    }
+
 }
