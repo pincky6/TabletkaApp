@@ -84,7 +84,8 @@ abstract class AbstractModelList: Fragment() {
             override fun onQueryTextChange(newText: String): Boolean {
                 model.listFilterViewModel.title = newText
                 val list = model.listFilterViewModel.filterByTitle(model.medicineList)
-                (binding.recyclerView.adapter as AbstractAdapter).setList(list)
+                (binding.recyclerView.adapter as AbstractAdapter).resetList(list)
+                updateUI()
                 return false
             }
         })

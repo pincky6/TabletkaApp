@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.diplom.tabletkaapp.models.AbstractModel
 
-class HospitalAdapter(override var list: MutableList<AbstractModel>): AbstractAdapter(list) {
+class HospitalAdapter(override var list: MutableList<AbstractModel>?): AbstractAdapter(list) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         TODO("Not yet implemented")
     }
