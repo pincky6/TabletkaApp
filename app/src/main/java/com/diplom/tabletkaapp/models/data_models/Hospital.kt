@@ -5,10 +5,10 @@ import java.util.Date
 
 data class Hospital(
     override val id: String, override var wish: Boolean,
-    val name: String, val hospitalReference: String,
+    override val name: String, val hospitalReference: String,
     val latitude: Double, val longitude: Double,
     val address: String, val phone: String,
     val expirationDates: MutableList<Date>,
     val packagesNumber: MutableList<Int>,
     val prices: MutableList<Double>
-): AbstractModel(id, wish)
+): AbstractModel(id, wish, name)

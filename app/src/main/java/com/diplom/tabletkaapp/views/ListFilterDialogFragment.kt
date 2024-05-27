@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.fragment.app.DialogFragment
 import com.diplom.tabletkaapp.databinding.FragmentListViewSettingsBinding
-import org.osmdroid.util.GeoPoint
+//import org.osmdroid.util.GeoPoint
 
 class ListFilterDialogFragment: DialogFragment() {
     var _binding: FragmentListViewSettingsBinding? = null
@@ -25,7 +25,7 @@ class ListFilterDialogFragment: DialogFragment() {
     ): View {
         _binding = FragmentListViewSettingsBinding.inflate(inflater, container, false)
         val showDistanceSort = arguments?.getBoolean("showDistanceSort")!!
-        listSettings.userGeoPoint = (arguments?.getSerializable("userGeoPoint") as GeoPoint?)!!
+        //listSettings.userGeoPoint = (arguments?.getSerializable("userGeoPoint") as GeoPoint?)!!
         listSettings.sortMask = arguments?.getInt("sortMask")!!
         listSettings.minPrice = arguments?.getDouble("min_price")!!
         listSettings.maxPrice = arguments?.getDouble("max_price")!!

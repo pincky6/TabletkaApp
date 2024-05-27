@@ -79,6 +79,9 @@
         <action
             android:id="@+id/showInfoFragment"
             app:destination="@id/infoFragment" />
+        <action
+            android:id="@+id/showListFilterDialogFragment"
+            app:destination="@id/listFilterDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
@@ -88,4 +91,21 @@
             android:name="info"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/listFilterDialogFragment"
+        android:name="com.diplom.tabletkaapp.ui.search.filter.ListFilterDialogFragment"
+        android:label="ListFilterDialogFragment" >
+        <argument
+            android:name="showDistanceSort"
+            app:argType="boolean" />
+        <argument
+            android:name="minPrice"
+            app:argType="float" />
+        <argument
+            android:name="maxPrice"
+            app:argType="float" />
+        <argument
+            android:name="sortMask"
+            app:argType="integer" />
+    </dialog>
 </navigation>

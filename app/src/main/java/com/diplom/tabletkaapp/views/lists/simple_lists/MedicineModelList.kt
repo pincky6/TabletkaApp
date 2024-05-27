@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation.findNavController
 import androidx.room.Room
+import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.parser.MedicineParser
 import com.diplom.tabletkaapp.util.CacheMedicineConverter
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
@@ -35,7 +37,6 @@ class MedicineModelList:
             ).build()
 
         }
-
         binding.updateButton.visibility = View.GONE
         val query = arguments?.getString("query") ?: ""
         val requestId = arguments?.getInt("requestId")?.toLong() ?: 0
@@ -43,26 +44,39 @@ class MedicineModelList:
         CoroutineScope(Dispatchers.IO).launch {
             val medicineEntities = model.database.medicineDao().getMedicineByRecordId(requestId)
             withContext(Dispatchers.Main){
-                initRecyclerView(MedicineAdapter(CacheMedicineConverter.fromEntityListToModelList(medicineEntities)))
+                model.medicineList = CacheMedicineConverter.fromEntityListToModelList(medicineEntities)
+                initRecyclerView(MedicineAdapter(model.medicineList))
             }
             val medicineList = MedicineParser.parseFromName(query, regionId)
             if(!MedicineCacher.isValidData(model.database, medicineList)){
                 MedicineCacher.deleteById(model.database, requestId)
                 MedicineCacher.addMedicineList(model.database, medicineList, requestId)
                 withContext(Dispatchers.Main){
+                    model.medicineList = medicineList
                     initRecyclerView(MedicineAdapter(medicineList))
                 }
             } else if(medicineEntities.isEmpty()){
                 MedicineCacher.addMedicineList(model.database, medicineList, requestId)
                 withContext(Dispatchers.Main){
+                    model.medicineList = medicineList
                     initRecyclerView(MedicineAdapter(medicineList))
                 }
             }
         }
-        initFilterButton {
-
-        }
+        binding.filterButton.text = context?.getString(R.string.medicine_filter_and_sort_button)
+        initFilterButton()
         return binding.root
+    }
+
+    private fun initFilterButton(){
+        initFilterButton {
+            findNavController(binding.root).navigate(
+                MedicineModelListDirections.showListFilterDialogFragment(false,
+                    model.listFilterViewModel.minPrice.toFloat(),
+                    model.listFilterViewModel.minPrice.toFloat(),
+                    model.listFilterViewModel.sortMask)
+            )
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

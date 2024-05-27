@@ -1,4 +1,5 @@
 package com.diplom.tabletkaapp.models
 
-abstract class AbstractModel(open val id: String, open var wish: Boolean) {
+abstract class AbstractModel(open val id: String, open var wish: Boolean,
+                             open val name: String) {
 }

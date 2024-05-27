@@ -7,7 +7,7 @@ import com.diplom.tabletkaapp.util.UrlStrings
 data class Medicine(
     override val id: String,
     override var wish: Boolean,
-    val name: String,
+    override val name: String,
     val medicineReference: String,
     val compound: String,
     val compoundReference: String,
@@ -18,7 +18,7 @@ data class Medicine(
     val country: String,
     val priceRange: MutableList<Double>,
     val hospitalCount: Int
-) : AbstractModel(id, wish) {
+) : AbstractModel(id, wish, name) {
     override fun toString(): String {
         var medicineInfo = "Имя: " + name + "\n" +
                 "Ссылка на лекарство: " + "${UrlStrings.REQUEST_URL}${medicineReference}" + "\n" +

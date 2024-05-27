@@ -25,9 +25,9 @@
     <string name="enter_string">Вход</string>
 
     <string name="medicine_search_hint">Введите название лекарства</string>
-    <string name="medicine_filter_and_sort_button">Фильтры и сортировка</string>
+    <string name="medicine_filter_and_sort_button">Сортировка</string>
     <string name="hospital_search_hint">Введите название аптеки</string>
-    <string name="hospital_filter_and_sort_button">Сортировка</string>
+    <string name="hospital_filter_and_sort_button">Фильтры и сортировка</string>
 
     <string name="unknown">Неизвестно</string>
 </resources>
