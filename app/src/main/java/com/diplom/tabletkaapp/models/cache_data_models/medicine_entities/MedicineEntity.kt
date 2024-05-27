@@ -10,6 +10,7 @@ import com.diplom.tabletkaapp.models.cache_data_models.converters.PriceRangeConv
 data class MedicineEntity(
     @PrimaryKey
     val id: String,
+    val wish: Boolean,
     val name: String,
     @ColumnInfo(name = "medicine_reference")
     val medicineReference: String,

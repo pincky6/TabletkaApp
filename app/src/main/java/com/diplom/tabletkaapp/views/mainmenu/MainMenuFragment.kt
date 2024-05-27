@@ -51,7 +51,7 @@ class MainMenuFragment : Fragment() {
             model.database = Room.databaseBuilder(
                 it.applicationContext,
                 AppDatabase::class.java,
-                "cache3"
+                "cache4"
             ).build()
 
         }

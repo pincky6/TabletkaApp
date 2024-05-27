@@ -16,7 +16,7 @@ import com.diplom.tabletkaapp.view_models.cache.pharmacy_daos.HospitalDao
     MedicineEntity::class,
     HospitalEntity::class,
     RequestEntity::class
-], version = 3)
+], version = 4)
 @TypeConverters(PriceRangeConverter::class,
                 ExpirationDatesConverter::class,
                 PackagesNumberConverter::class)

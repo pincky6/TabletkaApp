@@ -12,6 +12,7 @@ import java.util.Date
 data class HospitalEntity(
     @PrimaryKey
     val id: String,
+    val wish: Boolean,
     val name: String,
     val hospitalReference: String,
     val latitude: Double, val longitude: Double,

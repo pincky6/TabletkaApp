@@ -7,7 +7,7 @@ import models.Medicine
 object MedicineCacher {
     fun add(appDatabase: AppDatabase, medicine: Medicine, requestId: Long){
         val medicineDao = appDatabase.medicineDao()
-        val medicineEntity = MedicineEntity(medicine.id, medicine.name, medicine.medicineReference,
+        val medicineEntity = MedicineEntity(medicine.id, medicine.wish, medicine.name, medicine.medicineReference,
             medicine.compound, medicine.compoundReference, medicine.recipe, medicine.recipeInfo, medicine.companyName,
             medicine.companyReference, medicine.country, medicine.priceRange, medicine.hospitalCount, requestId)
         medicineDao.insertMedicine(medicineEntity)

@@ -80,6 +80,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="infoFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="267" />
+                            <option name="y" value="-603" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="loginFragment">
                     <value>
                       <LayoutPositions>
@@ -135,6 +147,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="showLoginFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="showMedicineModelList">
                               <value>
                                 <LayoutPositions />
                               </value>

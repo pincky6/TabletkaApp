@@ -15,7 +15,7 @@ interface MedicineDao {
     @Query("SELECT * FROM medicine WHERE id = :id")
     suspend fun getMedicineById(id: String): MedicineEntity
     @Query("SELECT * FROM medicine WHERE record_id = :record_id")
-    suspend fun getMedicineByRecordId(record_id: Int): List<MedicineEntity>
+    suspend fun getMedicineByRecordId(record_id: Long): List<MedicineEntity>
     @Query("SELECT * FROM medicine")
     suspend fun getAllMedicines(): List<MedicineEntity>
 }

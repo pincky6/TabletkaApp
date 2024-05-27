@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:background="@drawable/grid_border">
 
     <TextView
         android:id="@+id/name"
@@ -26,7 +27,7 @@
         android:text="@string/unknown"
         android:textColor="@color/green"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/copy_medicine_info_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/company_name" />
 
@@ -37,7 +38,7 @@
         android:text="@string/unknown"
         android:textColor="@color/green"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/copy_medicine_info_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe" />
 
@@ -55,7 +56,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/unknown"
-        app:layout_constraintEnd_toStartOf="@+id/copy_medicine_info_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/compound" />
 
@@ -69,21 +70,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/medicine_copy_info_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/wish_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_info"
         app:srcCompat="@android:drawable/btn_star_big_off" />
 
     <ImageButton
-        android:id="@+id/copy_medicine_info_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/info_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/copy_button"
         app:layout_constraintTop_toBottomOf="@+id/recipe_info"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@android:drawable/btn_star_big_off"
-        tools:layout_editor_absoluteX="256dp" />
+        app:srcCompat="@drawable/baseline_info_24" />
+
+    <ImageButton
+        android:id="@+id/copy_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/wish_button"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_info"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/baseline_content_copy_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

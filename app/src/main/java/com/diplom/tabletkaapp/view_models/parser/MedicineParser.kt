@@ -79,7 +79,7 @@ object MedicineParser: ITabletkaHealthParser()  {
         for(i in 0 until size){
             medicineList.add(
                 Medicine(
-                    i.toString(),
+                    i.toString(), false,
                     names[i], medicinesReference[i],
                     compounds[i], compoundReference[i],
                     recipes[i], recipesInfo[i],

@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.room.Room
 import com.diplom.tabletkaapp.parser.MedicineParser
+import com.diplom.tabletkaapp.util.CacheMedicineConverter
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.cache.MedicineCacher
+import com.diplom.tabletkaapp.view_models.list.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.views.lists.AbstractModelList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MedicineModelList:
     AbstractModelList() {
@@ -28,7 +31,7 @@ class MedicineModelList:
             model.database = Room.databaseBuilder(
                 it.applicationContext,
                 AppDatabase::class.java,
-                "cache3"
+                "cache4"
             ).build()
 
         }
@@ -38,11 +41,23 @@ class MedicineModelList:
         val requestId = arguments?.getInt("requestId")?.toLong() ?: 0
         val regionId = arguments?.getInt("regionId") ?: 0
         CoroutineScope(Dispatchers.IO).launch {
+            val medicineEntities = model.database.medicineDao().getMedicineByRecordId(requestId)
+            withContext(Dispatchers.Main){
+                initRecyclerView(MedicineAdapter(CacheMedicineConverter.fromEntityListToModelList(medicineEntities)))
+            }
             val medicineList = MedicineParser.parseFromName(query, regionId)
             if(!MedicineCacher.isValidData(model.database, medicineList)){
                 MedicineCacher.deleteById(model.database, requestId)
+                MedicineCacher.addMedicineList(model.database, medicineList, requestId)
+                withContext(Dispatchers.Main){
+                    initRecyclerView(MedicineAdapter(medicineList))
+                }
+            } else if(medicineEntities.isEmpty()){
+                MedicineCacher.addMedicineList(model.database, medicineList, requestId)
+                withContext(Dispatchers.Main){
+                    initRecyclerView(MedicineAdapter(medicineList))
+                }
             }
-            MedicineCacher.addMedicineList(model.database, medicineList, requestId)
         }
         initFilterButton {
 

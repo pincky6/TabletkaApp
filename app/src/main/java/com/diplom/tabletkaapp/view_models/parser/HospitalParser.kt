@@ -49,7 +49,7 @@ object HospitalParser: ITabletkaHealthParser() {
         for(i in 0 until names.size){
             pharmacyList.add(
                 Hospital(
-                    i.toString(),
+                    i.toString(), false,
                     names[i], hospitalsReference[i],
                     hospitalsCoordinates[i][0], hospitalsCoordinates[i][1],
                     addresses[i], phones[i],

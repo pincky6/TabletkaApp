@@ -76,5 +76,16 @@
         <argument
             android:name="regionId"
             app:argType="integer" />
+        <action
+            android:id="@+id/showInfoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.diplom.tabletkaapp.views.InfoFragment"
+        android:label="InfoFragment" >
+        <argument
+            android:name="info"
+            app:argType="string" />
     </fragment>
 </navigation>

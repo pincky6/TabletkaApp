@@ -36,14 +36,17 @@ abstract class AbstractModelList: Fragment() {
     }
 
     protected fun initRecyclerView(adapter: RecyclerView.Adapter<ViewHolder>){
+        if (binding_ == null) return
         binding.recyclerView.layoutManager = LinearLayoutManager(context, VERTICAL, false)
         binding.recyclerView.adapter = adapter
     }
     protected fun initUpdateButton(update: () -> Unit){
+        if (binding_ == null) return
         binding.updateButton.setOnClickListener{
             update()
         }
     }protected fun initFilterButton(filter: () -> Unit){
+        if (binding_ == null) return
         binding.filterButton.setOnClickListener{
             filter()
         }
