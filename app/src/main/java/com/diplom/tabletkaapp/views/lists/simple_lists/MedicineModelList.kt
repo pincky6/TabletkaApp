@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.navigation.Navigation.findNavController
 import androidx.room.Room
 import com.diplom.tabletkaapp.R
@@ -11,6 +12,7 @@ import com.diplom.tabletkaapp.parser.MedicineParser
 import com.diplom.tabletkaapp.util.CacheMedicineConverter
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.cache.MedicineCacher
+import com.diplom.tabletkaapp.view_models.list.adapters.AbstractAdapter
 import com.diplom.tabletkaapp.view_models.list.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.views.lists.AbstractModelList
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +22,6 @@ import kotlinx.coroutines.withContext
 
 class MedicineModelList:
     AbstractModelList() {
-        lateinit var model: MedicineModelViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,15 +29,6 @@ class MedicineModelList:
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        model = MedicineModelViewModel()
-        context?.let {
-            model.database = Room.databaseBuilder(
-                it.applicationContext,
-                AppDatabase::class.java,
-                "cache4"
-            ).build()
-
-        }
         binding.updateButton.visibility = View.GONE
         val query = arguments?.getString("query") ?: ""
         val requestId = arguments?.getInt("requestId")?.toLong() ?: 0
@@ -78,6 +70,7 @@ class MedicineModelList:
             )
         }
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

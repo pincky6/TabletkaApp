@@ -18,6 +18,8 @@
     <string name="search_medicine_hint">Введите лекарство</string>
     <string name="select_region_string">Выберите регион</string>
 
+    
+
 
     <string name="wish_row_string">Избранное</string>
     <string name="pharmacy_string">Аптеки</string>
