@@ -15,9 +15,6 @@ import models.Medicine
 class MedicineHolder(
     val binding: ItemMedicineBinding
 ): RecyclerView.ViewHolder(binding.root) {
-//    fun bind(medicine: Medicine,
-//             onMedicineClicked: ((()->Unit)?),
-//             onWishListButtonClicked: (()->Unit)?){
     fun bind(medicine: Medicine){
         binding.name.text = medicine.name
         binding.compound.text = medicine.compound
@@ -31,6 +28,12 @@ class MedicineHolder(
         } else {
             binding.price.text = "Нет в продаже"
         }
+
+        initWishButton(medicine)
+        initCopyButton(medicine)
+        initInfoButton(medicine)
+    }
+    private fun initWishButton(medicine: Medicine){
         binding.wishButton.setImageResource(
             if(medicine.wish) {
                 android.R.drawable.btn_star_big_on
@@ -47,15 +50,19 @@ class MedicineHolder(
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
         }
-        binding.infoButton.setOnClickListener{
-            findNavController(binding.root).navigate(
-                MedicineModelListDirections.showInfoFragment(medicine.toString())
-            )
-        }
+    }
+    private fun initCopyButton(medicine: Medicine){
         binding.copyButton.setOnClickListener{
             val clipboard = binding.root.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("Медикамент", medicine.toString())
             clipboard.setPrimaryClip(clip)
+        }
+    }
+    private fun initInfoButton(medicine: Medicine){
+        binding.infoButton.setOnClickListener{
+            findNavController(binding.root).navigate(
+                MedicineModelListDirections.showInfoFragment(medicine.toString())
+            )
         }
     }
 }
