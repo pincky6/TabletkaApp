@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.parser.MedicineParser
+import com.diplom.tabletkaapp.util.CacheHospitalConverter
 import com.diplom.tabletkaapp.util.CacheMedicineConverter
 import com.diplom.tabletkaapp.view_models.HospitalModelListViewModel
+import com.diplom.tabletkaapp.view_models.cache.HospitalCacher
 import com.diplom.tabletkaapp.view_models.cache.MedicineCacher
+import com.diplom.tabletkaapp.view_models.list.adapters.HospitalAdapter
+import com.diplom.tabletkaapp.view_models.list.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.views.lists.AbstractModelList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,15 +37,17 @@ AbstractModelList() {
         val requestId = arguments?.getInt("requestId")?.toLong() ?: 0
         val regionId = arguments?.getInt("regionId") ?: 0
         hospitalModel.medicine = arguments?.getSerializable("medicine") as Medicine
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val medicineEntities = model.database.medicineDao().getMedicineByRecordId(requestId)
-//            initRecyclerViewWithMainContext(CacheMedicineConverter.fromEntityListToModelList(medicineEntities))
-//
-//            val medicineList = MedicineParser.parseFromName(query, regionId)
-//            MedicineCacher.validateMedicineDatabase(model.database, requestId,
-//                medicineList, medicineEntities)
-//            initRecyclerViewWithMainContext(medicineList)
-//        }
+        CoroutineScope(Dispatchers.IO).launch {
+            val hospitalEntities = model.database.hospitalDao().getHospitalsByRegionIdAndMedicineIdAndRecordId(regionId, hospitalModel.medicine.id.toLong(),
+                                                                                                               requestId)
+            val convertedList = CacheHospitalConverter.fromEntityListToModelList(hospitalEntities)
+            initRecyclerViewWithMainContext(MedicineAdapter(convertedList, query, regionId, requestId), convertedList)
+
+            val hospitalList = MedicineParser.parseFromName(query, regionId)
+            HospitalCacher.validateMedicineDatabase(model.database, regionId, hospitalModel.medicine.id.toLong(), requestId,
+                hospitalList, hospitalEntities)
+            initRecyclerViewWithMainContext(HospitalAdapter(hospitalList, query, regionId, hospitalModel.medicine.id.toLong(), hospitalList)
+        }
         binding.filterButton.text = context?.getString(R.string.medicine_filter_and_sort_button)
         initFilterButton()
         return binding.root

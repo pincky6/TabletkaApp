@@ -23,7 +23,7 @@ data class HospitalEntity(
     val packagesNumber: MutableList<Int>,
     @TypeConverters(PriceRangeConverter::class)
     val prices: MutableList<Double>,
-    val region: String,
+    val regionId: Int,
     val medicineId: Long,
     val recordId: Long
 )

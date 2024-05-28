@@ -19,9 +19,12 @@ interface HospitalDao {
     @Query("SELECT * FROM hospitals WHERE id = :id")
     suspend fun getMedicineById(id: String): HospitalEntity
 
-    @Query("SELECT * FROM hospitals WHERE region = :region")
-    suspend fun getMedicineByRegion(region: String): List<HospitalEntity>
+    @Query("SELECT * FROM hospitals WHERE regionId = :regionId")
+    suspend fun getMedicineByRegion(regionId: Int): List<HospitalEntity>
 
     @Query("SELECT * FROM hospitals")
     suspend fun getAllHospitals(): List<HospitalEntity>
+
+    @Query("SELECT * FROM hospitals WHERE regionId = :regionId AND medicineId = :medicineId AND recordId = :recordId")
+    suspend fun getHospitalsByRegionIdAndMedicineIdAndRecordId(regionId: Int, medicineId: Long, recordId: Long): List<HospitalEntity>
 }

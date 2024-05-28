@@ -32,6 +32,7 @@ class MedicineModelList:
 
         val query = arguments?.getString("query") ?: ""
         val requestId = arguments?.getLong("requestId") ?: 0
+
         val regionId = arguments?.getInt("regionId") ?: 0
         CoroutineScope(Dispatchers.IO).launch {
             val medicineEntities = model.database.medicineDao().getMedicineByRecordId(requestId)
