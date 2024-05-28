@@ -48,6 +48,7 @@ class HospitalAdapter(override var list: MutableList<AbstractModel>?, val appDat
     }
 
     private fun downloadPage(){
+        if(maxPage * 20 != list?.size) return
         maxPage++
         list?.let {
             CoroutineScope(Dispatchers.IO).launch {

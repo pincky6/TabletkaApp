@@ -1,5 +1,8 @@
 package com.diplom.tabletkaapp.views.lists.simple_lists
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,15 +42,15 @@ AbstractModelList() {
         val requestId = arguments?.getInt("requestId")?.toLong() ?: 0
         val regionId = arguments?.getInt("regionId") ?: 0
         hospitalModel.medicine = arguments?.getSerializable("medicine") as Medicine
+        initMedicineInfo()
         CoroutineScope(Dispatchers.IO).launch {
             val hospitalEntities = model.database.hospitalDao().getHospitalsByRegionIdAndMedicineIdAndRecordId(regionId, hospitalModel.medicine.id.toLong(),
                                                                                                                requestId)
-            var maxPage = model.database.hospitalDao().getMaxPage()
+            var maxPage = model.database.hospitalDao().getMaxPage(requestId, regionId, hospitalModel.medicine.id.toLong())
             val convertedList = CacheHospitalConverter.fromEntityListToModelList(hospitalEntities)
             initRecyclerViewWithMainContext(HospitalAdapter(convertedList, model.database, maxPage, query, regionId,
                 hospitalModel.medicine,
                 hospitalModel.medicine.id.toLong(), requestId), convertedList)
-
             val hospitalList = mutableListOf<AbstractModel>()
             if(maxPage == 0) maxPage++
             for(i in 0 until maxPage) {
@@ -87,6 +90,19 @@ AbstractModelList() {
 
     private fun hideUselessUI(){
         binding.updateButton.visibility = View.GONE
-        binding.medicineInfo.visibility = View.GONE
+    }
+
+    private fun initMedicineInfo(){
+        binding.medicineTitle.text = hospitalModel.medicine.name
+        binding.copyButton.setOnClickListener{
+            val clipboard = binding.root.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Медикамент", hospitalModel.medicine.toString())
+            clipboard.setPrimaryClip(clip)
+        }
+        binding.infoButton.setOnClickListener{
+            Navigation.findNavController(binding.root).navigate(
+                MedicineModelListDirections.showInfoFragment(hospitalModel.medicine.toString())
+            )
+        }
     }
 }

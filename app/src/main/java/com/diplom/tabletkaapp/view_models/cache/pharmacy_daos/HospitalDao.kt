@@ -27,6 +27,6 @@ interface HospitalDao {
 
     @Query("SELECT * FROM hospitals WHERE regionId = :regionId AND medicineId = :medicineId AND recordId = :recordId")
     suspend fun getHospitalsByRegionIdAndMedicineIdAndRecordId(regionId: Int, medicineId: Long, recordId: Long): List<HospitalEntity>
-    @Query("SELECT MAX(pageId) FROM hospitals")
-    suspend fun getMaxPage(): Int
+    @Query("SELECT MAX(pageId) FROM hospitals WHERE recordId = :requestId AND regionId = :regionId AND medicineId = :medicineId")
+    fun getMaxPage(requestId: Long, regionId: Int, medicineId: Long): Int
 }
