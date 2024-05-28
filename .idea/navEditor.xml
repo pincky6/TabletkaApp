@@ -96,7 +96,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="showListFilterDialogFragment">
+                            <entry key="showListFilterDialogFragmentHospital">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -114,6 +114,15 @@
                             <option name="x" value="424" />
                             <option name="y" value="-520" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="showListFilterDialogFragmentHospitalWish">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -194,7 +203,7 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="showListFilterDialogFragment">
+                            <entry key="showListFilterDialogFragmentMedicine">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -209,9 +218,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="116" />
-                            <option name="y" value="-508" />
+                            <option name="x" value="596" />
+                            <option name="y" value="-84" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="showListFilterDialogFragmentMedicineWish">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -247,9 +265,23 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
+                            <option name="x" value="508" />
+                            <option name="y" value="1376" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_navigation_profile_to_loginFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_navigation_profile_to_resetPasswordFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -265,12 +297,12 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_navigation_wish_list_to_hospitalWishListFragment">
+                            <entry key="showHospitalWishList">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_navigation_wish_list_to_medicineWishListFragment">
+                            <entry key="showMedicineWishList">
                               <value>
                                 <LayoutPositions />
                               </value>

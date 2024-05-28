@@ -48,4 +48,10 @@
 
     <string name="ok_button">Ок</string>
     <string name="cancel_button">Закрыть</string>
+
+    <string name="exit_button_text">Выйти из аккаунта</string>
+    <string name="delete_button_text">Удалить аккаунт</string>
+
+    <string name="settings_common">Общие настройки</string>
+
 </resources>

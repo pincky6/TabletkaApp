@@ -41,9 +41,15 @@
         app:destination="@id/registerFragment" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.diplom.tabletkaapp.views.search.HomeFragment"
-        android:label="@string/title_wish_list"
-        tools:layout="@layout/fragment_search" />
+        android:name="com.diplom.tabletkaapp.views.SettingsFragment"
+        android:label="@string/title_wish_list" >
+        <action
+            android:id="@+id/action_navigation_profile_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_main_menu"

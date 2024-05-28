@@ -13,6 +13,7 @@ import com.diplom.tabletkaapp.databinding.FragmentLoginBinding
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.authentication.OnFailrueSignListener
 import com.diplom.tabletkaapp.util.EditorsUtil
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment: Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -21,9 +22,11 @@ class LoginFragment: Fragment() {
         super.onStart()
         EditorsUtil.initTextWatchers(binding.gmailEditText, binding.passwordEditText)
         if (FirebaseSingInRepository.isUserExist && FirebaseSingInRepository.isVerified) {
-            findNavController(binding.root).navigate(
-                LoginFragmentDirections.showContentFragment()
-            )
+            FirebaseAuth.getInstance().currentUser?.let {
+                it.email?.let {
+                    binding.gmailEditText.setText(it)
+                }
+            }
         }
     }
     override fun onCreateView(
