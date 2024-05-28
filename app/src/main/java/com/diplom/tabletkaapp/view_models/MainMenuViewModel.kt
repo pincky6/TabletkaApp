@@ -19,12 +19,12 @@ class MainMenuViewModel : ViewModel() {
 
     var database: AppDatabase? = null
     var regionId: Int = -1
-    fun addRequestToDatabase(request: RequestEntity): Int{
-        var requestId = 0
+    fun addRequestToDatabase(request: RequestEntity): Long{
+        var requestId = 0L
         database?.let {
             val requestDao: RequestDao = it.requestDao()
             if(requestDao.getRequestsLikeRequest(request.request).isEmpty()) {
-                requestId = requestDao.insertRequest(request).toInt()
+                requestId = requestDao.insertRequest(request)
             }
         }
         return requestId

@@ -31,16 +31,17 @@ class MedicineModelList:
         hideUselessUI()
 
         val query = arguments?.getString("query") ?: ""
-        val requestId = arguments?.getInt("requestId")?.toLong() ?: 0
+        val requestId = arguments?.getLong("requestId") ?: 0
         val regionId = arguments?.getInt("regionId") ?: 0
         CoroutineScope(Dispatchers.IO).launch {
             val medicineEntities = model.database.medicineDao().getMedicineByRecordId(requestId)
-            initRecyclerViewWithMainContext(CacheMedicineConverter.fromEntityListToModelList(medicineEntities))
+            val convertedList = CacheMedicineConverter.fromEntityListToModelList(medicineEntities)
+            initRecyclerViewWithMainContext(MedicineAdapter(convertedList, query, regionId, requestId), convertedList)
 
             val medicineList = MedicineParser.parseFromName(query, regionId)
             MedicineCacher.validateMedicineDatabase(model.database, requestId,
                                                     medicineList, medicineEntities)
-            initRecyclerViewWithMainContext(medicineList)
+            initRecyclerViewWithMainContext(MedicineAdapter(medicineList, query, regionId, requestId), medicineList)
         }
         binding.filterButton.text = context?.getString(R.string.medicine_filter_and_sort_button)
         initFilterButton()

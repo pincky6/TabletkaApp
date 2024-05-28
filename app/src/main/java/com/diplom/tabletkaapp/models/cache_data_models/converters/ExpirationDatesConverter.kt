@@ -3,6 +3,9 @@ package com.diplom.tabletkaapp.models.cache_data_models.converters
 import androidx.room.TypeConverter
 import java.util.Date
 
+/**
+ * Класс для конвертации даты в строку и обратно в дату(преднгзначен для хранения списка дат в Room Database)
+ */
 class ExpirationDatesConverter {
 
     @TypeConverter

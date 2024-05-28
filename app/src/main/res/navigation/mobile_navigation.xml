@@ -72,7 +72,7 @@
             app:argType="string" />
         <argument
             android:name="requestId"
-            app:argType="integer" />
+            app:argType="long" />
         <argument
             android:name="regionId"
             app:argType="integer" />
@@ -83,7 +83,7 @@
             android:id="@+id/showListFilterDialogFragment"
             app:destination="@id/listFilterDialogFragment" />
         <action
-            android:id="@+id/action_medicineModelList_to_hospitalModelList"
+            android:id="@+id/showHospitalModelList"
             app:destination="@id/hospitalModelList" />
     </fragment>
     <fragment
@@ -116,21 +116,19 @@
         android:name="com.diplom.tabletkaapp.views.lists.simple_lists.HospitalModelList"
         android:label="HospitalModelList" >
         <action
-            android:id="@+id/action_hospitalModelList_to_infoFragment"
+            android:id="@+id/showInfoFragment"
             app:destination="@id/infoFragment" />
         <action
-            android:id="@+id/action_hospitalModelList_to_listFilterDialogFragment"
+            android:id="@+id/showListFilterDialogFragment"
             app:destination="@id/listFilterDialogFragment" />
         <argument
             android:name="query"
             app:argType="string" />
         <argument android:name="requestId"
-            app:argType="integer" />
+            app:argType="long" />
         <argument android:name="regionId"
             app:argType="integer" />
-        <argument android:name="medicineId"
-            app:argType="long" />
         <argument android:name="medicine"
-            app:argType="com.diplom.tabletkaapp.models.data_models.Medicine"/>
+            app:argType="models.Medicine"/>
     </fragment>
 </navigation>

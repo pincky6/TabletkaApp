@@ -85,13 +85,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-109" />
-                            <option name="y" value="-691" />
+                            <option name="x" value="988" />
+                            <option name="y" value="97" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_hospitalModelList_to_infoFragment">
+                            <entry key="showInfoFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="showListFilterDialogFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -106,8 +111,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="273" />
-                            <option name="y" value="-771" />
+                            <option name="x" value="1232" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -118,8 +123,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-302" />
-                            <option name="y" value="-338" />
+                            <option name="x" value="1232" />
+                            <option name="y" value="368" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -130,8 +135,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="580" />
-                            <option name="y" value="8" />
+                            <option name="x" value="744" />
+                            <option name="y" value="903" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -161,13 +166,13 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="96" />
-                            <option name="y" value="-308" />
+                            <option name="x" value="744" />
+                            <option name="y" value="346" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_medicineModelList_to_hospitalModelList">
+                            <entry key="showHospitalModelList">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -192,8 +197,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="12" />
+                            <option name="x" value="500" />
+                            <option name="y" value="860" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -218,8 +223,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-239" />
-                            <option name="y" value="401" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -230,8 +235,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="368" />
+                            <option name="x" value="256" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -242,8 +247,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="592" />
-                            <option name="y" value="334" />
+                            <option name="x" value="988" />
+                            <option name="y" value="589" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -254,8 +259,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="564" />
-                            <option name="y" value="-318" />
+                            <option name="x" value="988" />
+                            <option name="y" value="945" />
                           </Point>
                         </option>
                       </LayoutPositions>

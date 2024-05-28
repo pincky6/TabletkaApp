@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Query
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.ItemMedicineBinding
 import com.diplom.tabletkaapp.views.lists.simple_lists.MedicineModelListDirections
@@ -15,7 +16,8 @@ import models.Medicine
 class MedicineHolder(
     val binding: ItemMedicineBinding
 ): RecyclerView.ViewHolder(binding.root) {
-    fun bind(medicine: Medicine){
+    fun bind(medicine: Medicine, query: String,
+             regionId: Int, requestId: Long){
         binding.name.text = medicine.name
         binding.compound.text = medicine.compound
         binding.companyName.text = medicine.companyName
@@ -32,6 +34,11 @@ class MedicineHolder(
         initWishButton(medicine)
         initCopyButton(medicine)
         initInfoButton(medicine)
+        binding.root.setOnClickListener{
+            findNavController(binding.root).navigate(
+                MedicineModelListDirections.showHospitalModelList(query, requestId, regionId, medicine)
+            )
+        }
     }
     private fun initWishButton(medicine: Medicine){
         binding.wishButton.setImageResource(

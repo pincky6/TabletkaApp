@@ -82,6 +82,7 @@ class MainMenuFragment : Fragment() {
                     regions.add(0, allRegion)
                 }
                 withContext(Dispatchers.Main) {
+                    if(_binding == null) return@withContext
                     binding.regionsSpinner.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
                     binding.regionsSpinner.setPadding(0, 0, 50, 0)
                     binding.regionsSpinner.setPromptId(R.string.select_region_string)
@@ -149,7 +150,7 @@ class MainMenuFragment : Fragment() {
 
         })
     }
-    private fun navigateToMedicineList(query: String, requestId: Int) {
+    private fun navigateToMedicineList(query: String, requestId: Long) {
         findNavController(binding.root).navigate(
             MainMenuFragmentDirections.showMedicineModelList(query, requestId, model.regionId)
         )

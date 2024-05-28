@@ -76,18 +76,12 @@ object MedicineParser: ITabletkaHealthParser()  {
         val hospitalsCount = getHospitalsCount(table, "price", "capture")
         val size = names.size
         var medicineList: MutableList<AbstractModel> = arrayListOf()
-        for(i in 0 until size){
-            medicineList.add(
-                Medicine(
-                    i.toString(), false,
-                    names[i], medicinesReference[i],
-                    compounds[i], compoundReference[i],
-                    recipes[i], recipesInfo[i],
-                    companies[i], companiesReference[i],
-                    countries[i], prices[i], hospitalsCount[i])
-            )
-        }
-        return medicineList
+
+        return getMedicines(names, medicinesReference,
+                            compounds, compoundReference,
+                            recipes, recipesInfo,
+                            companies, companiesReference,
+                            countries, prices, hospitalsCount)
     }
     private fun getMedicinePriceInfo(
         table: Elements, priceClass: String
@@ -137,5 +131,40 @@ object MedicineParser: ITabletkaHealthParser()  {
             hospitalCount = hospitalInfo[1].toInt()
         }
         return listOf(hospitalCount).toMutableList()
+    }
+    private fun getMedicines(names: MutableList<String>, medicinesReferences: MutableList<String>,
+                            compounds: MutableList<String>, compoundReferences: MutableList<String>,
+                            recipes: MutableList<String>, recipesInfo: MutableList<String>,
+                            companies: MutableList<String>, companiesReferences: MutableList<String>,
+                            countries: MutableList<String>, prices: MutableList<MutableList<Double>>,
+                            hospitalsCount: MutableList<Int>): MutableList<AbstractModel>
+    {
+        val medicines = mutableListOf<AbstractModel>()
+        val size = mutableListOf(names.size, medicinesReferences.size,
+                                 compounds.size, compoundReferences.size,
+                                 recipes.size, recipesInfo.size,
+                                 companies.size, companiesReferences.size,
+                                 countries.size, prices.size,
+                                 hospitalsCount.size).maxOrNull() ?: 0
+        for(i in 0 until size)
+        {
+            val name = if(names.size <= i) "" else names[i]
+            val medicineReference = if(medicinesReferences.size <= i) "" else medicinesReferences[i]
+            val compound = if(compounds.size <= i) "" else compounds[i]
+            val compoundReference = if(compoundReferences.size <= i) "" else compoundReferences[i]
+            val recipe = if(recipes.size <= i) "" else recipes[i]
+            val recipeInfo = if(recipesInfo.size <= i) "" else recipesInfo[i]
+            val company = if(companies.size <= i) "" else companies[i]
+            val companyReference = if(companiesReferences.size <= i) "" else companiesReferences[i]
+            val country = if(countries.size <= i) "" else countries[i]
+            val price = if(prices.size <= i) mutableListOf() else prices[i]
+            val hospitalCount = if(hospitalsCount.size <= i) 0 else hospitalsCount[i]
+            medicines.add(Medicine(i.toString(), false,
+                                   name, medicineReference,
+                                   compound, compoundReference,
+                                   recipe, recipeInfo, company, companyReference,
+                                   country, price, hospitalCount))
+        }
+        return medicines
     }
 }

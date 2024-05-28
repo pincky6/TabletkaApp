@@ -46,18 +46,43 @@ object HospitalParser: ITabletkaHealthParser() {
         val packageNumber = parsePackageNumber(pricesInfo)
         val prices = parsePrice(pricesInfo)
         val pharmacyList: MutableList<AbstractModel> = arrayListOf()
-        for(i in 0 until names.size){
-            pharmacyList.add(
+
+        return getHospitals(names, hospitalsReference,
+                                hospitalsCoordinates,
+                                addresses, phones,
+                                expirationDates, packageNumber, prices)
+    }
+    private fun getHospitals(names: MutableList<String>, hospitalsReference: MutableList<String>,
+                             hospitalCoordinates: MutableList<MutableList<Double>>, addresses: MutableList<String>,
+                             phones: MutableList<String>, expirationDates: MutableList<MutableList<Date>>,
+                             packagesNumber: MutableList<MutableList<Int>>, prices: MutableList<MutableList<Double>>) : MutableList<AbstractModel>
+    {
+        val hospitals = mutableListOf<AbstractModel>()
+        val size = mutableListOf(names.size, hospitalsReference.size,
+                                 hospitalCoordinates.size, addresses.size,
+                                 phones.size, expirationDates.size,
+                                 packagesNumber.size, prices.size,
+                                 prices.size).maxOrNull() ?: 0
+        for(i in 0 until size){
+            val name = if(names.size <= i) "" else names[i]
+            val hospitalReference = if(hospitalsReference.size <= i) "" else hospitalsReference[i]
+            val hospitalCoordinate = if(hospitalCoordinates.size <= i) mutableListOf() else hospitalCoordinates[i]
+            val addressHospital = if(addresses.size <= i) "" else addresses[i]
+            val phone = if(phones.size <= i) "" else phones[i]
+            val expirationDate = if(expirationDates.size <= i) mutableListOf() else expirationDates[i]
+            val packageNum = if(packagesNumber.size <= i) mutableListOf() else packagesNumber[i]
+            val price = if(prices.size <= i) mutableListOf() else prices[i]
+            hospitals.add(
                 Hospital(
                     i.toString(), false,
-                    names[i], hospitalsReference[i],
-                    hospitalsCoordinates[i][0], hospitalsCoordinates[i][1],
-                    addresses[i], phones[i],
-                    expirationDates[i], packageNumber[i], prices[i]
-            )
+                    name, hospitalReference,
+                    hospitalCoordinate[0], hospitalCoordinate[1],
+                    addressHospital, phone,
+                    expirationDate, packageNum, price
+                )
             )
         }
-        return pharmacyList
+        return hospitals
     }
     private fun getHospitalCoordinates(hospitalReference: MutableList<String>): MutableList<MutableList<Double>>{
         val hospitalCoordinates: MutableList<MutableList<Double>> = arrayListOf()

@@ -2,6 +2,7 @@ package models
 
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.util.UrlStrings
+import java.io.Serializable
 
 data class Medicine(
     override val id: String,
@@ -17,7 +18,7 @@ data class Medicine(
     val country: String,
     val priceRange: MutableList<Double>,
     val hospitalCount: Int
-) : AbstractModel(id, wish, name) {
+) : AbstractModel(id, wish, name), Serializable {
     override fun toString(): String {
         var medicineInfo = "Имя: " + name + "\n" +
                 "Ссылка на лекарство: " + "${UrlStrings.REQUEST_URL}${medicineReference}" + "\n" +

@@ -113,10 +113,11 @@ abstract class AbstractModelList: Fragment() {
         }
     }
 
-    protected suspend fun initRecyclerViewWithMainContext(medicineList: MutableList<AbstractModel>){
+    protected suspend fun initRecyclerViewWithMainContext(adapter: AbstractAdapter, medicineList: MutableList<AbstractModel>){
         withContext(Dispatchers.Main){
             model.modelList = medicineList
-            initRecyclerView(MedicineAdapter(model.modelList))
+            adapter.resetList(medicineList)
+            initRecyclerView(adapter)
         }
     }
 
