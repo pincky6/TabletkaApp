@@ -11,4 +11,9 @@ data class Hospital(
     val expirationDates: MutableList<Date>,
     val packagesNumber: MutableList<Int>,
     val prices: MutableList<Double>
-): AbstractModel(id, wish, name)
+): AbstractModel(id, wish, name){
+    constructor(): this("", false, "", "", 0.0,
+        0.0, "", "", arrayListOf(), arrayListOf(),
+        mutableListOf()
+    )
+}

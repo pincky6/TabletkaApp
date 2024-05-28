@@ -11,7 +11,7 @@ import models.Medicine
 
 class MedicineAdapter(override var list: MutableList<AbstractModel>?,
                       val query: String, val regionId: Int, val requestId: Long,
-                      override val onWishListClicked: (()->Unit)?
+                      override val onWishListClicked: ((Boolean)->Unit)?
 ) : AbstractAdapter(list, onWishListClicked) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)

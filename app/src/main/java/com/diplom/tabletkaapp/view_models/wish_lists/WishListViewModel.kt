@@ -7,7 +7,7 @@ import com.diplom.tabletkaapp.firebase.database.TabletkaDatabase
 import com.diplom.tabletkaapp.models.AbstractModel
 
 class WishListViewModel: ViewModel() {
-    val list: MutableList<AbstractModel> = mutableListOf()
+    var list: MutableList<AbstractModel> = mutableListOf()
     var database: TabletkaDatabase? = null
     fun loadFromDatabase(completeListener: OnCompleteListener,
                          readCancelled: OnReadCancelled

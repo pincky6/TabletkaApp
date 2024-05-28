@@ -13,7 +13,7 @@ import models.Hospital
 import models.Medicine
 
 class WishListAdapter(override var list: MutableList<AbstractModel>?,
-                      override val onWishListClicked: (()->Unit)?
+                      override val onWishListClicked: ((Boolean)->Unit)?
 ) : AbstractAdapter(list, onWishListClicked) {
     override fun getItemViewType(position: Int): Int {
         if(list?.get(position) is Medicine){

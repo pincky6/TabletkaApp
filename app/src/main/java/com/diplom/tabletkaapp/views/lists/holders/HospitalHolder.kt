@@ -20,7 +20,7 @@ class HospitalHolder(
     fun bind(hospital: Hospital,
              regionId: Int, medicineId: Long,
              requestId: Long, query: String,
-             onWishListClicked: (()->Unit)?){
+             onWishListClicked: ((Boolean)->Unit)?){
         show = false
         binding.name.text = hospital.name
         binding.address.text = hospital.address
@@ -45,7 +45,7 @@ class HospitalHolder(
     }
     private fun initWishButton(hospital: Hospital, requestId: Long,
                                regionId: Int, query: String,
-                               onWishListClicked: (()->Unit)?){
+                               onWishListClicked: ((Boolean)->Unit)?){
         binding.hospitalWishButton.setImageResource(
             if(hospital.wish) {
                 android.R.drawable.btn_star_big_on
@@ -72,7 +72,7 @@ class HospitalHolder(
                 }
                 binding.hospitalWishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
-            onWishListClicked?.invoke()
+            onWishListClicked?.invoke(hospital.wish)
         }
     }
     private fun setPharmacyPriceVisibility(imageResource: Int, hospital: Hospital?,

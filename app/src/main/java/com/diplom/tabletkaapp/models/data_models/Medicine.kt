@@ -19,7 +19,10 @@ data class Medicine(
     val priceRange: MutableList<Double>,
     val hospitalCount: Int
 ) : AbstractModel(id, wish, name), Serializable {
-
+    constructor(): this("",false, "", "",
+        "", "", "", "", "",
+        "", "", mutableListOf(), 0
+    )
     override fun toString(): String {
         var medicineInfo = "Имя: " + name + "\n" +
                 "Ссылка на лекарство: " + "${UrlStrings.REQUEST_URL}${medicineReference}" + "\n" +

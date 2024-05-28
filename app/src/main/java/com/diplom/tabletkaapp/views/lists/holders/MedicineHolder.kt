@@ -22,7 +22,7 @@ class MedicineHolder(
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind(medicine: Medicine, query: String,
              regionId: Int, requestId: Long,
-             onWishListClicked: (()->Unit)?){
+             onWishListClicked: ((Boolean)->Unit)?){
         binding.name.text = medicine.name
         binding.compound.text = medicine.compound
         binding.companyName.text = medicine.companyName
@@ -39,15 +39,22 @@ class MedicineHolder(
         initWishButton(medicine, requestId, regionId, query, onWishListClicked)
         initCopyButton(medicine)
         initInfoButton(medicine)
-        binding.root.setOnClickListener{
-            findNavController(binding.root).navigate(
-                MedicineModelListDirections.showHospitalModelList(query, requestId, regionId, medicine)
-            )
+        if(!isWish) {
+            binding.root.setOnClickListener {
+                findNavController(binding.root).navigate(
+                    MedicineModelListDirections.showHospitalModelList(
+                        query,
+                        requestId,
+                        regionId,
+                        medicine
+                    )
+                )
+            }
         }
     }
     private fun initWishButton(medicine: Medicine, requestId: Long,
                                regionId: Int, query: String,
-                               onWishListClicked: (()->Unit)?){
+                               onWishListClicked: ((Boolean)->Unit)?){
         binding.wishButton.setImageResource(
             if(medicine.wish) {
                 android.R.drawable.btn_star_big_on
@@ -60,13 +67,21 @@ class MedicineHolder(
             }
             medicine.wish = !medicine.wish
             if(medicine.wish){
-                FirebaseMedicineDatabase.add(medicine, requestId, regionId, query)
+                if(isWish){
+                    FirebaseMedicineDatabase.add(medicine)
+                } else {
+                    FirebaseMedicineDatabase.add(medicine, requestId, regionId, query)
+                }
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
-                FirebaseMedicineDatabase.delete(medicine, requestId, regionId, query)
+                if(isWish){
+                    FirebaseMedicineDatabase.delete(medicine)
+                } else {
+                    FirebaseMedicineDatabase.delete(medicine, requestId, regionId, query)
+                }
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
-            onWishListClicked?.invoke()
+            onWishListClicked?.invoke(medicine.wish)
         }
     }
     private fun initCopyButton(medicine: Medicine){

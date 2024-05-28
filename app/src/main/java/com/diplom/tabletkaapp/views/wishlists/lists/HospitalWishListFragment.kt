@@ -77,8 +77,8 @@ class HospitalWishListFragment: AbstractModelList() {
         wishModel.loadFromDatabase(object : OnCompleteListener {
             override fun complete(list: MutableList<AbstractModel>) {
                 binding.recyclerView.layoutManager = LinearLayoutManager(context)
-                binding.recyclerView.adapter = WishListAdapter(list){
-                    updateFirebaseUI(list)
+                binding.recyclerView.adapter = WishListAdapter(list){wish->
+                    loadFromFirebase()
                 }
                 updateFirebaseUI(list)
             }
@@ -91,6 +91,7 @@ class HospitalWishListFragment: AbstractModelList() {
             })
     }
     private fun loadFromFirebase(){
+        wishModel.list.clear()
         wishModel.loadFromDatabase(object : OnCompleteListener {
             override fun complete(list: MutableList<AbstractModel>) {
                 updateFirebaseUI(list)
@@ -104,8 +105,10 @@ class HospitalWishListFragment: AbstractModelList() {
             })
     }
     fun updateFirebaseUI(list: MutableList<AbstractModel>){
+        wishModel.list.clear()
+        wishModel.list = list
         if(binding != null && binding.recyclerView.adapter != null){
-            (binding.recyclerView.adapter as WishListAdapter).resetList(list)
+            (binding.recyclerView.adapter as WishListAdapter).resetList(wishModel.list)
             (binding.recyclerView.adapter as WishListAdapter).notifyDataSetChanged()
         }
     }

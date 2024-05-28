@@ -41,7 +41,7 @@ class MedicineWishListFragment: AbstractModelList() {
             override fun complete(list: MutableList<AbstractModel>) {
                 binding.recyclerView.layoutManager = LinearLayoutManager(context)
                 binding.recyclerView.adapter = WishListAdapter(list){
-                    updateFirebaseUI(list)
+                    loadFromFirebase()
                 }
                 updateFirebaseUI(list)
             }
@@ -78,6 +78,7 @@ class MedicineWishListFragment: AbstractModelList() {
     }
 
     private fun loadFromFirebase(){
+        wishModel.list.clear()
         wishModel.loadFromDatabase(object : OnCompleteListener {
             override fun complete(list: MutableList<AbstractModel>) {
                 updateFirebaseUI(list)

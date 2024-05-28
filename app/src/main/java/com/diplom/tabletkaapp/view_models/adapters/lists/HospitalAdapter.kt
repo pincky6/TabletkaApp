@@ -26,7 +26,7 @@ import models.Medicine
 class HospitalAdapter(override var list: MutableList<AbstractModel>?, val appDatabase: AppDatabase,
                       var maxPage: Int, val query: String,
                       val regionId: Int, val medicine: Medicine,
-                      val medicineId: Long, val requestId: Long, override val onWishListClicked: (()->Unit)?
+                      val medicineId: Long, val requestId: Long, override val onWishListClicked: ((Boolean)->Unit)?
 ) : AbstractAdapter(list, onWishListClicked) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
