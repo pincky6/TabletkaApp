@@ -33,12 +33,14 @@ object FirebaseMedicineDatabase: TabletkaDatabase {
             }
         })
     }
-    override fun add(model: AbstractModel) {
+    override fun add(model: AbstractModel, requestId: Long, regionId: Int, query: String) {
         val medicine = model as Medicine
-        medicineDatabase.child(medicine.id).setValue(medicine)
+        medicineDatabase.child(medicine.id + "-" + requestId +
+                                        "-" + regionId + "-" + query).setValue(medicine)
     }
-    override fun delete(model: AbstractModel){
-        medicineDatabase.child(model.id).removeValue()
+    override fun delete(model: AbstractModel, requestId: Long, regionId: Int, query: String){
+        medicineDatabase.child(model.id + "-" + requestId +
+                              "-" + regionId + "-" + query).removeValue()
     }
 
     override fun generateKey(): String {

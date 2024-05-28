@@ -33,12 +33,15 @@ object FirebaseHospitalDatabase: TabletkaDatabase {
             }
         })
     }
-    override fun add(model: AbstractModel) {
+    override fun add(model: AbstractModel, requestId: Long, regionId: Int, query: String) {
         val pharmacy = model as Hospital
-        pharmacyDatabase.child(pharmacy.id).setValue(pharmacy)
+        pharmacyDatabase.child(model.id + "-" + requestId +
+                "-" + regionId + "-" + query + "-" + "hospital"
+        ).setValue(pharmacy)
     }
-    override fun delete(model: AbstractModel){
-        pharmacyDatabase.child(model.id).removeValue()
+    override fun delete(model: AbstractModel, requestId: Long, regionId: Int, query: String){
+        pharmacyDatabase.child(model.id + "-" + requestId +
+                "-" + regionId + "-" + query + "-" + "hospital").removeValue()
     }
     override fun generateKey(): String {
         return pharmacyDatabase.push().key ?: "null_key"

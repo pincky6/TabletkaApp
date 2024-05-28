@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
+    android:id="@+id/showListFilterDialogFragmentHospitalWish"
     app:startDestination="@id/navigation_main_menu">
 
     <fragment
@@ -60,9 +60,15 @@
 
     <fragment
         android:id="@+id/navigation_wish_list"
-        android:name="com.diplom.tabletkaapp.views.notifications.NotificationsFragment"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.diplom.tabletkaapp.views.wishlists.WishListMenu"
+        android:label="@string/title_profile" >
+        <action
+            android:id="@+id/showMedicineWishList"
+            app:destination="@id/medicineWishListFragment" />
+        <action
+            android:id="@+id/showHospitalWishList"
+            app:destination="@id/hospitalWishListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/medicineModelList"
         android:name="com.diplom.tabletkaapp.views.lists.simple_lists.MedicineModelList"
@@ -80,7 +86,7 @@
             android:id="@+id/showInfoFragment"
             app:destination="@id/infoFragment" />
         <action
-            android:id="@+id/showListFilterDialogFragment"
+            android:id="@+id/showListFilterDialogFragmentMedicine"
             app:destination="@id/listFilterDialogFragment" />
         <action
             android:id="@+id/showHospitalModelList"
@@ -119,7 +125,7 @@
             android:id="@+id/showInfoFragment"
             app:destination="@id/infoFragment" />
         <action
-            android:id="@+id/showListFilterDialogFragment"
+            android:id="@+id/showListFilterDialogFragmentHospital"
             app:destination="@id/listFilterDialogFragment" />
         <argument
             android:name="query"
@@ -130,5 +136,21 @@
             app:argType="integer" />
         <argument android:name="medicine"
             app:argType="models.Medicine"/>
+    </fragment>
+    <fragment
+        android:id="@+id/medicineWishListFragment"
+        android:name="com.diplom.tabletkaapp.views.wishlists.lists.MedicineWishListFragment"
+        android:label="MedicineWishListFragment" >
+        <action
+            android:id="@+id/showListFilterDialogFragmentMedicineWish"
+            app:destination="@id/listFilterDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hospitalWishListFragment"
+        android:name="com.diplom.tabletkaapp.views.wishlists.lists.HospitalWishListFragment"
+        android:label="HospitalWishListFragment" >
+        <action
+            android:id="@+id/showListFilterDialogFragmentHospitalWish"
+            app:destination="@id/listFilterDialogFragment" />
     </fragment>
 </navigation>

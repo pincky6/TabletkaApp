@@ -106,6 +106,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="hospitalWishListFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="424" />
+                            <option name="y" value="-520" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="infoFragment">
                     <value>
                       <LayoutPositions>
@@ -123,8 +135,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="1232" />
-                            <option name="y" value="368" />
+                            <option name="x" value="700" />
+                            <option name="y" value="-948" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -192,6 +204,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="medicineWishListFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="116" />
+                            <option name="y" value="-508" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="navigation_main_menu">
                     <value>
                       <LayoutPositions>
@@ -238,6 +262,20 @@
                             <option name="x" value="256" />
                             <option name="y" value="12" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_navigation_wish_list_to_hospitalWishListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_navigation_wish_list_to_medicineWishListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

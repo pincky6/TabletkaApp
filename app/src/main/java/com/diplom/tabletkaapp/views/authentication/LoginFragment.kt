@@ -70,9 +70,10 @@ class LoginFragment: Fragment() {
                         sendVerificationMessage()
                         return@signInWithGmailAndPassword
                     }
-                    findNavController(binding.root).navigate(
-                        LoginFragmentDirections.showContentFragment()
-                    )
+                    else
+                    {
+                        findNavController(binding.root).popBackStack()
+                    }
                 },
                 object : OnFailrueSignListener {
                     override fun failrueTask(exception: Exception) {
@@ -85,7 +86,7 @@ class LoginFragment: Fragment() {
                 })
         }
 
-        binding.signInButton.setOnClickListener { v ->
+        binding.signUpButton.setOnClickListener { v ->
             findNavController(binding.root).navigate(
                 LoginFragmentDirections.showRegisterFragment()
             )
@@ -110,9 +111,7 @@ class LoginFragment: Fragment() {
     private fun sendVerificationMessage(){
         FirebaseSingInRepository.sendVerification({ successful: Boolean ->
             if (successful) {
-                findNavController(binding.root).navigate(
-                    LoginFragmentDirections.showContentFragment()
-                )
+                findNavController(binding.root).popBackStack()
                 return@sendVerification
             }
                 EditorsUtil.setErrorState(binding.passwordEditText)

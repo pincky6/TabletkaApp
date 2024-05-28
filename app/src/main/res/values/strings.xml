@@ -43,6 +43,9 @@
     <string name="title_sort_title">По названию</string>
     <string name="count_cort_title">По количеству</string>
 
+    <string name="move_to_medicine_list_text">Мои лекарства</string>
+    <string name="move_to_hospital_list_text">Мои аптеки</string>
+
     <string name="ok_button">Ок</string>
     <string name="cancel_button">Закрыть</string>
 </resources>

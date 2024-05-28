@@ -36,7 +36,7 @@ AbstractModelList() {
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        initGetFilter(false)
+        initGetFilter(true)
 
         hideUselessUI()
 
@@ -45,7 +45,7 @@ AbstractModelList() {
         val regionId = arguments?.getInt("regionId") ?: 0
         hospitalModel.medicine = arguments?.getSerializable("medicine") as Medicine
         initMedicineInfo()
-        initWishButton(hospitalModel.medicine)
+        initWishButton(hospitalModel.medicine, regionId, requestId, query)
         CoroutineScope(Dispatchers.IO).launch {
             val hospitalEntities = model.database.hospitalDao().getHospitalsByRegionIdAndMedicineIdAndRecordId(regionId, hospitalModel.medicine.id.toLong(),
                                                                                                                requestId)
@@ -79,7 +79,7 @@ AbstractModelList() {
     private fun initFilterButton(){
         initFilterButton {
             Navigation.findNavController(binding.root).navigate(
-                MedicineModelListDirections.showListFilterDialogFragment(true,
+                HospitalModelListDirections.showListFilterDialogFragmentHospital(true,
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.sortMask)
@@ -108,7 +108,7 @@ AbstractModelList() {
             )
         }
     }
-    private fun initWishButton(medicine: Medicine){
+    private fun initWishButton(medicine: Medicine, regionId: Int, requestId: Long, query: String){
         binding.wishButton.setImageResource(
             if(medicine.wish) {
                 android.R.drawable.btn_star_big_on
@@ -121,10 +121,10 @@ AbstractModelList() {
             }
             medicine.wish = !medicine.wish
             if(medicine.wish){
-                FirebaseMedicineDatabase.add(hospitalModel.medicine)
+                FirebaseMedicineDatabase.add(hospitalModel.medicine, requestId, regionId, query)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
-                FirebaseMedicineDatabase.delete(hospitalModel.medicine)
+                FirebaseMedicineDatabase.delete(hospitalModel.medicine, requestId, regionId, query)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
         }

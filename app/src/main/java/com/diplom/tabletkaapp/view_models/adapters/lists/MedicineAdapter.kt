@@ -10,7 +10,9 @@ import com.diplom.tabletkaapp.ui.search.holders.MedicineHolder
 import models.Medicine
 
 class MedicineAdapter(override var list: MutableList<AbstractModel>?,
-                     val query: String, val regionId: Int, val requestId: Long) : AbstractAdapter(list) {
+                      val query: String, val regionId: Int, val requestId: Long,
+                      override val onWishListClicked: (()->Unit)?
+) : AbstractAdapter(list, onWishListClicked) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemMedicineBinding.inflate(inflater, parent, false)
@@ -19,7 +21,8 @@ class MedicineAdapter(override var list: MutableList<AbstractModel>?,
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         list?.let {
-            (holder as MedicineHolder).bind(it[position] as Medicine, query, regionId, requestId)
+            (holder as MedicineHolder).bind(it[position] as Medicine, query,
+                regionId, requestId, onWishListClicked)
         }
     }
 

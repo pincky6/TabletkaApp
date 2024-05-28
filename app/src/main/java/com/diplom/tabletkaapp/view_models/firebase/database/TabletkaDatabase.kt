@@ -10,8 +10,8 @@ open interface TabletkaDatabase {
         onReadCancelled: OnReadCancelled
     )
 
-    fun add(model: AbstractModel)
-    fun delete(model: AbstractModel)
+    fun add(model: AbstractModel, requestId: Long, regionId: Int, query: String)
+    fun delete(model: AbstractModel, requestId: Long, regionId: Int, query: String)
 
     fun generateKey(): String
 }

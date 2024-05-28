@@ -52,7 +52,7 @@ class MedicineModelList:
     private fun initFilterButton(){
         initFilterButton {
             findNavController(binding.root).navigate(
-                MedicineModelListDirections.showListFilterDialogFragment(false,
+                MedicineModelListDirections.showListFilterDialogFragmentMedicine(false,
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.sortMask)

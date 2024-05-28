@@ -26,7 +26,8 @@ import models.Medicine
 class HospitalAdapter(override var list: MutableList<AbstractModel>?, val appDatabase: AppDatabase,
                       var maxPage: Int, val query: String,
                       val regionId: Int, val medicine: Medicine,
-                      val medicineId: Long, val requestId: Long): AbstractAdapter(list) {
+                      val medicineId: Long, val requestId: Long, override val onWishListClicked: (()->Unit)?
+) : AbstractAdapter(list, onWishListClicked) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
@@ -36,7 +37,8 @@ class HospitalAdapter(override var list: MutableList<AbstractModel>?, val appDat
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         list?.let {
-            (holder as HospitalHolder).bind(it[position] as Hospital, regionId, medicineId, requestId)
+            (holder as HospitalHolder).bind(it[position] as Hospital, regionId,
+                    medicineId, requestId, query, onWishListClicked)
             if(position == it.size - 1){
                 downloadPage()
             }

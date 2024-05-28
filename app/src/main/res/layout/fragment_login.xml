@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/password_edit_text">
 
         <Button
-            android:id="@+id/sign_in_with_google_button"
+            android:id="@+id/sign_in_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sign_in_text"
@@ -63,7 +63,7 @@
             tools:layout_editor_absoluteY="490dp" />
 
         <Button
-            android:id="@+id/sign_in_button"
+            android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sign_up_text"
