@@ -119,7 +119,7 @@ abstract class AbstractModelList: Fragment() {
         }
     }
 
-    public fun updateUI(){
+    fun updateUI(){
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }

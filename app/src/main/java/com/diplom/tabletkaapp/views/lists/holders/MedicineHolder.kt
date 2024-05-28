@@ -17,7 +17,8 @@ import com.diplom.tabletkaapp.views.lists.simple_lists.MedicineModelListDirectio
 import models.Medicine
 
 class MedicineHolder(
-    val binding: ItemMedicineBinding
+    val binding: ItemMedicineBinding,
+    val isWish: Boolean
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind(medicine: Medicine, query: String,
              regionId: Int, requestId: Long,

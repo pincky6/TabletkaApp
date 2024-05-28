@@ -16,7 +16,7 @@ class MedicineAdapter(override var list: MutableList<AbstractModel>?,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemMedicineBinding.inflate(inflater, parent, false)
-        return MedicineHolder(binding)
+        return MedicineHolder(binding, false)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

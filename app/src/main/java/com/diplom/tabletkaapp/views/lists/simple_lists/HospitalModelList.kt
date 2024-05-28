@@ -53,7 +53,7 @@ AbstractModelList() {
             val convertedList = CacheHospitalConverter.fromEntityListToModelList(hospitalEntities)
             initRecyclerViewWithMainContext(HospitalAdapter(convertedList, model.database, maxPage, query, regionId,
                 hospitalModel.medicine,
-                hospitalModel.medicine.id.toLong(), requestId), convertedList)
+                hospitalModel.medicine.id.toLong(), requestId, null), convertedList)
             val hospitalList = mutableListOf<AbstractModel>()
             if(maxPage == 0) maxPage++
             for(i in 0 until maxPage) {
@@ -69,7 +69,7 @@ AbstractModelList() {
                 hospitalList, hospitalEntities)
             initRecyclerViewWithMainContext(HospitalAdapter(convertedList, model.database, maxPage, query, regionId,
                 hospitalModel.medicine,
-                hospitalModel.medicine.id.toLong(), requestId), hospitalList)
+                hospitalModel.medicine.id.toLong(), requestId, null), hospitalList)
         }
         binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()

@@ -37,12 +37,12 @@ class MedicineModelList:
         CoroutineScope(Dispatchers.IO).launch {
             val medicineEntities = model.database.medicineDao().getMedicineByRecordId(requestId)
             val convertedList = CacheMedicineConverter.fromEntityListToModelList(medicineEntities)
-            initRecyclerViewWithMainContext(MedicineAdapter(convertedList, query, regionId, requestId), convertedList)
+            initRecyclerViewWithMainContext(MedicineAdapter(convertedList, query, regionId, requestId, null), convertedList)
 
             val medicineList = MedicineParser.parseFromName(query, regionId)
             MedicineCacher.validateMedicineDatabase(model.database, requestId,
                                                     medicineList, medicineEntities)
-            initRecyclerViewWithMainContext(MedicineAdapter(medicineList, query, regionId, requestId), medicineList)
+            initRecyclerViewWithMainContext(MedicineAdapter(medicineList, query, regionId, requestId, null), medicineList)
         }
         binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()

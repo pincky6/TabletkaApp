@@ -14,7 +14,8 @@ import models.Medicine
 
 class HospitalHolder(
     var binding: ItemHospitalBinding,
-    var show: Boolean
+    var show: Boolean,
+    val isWish: Boolean
 ): RecyclerView.ViewHolder(binding.root) {
     fun bind(hospital: Hospital,
              regionId: Int, medicineId: Long,
@@ -57,11 +58,18 @@ class HospitalHolder(
             }
             hospital.wish = !hospital.wish
             if(hospital.wish){
-
-                FirebaseHospitalDatabase.add(hospital, requestId, regionId, query)
+                if(isWish){
+                    FirebaseHospitalDatabase.add(hospital)
+                } else {
+                    FirebaseHospitalDatabase.add(hospital, requestId, regionId, query)
+                }
                 binding.hospitalWishButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
-                FirebaseHospitalDatabase.delete(hospital, requestId, regionId, query)
+                if(isWish) {
+                    FirebaseHospitalDatabase.delete(hospital)
+                } else {
+                    FirebaseHospitalDatabase.delete(hospital, requestId, regionId, query)
+                }
                 binding.hospitalWishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
             onWishListClicked?.invoke()

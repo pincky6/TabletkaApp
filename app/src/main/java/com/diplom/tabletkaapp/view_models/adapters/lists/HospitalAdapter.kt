@@ -32,7 +32,7 @@ class HospitalAdapter(override var list: MutableList<AbstractModel>?, val appDat
 
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemHospitalBinding.inflate(inflater, parent, false)
-        return HospitalHolder(binding, false)
+        return HospitalHolder(binding, false, false)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
