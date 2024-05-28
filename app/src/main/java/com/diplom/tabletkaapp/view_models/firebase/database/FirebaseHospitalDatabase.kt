@@ -10,7 +10,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 import models.Hospital
 
-object FirebasePharmacyDatabase: TabletkaDatabase {
+object FirebaseHospitalDatabase: TabletkaDatabase {
     val pharmacyDatabase: DatabaseReference
         get() {
             val userId: String = FirebaseAuth.getInstance().currentUser?.email?.replace('.', '-') ?: ""

@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Query
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.ItemMedicineBinding
+import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
+import com.diplom.tabletkaapp.firebase.database.FirebaseHospitalDatabase
+import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
 import com.diplom.tabletkaapp.views.lists.simple_lists.MedicineModelListDirections
 import models.Medicine
 
@@ -48,12 +51,15 @@ class MedicineHolder(
                 android.R.drawable.btn_star_big_off
             })
         binding.wishButton.setOnClickListener {
+            if(!FirebaseSingInRepository.checkUserExistWithWarningDialog(binding.root.context)){
+                return@setOnClickListener
+            }
             medicine.wish = !medicine.wish
             if(medicine.wish){
-//                FirebasePharmacyDatabase.add(hospital)
+                FirebaseMedicineDatabase.add(medicine)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
-//                FirebasePharmacyDatabase.delete(hospital)
+                FirebaseMedicineDatabase.delete(medicine)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
         }

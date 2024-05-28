@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.ItemHospitalBinding
+import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
+import com.diplom.tabletkaapp.firebase.database.FirebaseHospitalDatabase
 import com.diplom.tabletkaapp.ui.search.adapters.MedicineInfoAdapter
 import models.Hospital
 
@@ -32,12 +34,16 @@ class HospitalHolder(
                 android.R.drawable.btn_star_big_off
             })
         binding.hospitalWishButton.setOnClickListener {
+            if(!FirebaseSingInRepository.checkUserExistWithWarningDialog(binding.root.context)){
+                return@setOnClickListener
+            }
             hospital.wish = !hospital.wish
             if(hospital.wish){
-//                FirebasePharmacyDatabase.add(hospital)
+
+                FirebaseHospitalDatabase.add(hospital)
                 binding.hospitalWishButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
-//                FirebasePharmacyDatabase.delete(hospital)
+                FirebaseHospitalDatabase.delete(hospital)
                 binding.hospitalWishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
         }

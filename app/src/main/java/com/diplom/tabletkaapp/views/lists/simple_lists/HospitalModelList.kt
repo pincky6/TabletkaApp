@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.diplom.tabletkaapp.R
+import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
+import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.parser.HospitalParser
 import com.diplom.tabletkaapp.parser.MedicineParser
@@ -114,12 +116,15 @@ AbstractModelList() {
                 android.R.drawable.btn_star_big_off
             })
         binding.wishButton.setOnClickListener {
+            if(!FirebaseSingInRepository.checkUserExistWithWarningDialog(binding.root.context)){
+                return@setOnClickListener
+            }
             medicine.wish = !medicine.wish
             if(medicine.wish){
-//                FirebasePharmacyDatabase.add(hospital)
+                FirebaseMedicineDatabase.add(hospitalModel.medicine)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
-//                FirebasePharmacyDatabase.delete(hospital)
+                FirebaseMedicineDatabase.delete(hospitalModel.medicine)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
         }
