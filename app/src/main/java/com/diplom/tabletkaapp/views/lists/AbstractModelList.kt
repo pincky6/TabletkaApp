@@ -13,21 +13,19 @@ import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.room.Room
 import com.diplom.tabletkaapp.R
-import com.diplom.tabletkaapp.databinding.FragmentHospitalListBinding
 import com.diplom.tabletkaapp.databinding.FragmentListBinding
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.ui.search.filter.ListFilterDialogFragment
 import com.diplom.tabletkaapp.util.DatabaseInfo
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.list.adapters.AbstractAdapter
-import com.diplom.tabletkaapp.view_models.list.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.views.lists.simple_lists.AbstractModelViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import models.Medicine
 
 abstract class AbstractModelList: Fragment() {
-    private var binding_: FragmentHospitalListBinding? = null
+    private var binding_: FragmentListBinding? = null
     val binding get() = binding_!!
 
     var model: AbstractModelViewModel = AbstractModelViewModel()
@@ -37,7 +35,7 @@ abstract class AbstractModelList: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding_ = FragmentHospitalListBinding.inflate(inflater, container, false)
+        binding_ = FragmentListBinding.inflate(inflater, container, false)
         context?.let {
             model.database = Room.databaseBuilder(
                 requireContext().applicationContext,

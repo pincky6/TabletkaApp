@@ -51,6 +51,12 @@ class ListFilterViewModel: ViewModel() {
         if((sortMask and 1) == 1) {
             sortedList.sortBy {(it as Medicine).priceRange.firstOrNull()}
         }
+        if(sortMask and 2 == 2){
+            sortedList.sortBy { (it as Medicine).name }
+        }
+        if (sortMask and 4 == 4){
+            sortedList.sortBy { (it as Medicine).hospitalCount }
+        }
         return sortedList
     }
     private fun sortPharmacy(list: MutableList<AbstractModel>): MutableList<AbstractModel>{
@@ -59,6 +65,12 @@ class ListFilterViewModel: ViewModel() {
             sortedList.sortBy {(it as Hospital).prices.firstOrNull()}
         }
         if(sortMask and 2 == 2){
+            sortedList.sortBy { (it as Hospital).name }
+        }
+        if (sortMask and 4 == 4){
+            sortedList.sortBy { (it as Hospital).packagesNumber.max() }
+        }
+        if(sortMask and 8 == 8){
             sortedList.sortBy {
 //                val pharmacy = it as Hospital
 //                val dLat = Math.toRadians(userGeoPoint.latitude - pharmacy.latitude)

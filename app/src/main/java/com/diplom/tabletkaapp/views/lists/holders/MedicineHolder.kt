@@ -49,11 +49,11 @@ class MedicineHolder(
             })
         binding.wishButton.setOnClickListener {
             medicine.wish = !medicine.wish
-            if (!medicine.wish) {
-//                   FirebaseMedicineDatabase.add(medicine)
+            if(medicine.wish){
+//                FirebasePharmacyDatabase.add(hospital)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
-//                   FirebaseMedicineDatabase.delete(medicine)
+//                FirebasePharmacyDatabase.delete(hospital)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
         }

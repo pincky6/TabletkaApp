@@ -56,7 +56,9 @@ class ListFilterDialogFragment: DialogFragment() {
 
     private fun initCheckBoxes(){
         binding.sortByMinPriceCheckBox.isChecked = (listSettings.sortMask and 1) == 1
-        binding.distanceSortCheckBox.isChecked = (listSettings.sortMask and 2) == 2
+        binding.sortByTitleCheckBox.isChecked = (listSettings.sortMask and 2) == 2
+        binding.sortByCountCheckBox.isChecked = (listSettings.sortMask and 4) == 4
+        binding.distanceSortCheckBox.isChecked = (listSettings.sortMask and 8) == 8
         binding.sortByMinPriceCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 listSettings.sortMask = listSettings.sortMask or 1
@@ -65,11 +67,27 @@ class ListFilterDialogFragment: DialogFragment() {
                 listSettings.sortMask = listSettings.sortMask and maskToClear.inv()
             }
         }
-        binding.distanceSortCheckBox.setOnCheckedChangeListener { _, isChecked ->
+        binding.sortByTitleCheckBox.setOnCheckedChangeListener{_, isChecked ->
             if (isChecked) {
                 listSettings.sortMask = listSettings.sortMask or 2
             } else {
                 val maskToClear = 2
+                listSettings.sortMask = listSettings.sortMask and maskToClear.inv()
+            }
+        }
+        binding.sortByCountCheckBox.setOnCheckedChangeListener{_, isChecked ->
+            if (isChecked) {
+                listSettings.sortMask = listSettings.sortMask or 4
+            } else {
+                val maskToClear = 4
+                listSettings.sortMask = listSettings.sortMask and maskToClear.inv()
+            }
+        }
+        binding.distanceSortCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                listSettings.sortMask = listSettings.sortMask or 8
+            } else {
+                val maskToClear = 8
                 listSettings.sortMask = listSettings.sortMask and maskToClear.inv()
             }
         }

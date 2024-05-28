@@ -44,7 +44,7 @@ class MedicineModelList:
                                                     medicineList, medicineEntities)
             initRecyclerViewWithMainContext(MedicineAdapter(medicineList, query, regionId, requestId), medicineList)
         }
-        binding.filterButton.text = context?.getString(R.string.medicine_filter_and_sort_button)
+        binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()
         return binding.root
     }

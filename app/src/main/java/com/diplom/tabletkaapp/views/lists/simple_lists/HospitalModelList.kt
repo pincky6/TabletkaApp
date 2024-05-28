@@ -43,6 +43,7 @@ AbstractModelList() {
         val regionId = arguments?.getInt("regionId") ?: 0
         hospitalModel.medicine = arguments?.getSerializable("medicine") as Medicine
         initMedicineInfo()
+        initWishButton(hospitalModel.medicine)
         CoroutineScope(Dispatchers.IO).launch {
             val hospitalEntities = model.database.hospitalDao().getHospitalsByRegionIdAndMedicineIdAndRecordId(regionId, hospitalModel.medicine.id.toLong(),
                                                                                                                requestId)
@@ -68,7 +69,7 @@ AbstractModelList() {
                 hospitalModel.medicine,
                 hospitalModel.medicine.id.toLong(), requestId), hospitalList)
         }
-        binding.filterButton.text = context?.getString(R.string.medicine_filter_and_sort_button)
+        binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()
         return binding.root
     }
@@ -76,7 +77,7 @@ AbstractModelList() {
     private fun initFilterButton(){
         initFilterButton {
             Navigation.findNavController(binding.root).navigate(
-                MedicineModelListDirections.showListFilterDialogFragment(false,
+                MedicineModelListDirections.showListFilterDialogFragment(true,
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.sortMask)
@@ -103,6 +104,24 @@ AbstractModelList() {
             Navigation.findNavController(binding.root).navigate(
                 MedicineModelListDirections.showInfoFragment(hospitalModel.medicine.toString())
             )
+        }
+    }
+    private fun initWishButton(medicine: Medicine){
+        binding.wishButton.setImageResource(
+            if(medicine.wish) {
+                android.R.drawable.btn_star_big_on
+            } else {
+                android.R.drawable.btn_star_big_off
+            })
+        binding.wishButton.setOnClickListener {
+            medicine.wish = !medicine.wish
+            if(medicine.wish){
+//                FirebasePharmacyDatabase.add(hospital)
+                binding.wishButton.setImageResource(android.R.drawable.btn_star_big_on)
+            } else {
+//                FirebasePharmacyDatabase.delete(hospital)
+                binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
+            }
         }
     }
 }

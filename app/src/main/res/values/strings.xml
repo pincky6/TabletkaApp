@@ -40,6 +40,8 @@
 
     <string name="distance_title">По расстроянию</string>
     <string name="price_sort_title">По минимальной цене</string>
+    <string name="title_sort_title">По названию</string>
+    <string name="count_cort_title">По количеству</string>
 
     <string name="ok_button">Ок</string>
     <string name="cancel_button">Закрыть</string>
