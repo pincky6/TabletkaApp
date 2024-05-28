@@ -10,12 +10,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object HospitalParser: ITabletkaHealthParser() {
-    override fun parsePageFromName(name: String, regionId: Int, page: Int): MutableList<AbstractModel>{
-        val pagedUrl = "${name}${UrlStrings.PAGE_CONDITION}${page}"
+    override fun parsePageFromName(medicineCode: String, regionId: Int, page: Int): MutableList<AbstractModel>{
+        val pagedUrl = "${medicineCode}${UrlStrings.PAGE_CONDITION}${page}"
         return parseFromName(pagedUrl, regionId)
     }
-    override fun parseFromName(name : String, regionId: Int): MutableList<AbstractModel>{
-        val doc = Jsoup.connect("${UrlStrings.REQUEST_URL}${name}" +
+    override fun parseFromName(medicineCode : String, regionId: Int): MutableList<AbstractModel>{
+        val doc = Jsoup.connect("${UrlStrings.BASIC_URL}${medicineCode}" +
                 "${UrlStrings.REGION_CONDITION}${regionId}").get()
         val table = doc.select("tbody")
 
@@ -45,7 +45,6 @@ object HospitalParser: ITabletkaHealthParser() {
         val expirationDates = parseExpirationDates(pricesInfo)
         val packageNumber = parsePackageNumber(pricesInfo)
         val prices = parsePrice(pricesInfo)
-        val pharmacyList: MutableList<AbstractModel> = arrayListOf()
 
         return getHospitals(names, hospitalsReference,
                                 hospitalsCoordinates,

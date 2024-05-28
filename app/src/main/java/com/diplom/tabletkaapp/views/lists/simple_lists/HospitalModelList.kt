@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.diplom.tabletkaapp.R
+import com.diplom.tabletkaapp.models.AbstractModel
+import com.diplom.tabletkaapp.parser.HospitalParser
 import com.diplom.tabletkaapp.parser.MedicineParser
 import com.diplom.tabletkaapp.util.CacheHospitalConverter
 import com.diplom.tabletkaapp.util.CacheMedicineConverter
@@ -40,13 +42,28 @@ AbstractModelList() {
         CoroutineScope(Dispatchers.IO).launch {
             val hospitalEntities = model.database.hospitalDao().getHospitalsByRegionIdAndMedicineIdAndRecordId(regionId, hospitalModel.medicine.id.toLong(),
                                                                                                                requestId)
+            var maxPage = model.database.hospitalDao().getMaxPage()
             val convertedList = CacheHospitalConverter.fromEntityListToModelList(hospitalEntities)
-            initRecyclerViewWithMainContext(MedicineAdapter(convertedList, query, regionId, requestId), convertedList)
+            initRecyclerViewWithMainContext(HospitalAdapter(convertedList, model.database, maxPage, query, regionId,
+                hospitalModel.medicine,
+                hospitalModel.medicine.id.toLong(), requestId), convertedList)
 
-            val hospitalList = MedicineParser.parseFromName(query, regionId)
+            val hospitalList = mutableListOf<AbstractModel>()
+            if(maxPage == 0) maxPage++
+            for(i in 0 until maxPage) {
+                hospitalList.addAll(
+                    HospitalParser.parsePageFromName(
+                        hospitalModel.medicine.medicineReference,
+                        regionId,
+                        i + 1
+                    )
+                )
+            }
             HospitalCacher.validateMedicineDatabase(model.database, regionId, hospitalModel.medicine.id.toLong(), requestId,
                 hospitalList, hospitalEntities)
-            initRecyclerViewWithMainContext(HospitalAdapter(hospitalList, query, regionId, hospitalModel.medicine.id.toLong(), hospitalList)
+            initRecyclerViewWithMainContext(HospitalAdapter(convertedList, model.database, maxPage, query, regionId,
+                hospitalModel.medicine,
+                hospitalModel.medicine.id.toLong(), requestId), hospitalList)
         }
         binding.filterButton.text = context?.getString(R.string.medicine_filter_and_sort_button)
         initFilterButton()

@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.ItemHospitalBinding
-import com.diplom.tabletkaapp.databinding.ItemPharmacyBinding
+import com.diplom.tabletkaapp.ui.search.adapters.MedicineInfoAdapter
 import models.Hospital
 
 class HospitalHolder(
@@ -25,20 +25,20 @@ class HospitalHolder(
 //            onNavigationButtonClicked?.click(PointModel(pharmacy.name,
 //                GeoPoint(pharmacy.latitude, pharmacy.longitude)))
 //        }
-        binding.wishButton.setImageResource(
+        binding.hospitalWishButton.setImageResource(
             if(hospital.wish) {
                 android.R.drawable.btn_star_big_on
             } else {
                 android.R.drawable.btn_star_big_off
             })
-        binding.wishButton.setOnClickListener {
+        binding.hospitalWishButton.setOnClickListener {
             hospital.wish = !hospital.wish
             if(hospital.wish){
 //                FirebasePharmacyDatabase.add(hospital)
-                binding.wishButton.setImageResource(android.R.drawable.btn_star_big_on)
+                binding.hospitalWishButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
 //                FirebasePharmacyDatabase.delete(hospital)
-                binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
+                binding.hospitalWishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
         }
         initShowMedicineButton(hospital)

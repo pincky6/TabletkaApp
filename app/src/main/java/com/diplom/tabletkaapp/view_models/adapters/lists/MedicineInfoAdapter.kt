@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.diplom.tabletkaapp.databinding.ItemMedicineInfoBinding
 import com.diplom.tabletkaapp.ui.search.holders.MedicineInfoHolder
-import models.Pharmacy
+import models.Hospital
 
-class MedicineInfoAdapter(private var pharmacy: Pharmacy? = null): RecyclerView.Adapter<MedicineInfoHolder>() {
+class MedicineInfoAdapter(private var pharmacy: Hospital? = null): RecyclerView.Adapter<MedicineInfoHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedicineInfoHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemMedicineInfoBinding = ItemMedicineInfoBinding.inflate(inflater, parent, false)
@@ -29,7 +29,7 @@ class MedicineInfoAdapter(private var pharmacy: Pharmacy? = null): RecyclerView.
         return pharmacy!!.expirationDates.size
     }
 
-    fun setPharmacy(pharmacy: Pharmacy?){
+    fun setPharmacy(pharmacy: Hospital?){
         this.pharmacy = pharmacy
     }
 }

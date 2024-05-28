@@ -1,7 +1,7 @@
 package com.diplom.tabletkaapp.firebase.database
 
-import com.diplom.tabletkaapp.models.AbstractFirebaseModel
+import com.diplom.tabletkaapp.models.AbstractModel
 
 interface OnCompleteListener {
-    fun complete(list: MutableList<AbstractFirebaseModel>)
+    fun complete(list: MutableList<AbstractModel>)
 }

@@ -6,21 +6,22 @@ import com.diplom.tabletkaapp.models.cache_data_models.pharmacy_entities.Hospita
 import models.Hospital
 
 object HospitalCacher{
-    suspend fun add(appDatabase: AppDatabase, hospital: Hospital, regionId: Int, medicineId: Long, requestId: Long){
+    suspend fun add(appDatabase: AppDatabase, hospital: Hospital, page: Int,
+                    regionId: Int, medicineId: Long, requestId: Long){
         val hospitalDao = appDatabase.hospitalDao()
         val hospitalEntity = HospitalEntity(hospital.id, hospital.wish, hospital.name, hospital.hospitalReference,
             hospital.latitude, hospital.longitude, hospital.address, hospital.phone,
-            hospital.expirationDates, hospital.packagesNumber, hospital.prices, regionId, medicineId, requestId)
+            hospital.expirationDates, hospital.packagesNumber, hospital.prices, page, regionId, medicineId, requestId)
         hospitalDao.insertHospital(hospitalEntity)
     }
     suspend fun deleteById(appDatabase: AppDatabase, requestId: Long){
         val medicineDao = appDatabase.medicineDao()
         medicineDao.deleteByRecordId(requestId)
     }
-    suspend fun addMedicineList(appDatabase: AppDatabase, hospitalList: MutableList<AbstractModel>,
+    suspend fun addHospitalList(appDatabase: AppDatabase, hospitalList: MutableList<AbstractModel>,
                                 regionId: Int, medicineId: Long, requestId: Long){
-        for(medicine in hospitalList){
-            add(appDatabase, medicine as Hospital, regionId, medicineId, requestId)
+        for(i in 0 until hospitalList.size){
+            add(appDatabase, hospitalList[i] as Hospital, i % 20, regionId, medicineId, requestId)
         }
     }
 
@@ -53,10 +54,10 @@ object HospitalCacher{
     ){
         if(!isValidData(appDatabase, hospitalList)){
             deleteById(appDatabase, requestId)
-            addMedicineList(appDatabase, hospitalList, regionId, medicineId, requestId)
+            addHospitalList(appDatabase, hospitalList, regionId, medicineId, requestId)
 
         } else if(hospitalEntities.isEmpty()){
-            addMedicineList(appDatabase, hospitalList, regionId, medicineId, requestId)
+            addHospitalList(appDatabase, hospitalList, regionId, medicineId, requestId)
         }
     }
 }

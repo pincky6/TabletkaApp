@@ -39,12 +39,12 @@
             android:layout_height="64dp"
             android:layout_gravity="end"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/wish_button"
+            app:layout_constraintEnd_toStartOf="@+id/copy_button"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_info_24" />
 
         <ImageButton
-            android:id="@+id/wish_button"
+            android:id="@+id/copy_button"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="end"

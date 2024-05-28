@@ -4,6 +4,7 @@ object UrlStrings {
     const val BASIC_URL = "https://tabletka.by/"
 
     const val REQUEST_URL: String = "https://tabletka.by/search?request="
+    const val REQUEST_HOSPITAL_UTL = "https://tabletka.by/result?ls="
     const val REGION_CONDITION: String = "&region="
     const val PAGE_CONDITION: String = "&page="
 
