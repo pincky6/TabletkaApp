@@ -31,9 +31,16 @@ class MapViewModel: ViewModel() {
     var currentMarker: Marker? = null
     var roadType = OSRMRoadManager.MEAN_BY_FOOT
     fun setMarkers(context: Context, binding: FragmentMapBinding){
+        if(geoPointsList.mutableList.size == 1){
+            setZoom(binding, geoPointsList.mutableList[0])
+        }
         for(point in geoPointsList.mutableList){
             setMarker(context, binding, point)
         }
+    }
+    fun setZoom(binding: FragmentMapBinding, point: GeoPoint){
+        binding.mapView.controller.setCenter(point)
+        binding.mapView.controller.setZoom(12.0)
     }
     fun setMarker(context: Context, binding: FragmentMapBinding, geoPoint: GeoPoint){
                 val marker = Marker(binding.mapView)

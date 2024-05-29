@@ -47,7 +47,7 @@ class MapFragment: Fragment() {
             override fun onLocationChanged(location: Location){
                 if(model.currentGeoPoint != GeoPoint(location.latitude, location.longitude)) {
                     model.currentGeoPoint = GeoPoint(location.latitude, location.longitude)
-                    _binding?.mapView?.controller?.setCenter(model.currentGeoPoint)
+                    //_binding?.mapView?.controller?.setCenter(model.currentGeoPoint)
                 }
             }
 
@@ -94,6 +94,9 @@ class MapFragment: Fragment() {
             mapInfoBottomSheetFragment?.setHospital(hospital)
         } else {
             mapInfoBottomSheetFragment?.hideHospitalInfo()
+            model.currentGeoPoint?.let {
+                model.setZoom(binding, it)
+            }
         }
     }
 
