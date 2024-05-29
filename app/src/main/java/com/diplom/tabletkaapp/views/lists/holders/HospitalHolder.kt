@@ -32,7 +32,7 @@ class HospitalHolder(
         binding.pricesRecyclerView.layoutManager = LinearLayoutManager(binding.root.context)
         binding.pricesRecyclerView.adapter = MedicineInfoAdapter(hospital)
         binding.pricesRecyclerView.visibility = View.GONE
-        initMapButton()
+        initMapButton(hospital)
         initWishButton(hospital, requestId, regionId, query, onWishListClicked)
         initShowMedicineButton(hospital)
     }

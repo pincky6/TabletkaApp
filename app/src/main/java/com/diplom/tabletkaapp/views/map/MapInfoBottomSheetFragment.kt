@@ -11,10 +11,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentMapBottomSheetBinding
+import com.diplom.tabletkaapp.view_models.map.MapBottomSheetViewModel
+import models.Hospital
 
 class MapInfoBottomSheetFragment: Fragment() {
     var _binding: FragmentMapBottomSheetBinding? = null
     val binding get() = _binding!!
+    val model = MapBottomSheetViewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +37,18 @@ class MapInfoBottomSheetFragment: Fragment() {
             }
         }
         return binding.root
+    }
+
+    fun setHospital(newHospital: Hospital){
+        binding.hospitalInfoPanel.name.text = newHospital.name
+        binding.hospitalInfoPanel.address.text = newHospital.address
+        binding.hospitalInfoPanel.phone.text = newHospital.phone
+
+        model.hospital = newHospital
+    }
+
+    fun hideHospitalInfo(){
+        binding.hospitalInfoPanel.root.visibility = View.GONE
     }
 
     private fun expandPanel() {

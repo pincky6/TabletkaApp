@@ -145,6 +145,7 @@
         <action
             android:id="@+id/action_hospitalModelList_to_mapFragment"
             app:destination="@id/mapFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/medicineWishListFragment"
@@ -163,10 +164,19 @@
             app:destination="@id/listFilterDialogFragment" />
         <action
             android:id="@+id/action_hospitalWishListFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
+            app:destination="@id/mapFragment"/>
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.diplom.tabletkaapp.views.map.MapFragment"
-        android:label="MapFragment" />
+        android:label="MapFragment">
+    <argument
+        android:name="pharmacyGeoPoints"
+        app:argType="com.diplom.tabletkaapp.models.data_models.GeoPointsList"
+        />
+        <argument
+            android:name="hospital"
+            app:argType="models.Hospital"
+            app:nullable="true" />
+    </fragment>
 </navigation>
