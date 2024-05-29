@@ -30,6 +30,11 @@ class MapViewModel: ViewModel() {
     var currentGeoPoint: GeoPoint? = null
     var currentMarker: Marker? = null
     var roadType = OSRMRoadManager.MEAN_BY_FOOT
+    fun setMarkers(context: Context, binding: FragmentMapBinding){
+        for(point in geoPointsList.mutableList){
+            setMarker(context, binding, point)
+        }
+    }
     fun setMarker(context: Context, binding: FragmentMapBinding, geoPoint: GeoPoint){
                 val marker = Marker(binding.mapView)
                 marker.position = geoPoint
@@ -50,7 +55,6 @@ class MapViewModel: ViewModel() {
                 binding.mapView.invalidate()
         }
 
-        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         fun buildRoadMap(context: Context, binding: FragmentMapBinding,
                          endPoint: GeoPoint, roadManagerRoadChoose: String) {
             if (ActivityCompat.checkSelfPermission(

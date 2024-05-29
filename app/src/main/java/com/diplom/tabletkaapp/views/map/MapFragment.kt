@@ -83,6 +83,7 @@ class MapFragment: Fragment() {
             childFragmentManager.findFragmentById(R.id.map_bottom_info) as MapInfoBottomSheetFragment?;
         initInfoBottom()
         initBackButton()
+        model.setMarkers(requireContext(), binding)
         return binding.root
     }
 
