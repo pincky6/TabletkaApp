@@ -55,7 +55,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.osmdroid.android)
     implementation(libs.osmbonuspack)
-    // To use Kotlin Symbol Processing (KSP)
+    implementation(libs.material.v140)
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
     implementation("org.jsoup:jsoup:1.17.2")
