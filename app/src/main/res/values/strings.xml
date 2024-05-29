@@ -54,4 +54,9 @@
 
     <string name="settings_common">Общие настройки</string>
 
+    <string name="by_foot_text">Пешком</string>
+    <string name="by_car_text">На машине</string>
+    <string name="by_velo_text">На самокате</string>
+    <string name="build_road_text">Построить маршрут</string>
+
 </resources>

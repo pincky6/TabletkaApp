@@ -1,16 +1,20 @@
 package com.diplom.tabletkaapp.ui.search.holders
 
 import android.view.View
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.ItemHospitalBinding
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.database.FirebaseHospitalDatabase
-import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
+import com.diplom.tabletkaapp.models.data_models.GeoPointsList
 import com.diplom.tabletkaapp.ui.search.adapters.MedicineInfoAdapter
+import com.diplom.tabletkaapp.views.lists.simple_lists.HospitalModelListDirections
+import com.diplom.tabletkaapp.views.wishlists.lists.HospitalWishListFragmentDirections
+
 import models.Hospital
-import models.Medicine
+import org.osmdroid.util.GeoPoint
 
 class HospitalHolder(
     var binding: ItemHospitalBinding,
@@ -28,7 +32,7 @@ class HospitalHolder(
         binding.pricesRecyclerView.layoutManager = LinearLayoutManager(binding.root.context)
         binding.pricesRecyclerView.adapter = MedicineInfoAdapter(hospital)
         binding.pricesRecyclerView.visibility = View.GONE
-
+        initMapButton()
         initWishButton(hospital, requestId, regionId, query, onWishListClicked)
         initShowMedicineButton(hospital)
     }
@@ -74,6 +78,15 @@ class HospitalHolder(
             }
             onWishListClicked?.invoke(hospital.wish)
         }
+    }
+    private fun initMapButton(hospital: Hospital){
+            binding.showGeolocationButton.setOnClickListener {
+                val geoPointsList = GeoPointsList(mutableListOf(GeoPoint(hospital.latitude, hospital.longitude)))
+                findNavController(binding.root).navigate(
+                    if(isWish) HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList)
+                    else HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList)
+                )
+            }
     }
     private fun setPharmacyPriceVisibility(imageResource: Int, hospital: Hospital?,
                                            visibleFlag: Int, flag: Boolean){

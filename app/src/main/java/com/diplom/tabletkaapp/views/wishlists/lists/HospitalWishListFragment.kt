@@ -18,6 +18,7 @@ import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
 import com.diplom.tabletkaapp.firebase.database.OnCompleteListener
 import com.diplom.tabletkaapp.firebase.database.OnReadCancelled
 import com.diplom.tabletkaapp.models.AbstractModel
+import com.diplom.tabletkaapp.models.data_models.GeoPointsList
 import com.diplom.tabletkaapp.parser.HospitalParser
 import com.diplom.tabletkaapp.util.CacheHospitalConverter
 import com.diplom.tabletkaapp.view_models.adapters.lists.WishListAdapter
@@ -25,12 +26,13 @@ import com.diplom.tabletkaapp.view_models.cache.HospitalCacher
 import com.diplom.tabletkaapp.view_models.list.adapters.HospitalAdapter
 import com.diplom.tabletkaapp.view_models.wish_lists.WishListViewModel
 import com.diplom.tabletkaapp.views.lists.AbstractModelList
-import com.diplom.tabletkaapp.views.lists.simple_lists.HospitalModelListDirections
-import com.diplom.tabletkaapp.views.lists.simple_lists.MedicineModelListDirections
+import com.diplom.tabletkaapp.views.wishlists.lists.HospitalWishListFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import models.Hospital
 import models.Medicine
+import org.osmdroid.util.GeoPoint
 
 class HospitalWishListFragment: AbstractModelList() {
 
@@ -70,8 +72,12 @@ class HospitalWishListFragment: AbstractModelList() {
 
     private fun initFloatingButton(){
         binding.floatingActionButton.setOnClickListener {
+            val geoPointsList = GeoPointsList(model.modelList.flatMap {
+                val hospital = (it as Hospital)
+                mutableListOf(GeoPoint(hospital.latitude, hospital.longitude))
+            } as MutableList<GeoPoint>)
             findNavController(binding.root).navigate(
-                HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment()
+                HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList)
             )
         }
     }
@@ -86,6 +92,7 @@ class HospitalWishListFragment: AbstractModelList() {
     private fun initFirebaseRecylcerView(){
         wishModel.loadFromDatabase(object : OnCompleteListener {
             override fun complete(list: MutableList<AbstractModel>) {
+                if(binding_ == null) return
                 binding.recyclerView.layoutManager = LinearLayoutManager(context)
                 binding.recyclerView.adapter = WishListAdapter(list){wish->
                     loadFromFirebase()

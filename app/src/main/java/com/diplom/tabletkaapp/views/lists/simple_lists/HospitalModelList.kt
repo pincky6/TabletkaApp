@@ -12,6 +12,7 @@ import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
 import com.diplom.tabletkaapp.models.AbstractModel
+import com.diplom.tabletkaapp.models.data_models.GeoPointsList
 import com.diplom.tabletkaapp.parser.HospitalParser
 import com.diplom.tabletkaapp.parser.MedicineParser
 import com.diplom.tabletkaapp.util.CacheHospitalConverter
@@ -22,11 +23,12 @@ import com.diplom.tabletkaapp.view_models.cache.MedicineCacher
 import com.diplom.tabletkaapp.view_models.list.adapters.HospitalAdapter
 import com.diplom.tabletkaapp.view_models.list.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.views.lists.AbstractModelList
-import com.diplom.tabletkaapp.views.wishlists.lists.HospitalWishListFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import models.Hospital
 import models.Medicine
+import org.osmdroid.util.GeoPoint
 
 class HospitalModelList:
 AbstractModelList() {
@@ -105,7 +107,7 @@ AbstractModelList() {
         }
         binding.infoButton.setOnClickListener{
             Navigation.findNavController(binding.root).navigate(
-                MedicineModelListDirections.showInfoFragment(hospitalModel.medicine.toString())
+                HospitalModelListDirections.showInfoFragment(hospitalModel.medicine.toString())
             )
         }
     }
@@ -133,8 +135,12 @@ AbstractModelList() {
 
     private fun initFloatingButton(){
         binding.floatingActionButton.setOnClickListener {
+            val geoPointsList = GeoPointsList(model.modelList.flatMap {
+                val hospital = (it as Hospital)
+                mutableListOf(GeoPoint(hospital.latitude, hospital.longitude))
+            } as MutableList<GeoPoint>)
             Navigation.findNavController(binding.root).navigate(
-                HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment()
+                HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList)
             )
         }
     }

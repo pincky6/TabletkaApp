@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 import models.Medicine
 
 abstract class AbstractModelList: Fragment() {
-    private var binding_: FragmentListBinding? = null
+    protected var binding_: FragmentListBinding? = null
     val binding get() = binding_!!
 
     var model: AbstractModelViewModel = AbstractModelViewModel()

@@ -21,6 +21,7 @@ class MapFragment: Fragment() {
         binding.mapView.setTileSource(TileSourceFactory.MAPNIK)
         binding.mapView.setMultiTouchControls(true)
         binding.mapView.overlays.add(RotationGestureOverlay(binding.mapView))
+
         return binding.root
     }
 
