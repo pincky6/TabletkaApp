@@ -53,6 +53,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+    implementation("org.osmdroid:osmdroid-android:6.1.16")
+    implementation("com.github.MKergall:osmbonuspack:6.9.0")
     // To use Kotlin Symbol Processing (KSP)
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
