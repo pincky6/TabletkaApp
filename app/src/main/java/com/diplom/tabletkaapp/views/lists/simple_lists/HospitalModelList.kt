@@ -140,7 +140,7 @@ AbstractModelList() {
                 mutableListOf(GeoPoint(hospital.latitude, hospital.longitude))
             } as MutableList<GeoPoint>)
             Navigation.findNavController(binding.root).navigate(
-                HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList)
+                HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList, null)
             )
         }
     }

@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.diplom.tabletkaapp"
-        minSdk = 26
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -53,8 +53,12 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-    implementation(libs.osmdroid.android)
+    implementation ("org.osmdroid:osmdroid-android:6.1.13")
+    implementation ("org.apache.commons:commons-lang3:3.8.1")
+    implementation ("com.google.code.gson:gson:2.8.6")
+    implementation ("com.squareup.okhttp3:okhttp:4.7.2")
     implementation(libs.material.v140)
+    implementation(libs.osmbonuspack)
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
     implementation("org.jsoup:jsoup:1.17.2")

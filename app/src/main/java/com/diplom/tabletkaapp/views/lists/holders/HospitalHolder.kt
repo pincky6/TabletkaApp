@@ -83,8 +83,8 @@ class HospitalHolder(
             binding.showGeolocationButton.setOnClickListener {
                 val geoPointsList = GeoPointsList(mutableListOf(GeoPoint(hospital.latitude, hospital.longitude)))
                 findNavController(binding.root).navigate(
-                    if(isWish) HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList)
-                    else HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList)
+                    if(isWish) HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList, hospital)
+                    else HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList, hospital)
                 )
             }
     }

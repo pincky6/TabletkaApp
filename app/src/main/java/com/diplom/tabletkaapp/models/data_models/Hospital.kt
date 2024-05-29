@@ -1,6 +1,7 @@
 package models
 
 import com.diplom.tabletkaapp.models.AbstractModel
+import java.io.Serializable
 import java.util.Date
 
 data class Hospital(
@@ -11,7 +12,7 @@ data class Hospital(
     val expirationDates: MutableList<Date>,
     val packagesNumber: MutableList<Int>,
     val prices: MutableList<Double>
-): AbstractModel(id, wish, name){
+): AbstractModel(id, wish, name), Serializable {
     constructor(): this("", false, "", "", 0.0,
         0.0, "", "", arrayListOf(), arrayListOf(),
         mutableListOf()

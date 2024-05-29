@@ -77,7 +77,7 @@ class HospitalWishListFragment: AbstractModelList() {
                 mutableListOf(GeoPoint(hospital.latitude, hospital.longitude))
             } as MutableList<GeoPoint>)
             findNavController(binding.root).navigate(
-                HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList)
+                HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList, null)
             )
         }
     }

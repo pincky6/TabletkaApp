@@ -40,15 +40,19 @@ class MapInfoBottomSheetFragment: Fragment() {
     }
 
     fun setHospital(newHospital: Hospital){
-        binding.hospitalInfoPanel.name.text = newHospital.name
-        binding.hospitalInfoPanel.address.text = newHospital.address
-        binding.hospitalInfoPanel.phone.text = newHospital.phone
+        if(_binding != null) {
+            binding.hospitalInfoPanel.name.text = newHospital.name
+            binding.hospitalInfoPanel.address.text = newHospital.address
+            binding.hospitalInfoPanel.phone.text = newHospital.phone
 
-        model.hospital = newHospital
+            model.hospital = newHospital
+        }
     }
 
     fun hideHospitalInfo(){
-        binding.hospitalInfoPanel.root.visibility = View.GONE
+        if(_binding != null) {
+            binding.hospitalInfoPanel.root.visibility = View.GONE
+        }
     }
 
     private fun expandPanel() {
