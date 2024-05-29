@@ -41,8 +41,8 @@ class MapViewModel: ViewModel() {
                     binding.mapView.overlays.removeAll {
                         it is Polyline
                     }
-//                    buildRoadMap(context, binding,
-//                        geoPoint, )
+                    buildRoadMap(context, binding,
+                        geoPoint, OSRMRoadManager.MEAN_BY_FOOT)
                     return@setOnMarkerClickListener true
                 }
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
