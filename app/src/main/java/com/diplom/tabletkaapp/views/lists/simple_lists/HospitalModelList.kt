@@ -22,6 +22,7 @@ import com.diplom.tabletkaapp.view_models.cache.MedicineCacher
 import com.diplom.tabletkaapp.view_models.list.adapters.HospitalAdapter
 import com.diplom.tabletkaapp.view_models.list.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.views.lists.AbstractModelList
+import com.diplom.tabletkaapp.views.wishlists.lists.HospitalWishListFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +40,7 @@ AbstractModelList() {
         initGetFilter(true)
 
         hideUselessUI()
-
+        initFloatingButton()
         val query = arguments?.getString("query") ?: ""
         val requestId = arguments?.getInt("requestId")?.toLong() ?: 0
         val regionId = arguments?.getInt("regionId") ?: 0
@@ -127,6 +128,14 @@ AbstractModelList() {
                 FirebaseMedicineDatabase.delete(hospitalModel.medicine, requestId, regionId, query)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
+        }
+    }
+
+    private fun initFloatingButton(){
+        binding.floatingActionButton.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(
+                HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment()
+            )
         }
     }
 }

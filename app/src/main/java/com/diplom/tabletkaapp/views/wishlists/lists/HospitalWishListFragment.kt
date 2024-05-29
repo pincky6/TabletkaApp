@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
@@ -48,6 +49,7 @@ class HospitalWishListFragment: AbstractModelList() {
         wishModel.database = FirebaseHospitalDatabase
         initUpdateButton()
         initFilterButton()
+        initFloatingButton()
         return binding.root
     }
     private fun initUpdateButton(){
@@ -57,11 +59,19 @@ class HospitalWishListFragment: AbstractModelList() {
     }
     private fun initFilterButton(){
         initFilterButton {
-            Navigation.findNavController(binding.root).navigate(
-                HospitalModelListDirections.showListFilterDialogFragmentHospital(true,
+            findNavController(binding.root).navigate(
+                HospitalWishListFragmentDirections.showListFilterDialogFragmentHospitalWish(true,
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.sortMask)
+            )
+        }
+    }
+
+    private fun initFloatingButton(){
+        binding.floatingActionButton.setOnClickListener {
+            findNavController(binding.root).navigate(
+                HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment()
             )
         }
     }
@@ -112,4 +122,6 @@ class HospitalWishListFragment: AbstractModelList() {
             (binding.recyclerView.adapter as WishListAdapter).notifyDataSetChanged()
         }
     }
+
+
 }

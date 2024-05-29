@@ -67,5 +67,6 @@ class MedicineModelList:
     private fun hideUselessUI(){
         binding.updateButton.visibility = View.GONE
         binding.medicineInfo.visibility = View.GONE
+        binding.floatingActionButton.visibility = View.GONE
     }
 }

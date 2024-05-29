@@ -54,7 +54,6 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
     implementation(libs.osmdroid.android)
-    implementation(libs.osmbonuspack)
     implementation(libs.material.v140)
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))

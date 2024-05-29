@@ -16,6 +16,7 @@ import com.diplom.tabletkaapp.view_models.adapters.lists.WishListAdapter
 import com.diplom.tabletkaapp.view_models.wish_lists.WishListViewModel
 import com.diplom.tabletkaapp.views.lists.AbstractModelList
 import com.diplom.tabletkaapp.views.lists.simple_lists.HospitalModelListDirections
+import com.diplom.tabletkaapp.views.wishlists.lists.MedicineWishListFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -61,7 +62,7 @@ class MedicineWishListFragment: AbstractModelList() {
     private fun initFilterButton(){
         initFilterButton {
             Navigation.findNavController(binding.root).navigate(
-                HospitalModelListDirections.showListFilterDialogFragmentHospital(true,
+                MedicineWishListFragmentDirections.showListFilterDialogFragmentMedicineWish(false,
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.minPrice.toFloat(),
                     model.listFilter.sortMask)
@@ -75,6 +76,7 @@ class MedicineWishListFragment: AbstractModelList() {
 
     private fun hideUselessUI(){
         binding.medicineInfo.visibility = View.GONE
+        binding.floatingActionButton.visibility = View.GONE
     }
 
     private fun loadFromFirebase(){

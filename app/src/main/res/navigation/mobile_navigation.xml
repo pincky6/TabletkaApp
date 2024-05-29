@@ -142,6 +142,9 @@
             app:argType="integer" />
         <argument android:name="medicine"
             app:argType="models.Medicine"/>
+        <action
+            android:id="@+id/action_hospitalModelList_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/medicineWishListFragment"
@@ -158,5 +161,12 @@
         <action
             android:id="@+id/showListFilterDialogFragmentHospitalWish"
             app:destination="@id/listFilterDialogFragment" />
+        <action
+            android:id="@+id/action_hospitalWishListFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.diplom.tabletkaapp.views.map.MapFragment"
+        android:label="MapFragment" />
 </navigation>
