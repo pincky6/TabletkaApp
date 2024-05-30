@@ -138,7 +138,6 @@ class MainMenuFragment : Fragment() {
             override fun onSuggestionSelect(position: Int): Boolean {
                 return false
             }
-
             override fun onSuggestionClick(position: Int): Boolean {
                 val cursor = binding.searchMedicines.suggestionsAdapter.getItem(position) as Cursor
                 val columnIndex = cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1)
@@ -147,7 +146,6 @@ class MainMenuFragment : Fragment() {
                 binding.searchMedicines.setQuery(suggestion, true)
                 return true
             }
-
         })
     }
     private fun navigateToMedicineList(query: String, requestId: Long) {

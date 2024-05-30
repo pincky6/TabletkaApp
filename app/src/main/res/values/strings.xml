@@ -4,6 +4,7 @@
     <string name="title_main_menu">Главное</string>
     <string name="title_wish_list">Избранное</string>
     <string name="title_profile">Профиль</string>
+    <string name="title_notes">Заметки</string>
 
     <string name="sign_in_text">Войти</string>
     <string name="sign_up_text">Зарегистрироваться</string>
@@ -65,5 +66,7 @@
 
     <string name="from_address">От</string>
     <string name="to_address">До</string>
+
+    <string name="add_note_text">Добавить Заметки</string>
 
 </resources>

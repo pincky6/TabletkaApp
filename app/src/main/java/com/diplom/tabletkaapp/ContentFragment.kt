@@ -30,7 +30,8 @@ class ContentFragment: Fragment() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.navigation_main_menu ||
                 destination.id == R.id.navigation_wish_list ||
-                destination.id == R.id.navigation_profile) {
+                destination.id == R.id.navigation_profile ||
+                destination.id == R.id.navigation_notes) {
                     binding.navView.setVisibility(View.VISIBLE)
                     return@addOnDestinationChangedListener
             }

@@ -9,7 +9,8 @@ import com.diplom.tabletkaapp.models.cache_data_models.converters.PriceRangeConv
 import java.util.Date
 
 @Entity(tableName = "hospitals")
-data class HospitalEntity(
+data class
+HospitalEntity(
     @PrimaryKey
     val id: String,
     val wish: Boolean,

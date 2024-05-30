@@ -179,4 +179,16 @@
             app:argType="models.Hospital"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_notes"
+        android:name="com.diplom.tabletkaapp.views.notes.NotesFragment"
+        android:label="NotesFragment" >
+        <action
+            android:id="@+id/action_navigation_notes_to_notesRedactorFragment"
+            app:destination="@id/notesRedactorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notesRedactorFragment"
+        android:name="com.diplom.tabletkaapp.views.notes.NotesRedactorFragment"
+        android:label="NotesRedactorFragment" />
 </navigation>

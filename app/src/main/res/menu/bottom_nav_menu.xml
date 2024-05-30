@@ -11,6 +11,10 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_wish_list" />
 
+    <item
+        android:id="@+id/navigation_notes"
+        android:icon="@drawable/baseline_edit_note_24"
+        android:title="@string/title_notes"/>
 
     <item
         android:id="@+id/navigation_profile"
