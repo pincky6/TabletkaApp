@@ -59,4 +59,11 @@
     <string name="by_velo_text">На самокате</string>
     <string name="build_road_text">Построить маршрут</string>
 
+    <string name="on_car_text">На машине:</string>
+    <string name="on_foot_text">Пешком:</string>
+    <string name="on_bike_text">На скутере/велосипеде:</string>
+
+    <string name="from_address">От</string>
+    <string name="to_address">До</string>
+
 </resources>
