@@ -55,6 +55,7 @@ class HospitalWishListFragment: AbstractModelList() {
         return binding.root
     }
     private fun initUpdateButton(){
+        binding.updateButton.setText(getText(R.string.update_wish_list))
         binding.updateButton.setOnClickListener {
             loadFromFirebase()
         }

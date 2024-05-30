@@ -71,4 +71,9 @@
     <string name="note_title_text">Заголовок</string>
     <string name="note_text">Текст Заметки</string>
 
+    <string name="update_wish_list">Обновить список</string>
+
+    <string name="theme_spiner_text">Сменить тему</string>
+    <string name="note_layout_spiner_text">Сменить вид заметки</string>
+
 </resources>
