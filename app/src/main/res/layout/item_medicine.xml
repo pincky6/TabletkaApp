@@ -7,14 +7,16 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:background="@drawable/grid_border">
+    android:background="@drawable/grid_border"
+    android:backgroundTint="?attr/background_item_color">
 
     <TextView
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?attr/background_item_color"
         android:text="@string/unknown"
-        android:textColor="@color/green"
+        android:textColor="?attr/text_color"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/price"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,10 +26,11 @@
         android:id="@+id/compound"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?attr/background_item_color"
         android:text="@string/unknown"
-        android:textColor="@color/green"
+        android:textColor="?attr/text_color"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/wish_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/company_name" />
 
@@ -35,10 +38,11 @@
         android:id="@+id/company_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?attr/background_item_color"
         android:text="@string/unknown"
-        android:textColor="@color/green"
+        android:textColor="?attr/text_color"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/wish_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe" />
 
@@ -46,8 +50,10 @@
         android:id="@+id/recipe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?attr/background_item_color"
         android:text="@string/unknown"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="?attr/text_color"
+        app:layout_constraintEnd_toStartOf="@+id/wish_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -55,8 +61,10 @@
         android:id="@+id/recipe_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?attr/background_item_color"
         android:text="@string/unknown"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="?attr/text_color"
+        app:layout_constraintEnd_toStartOf="@+id/wish_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/compound" />
 
@@ -64,6 +72,7 @@
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/background_item_color"
         android:text="@string/unknown"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,31 +82,12 @@
         android:id="@+id/wish_button"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
+        android:background="?attr/background_item_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_info"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.659"
         app:srcCompat="@android:drawable/btn_star_big_off" />
 
-    <ImageButton
-        android:id="@+id/info_button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/copy_button"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_info"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/baseline_info_24" />
-
-    <ImageButton
-        android:id="@+id/copy_button"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="180dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/wish_button"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_info"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/baseline_content_copy_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

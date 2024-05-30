@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="360dp"
+    android:background="?attr/background_item_color"
     android:layout_height="wrap_content">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/filter_title"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:textColor="?attr/text_color"
         android:text="@string/from_price"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
@@ -34,6 +37,7 @@
         android:ems="10"
         android:hint="@string/price_string"
         android:inputType="text"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toEndOf="@+id/from_price_text_view"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 
@@ -43,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:textColor="?attr/text_color"
         android:hint="@string/to_price"
         app:layout_constraintStart_toEndOf="@+id/min_price"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
@@ -55,6 +60,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:textColor="?attr/text_color"
         android:hint="@string/price_string"
         android:inputType="text"
         app:layout_constraintStart_toEndOf="@+id/to_price_text_view"
@@ -77,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
+        android:textColor="?attr/text_color"
         android:text="@string/sort_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/from_price_text_view" />
@@ -97,6 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:text="@string/price_sort_title"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -106,6 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:text="@string/count_cort_title"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sort_by_min_price_check_box" />
 
@@ -115,6 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:text="@string/title_sort_title"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sort_by_count_check_box" />
 
@@ -124,6 +134,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:text="@string/distance_title"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sort_by_title_check_box" />
 
@@ -133,7 +144,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="?attr/button_color"
         android:text="@string/ok_button"
+        android:textColor="?attr/text_color"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/distance_sort_check_box" />
 
@@ -143,7 +158,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="?attr/button_color"
         android:text="@string/cancel_button"
+        android:textColor="?attr/text_color"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ok_button"
         app:layout_constraintTop_toBottomOf="@+id/distance_sort_check_box" />

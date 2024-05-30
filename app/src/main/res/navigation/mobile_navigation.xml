@@ -190,5 +190,9 @@
     <fragment
         android:id="@+id/notesRedactorFragment"
         android:name="com.diplom.tabletkaapp.views.notes.NotesRedactorFragment"
-        android:label="NotesRedactorFragment" />
+        android:label="NotesRedactorFragment" >
+        <argument
+            android:name="note"
+            app:argType="com.diplom.tabletkaapp.models.data_models.Note" />
+    </fragment>
 </navigation>

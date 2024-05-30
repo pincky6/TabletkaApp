@@ -11,6 +11,13 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+        <item name="text_color"      >#FFFFFF</item>
+        <item name="button_color"    >#000966</item>
+        <item name="border_color"    >#FFFFFF</item>
+        <item name="note_color"      >#FFFFFF</item>
+        <item name="background_color">#000000</item>
+        <item name="note_color_border">#FFFFFF</item>
+        <item name="background_item_color">#242424</item>
     </style>
 </resources>

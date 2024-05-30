@@ -15,8 +15,10 @@ import com.diplom.tabletkaapp.firebase.database.FirebaseSettingsDatabase
 import com.diplom.tabletkaapp.firebase.database.OnCompleteListener
 import com.diplom.tabletkaapp.firebase.database.OnReadCancelled
 import com.diplom.tabletkaapp.models.AbstractModel
+import com.diplom.tabletkaapp.models.data_models.Note
 import com.diplom.tabletkaapp.view_models.SettingsViewModel
 import com.diplom.tabletkaapp.view_models.adapters.NotesAdapter
+import com.diplom.tabletkaapp.view_models.firebase.database.FirebaseNotesDatabase
 import com.diplom.tabletkaapp.view_models.notes.NotesViewModel
 
 class NotesFragment: Fragment() {
@@ -31,11 +33,22 @@ class NotesFragment: Fragment() {
     ): View {
         binding_ = FragmentNoteListBinding.inflate(inflater, container, false)
         initNoteList()
-        initBackButton()
         initMenu()
         return binding.root
     }
     private fun initNoteList(){
+        updateUI()
+    }
+    private fun initMenu(){
+        binding.floatingActionButton.setOnClickListener {item ->
+            val note = Note()
+            note.id = "-1"
+            findNavController(binding.root).navigate(
+                NotesFragmentDirections.actionNavigationNotesToNotesRedactorFragment(note)
+            )
+        }
+    }
+    private fun updateUI(){
         model.loadFromFirebase(object : OnCompleteListener{
             override fun complete(list: MutableList<AbstractModel>) {
                 FirebaseSettingsDatabase.readAll(SettingsViewModel()){
@@ -44,30 +57,18 @@ class NotesFragment: Fragment() {
                     } else {
                         binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                     }
-                    binding.recyclerView.adapter = NotesAdapter(list, it.notesMode)
+                    binding.recyclerView.adapter = NotesAdapter(list, it.notesMode){
+                        updateUI()
+                    }
                 }
             }
         },
-        object : OnReadCancelled{
-            override fun cancel() {
+            object : OnReadCancelled{
+                override fun cancel() {
 
-            }
+                }
 
-        })
-    }
-
-    private fun initBackButton() {
-        binding.materialToolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
-        binding.materialToolbar.setNavigationOnClickListener { v: View ->
-            findNavController(binding.root).popBackStack()
-        }
-    }
-
-    private fun initMenu(){
-        binding.floatingActionButton.setOnClickListener {item ->
-                findNavController(binding.root).navigate(
-                    NotesFragmentDirections.actionNavigationNotesToNotesRedactorFragment()
-                )
-        }
+            })
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#FFFFFF" /> <!-- Цвет фона (белый) -->
-    <stroke android:width="0.5dp" android:color="#000000" /> <!-- Цвет границы (черный) -->
+    <solid android:color="?attr/background_item_color" /> <!-- Цвет фона (белый) -->
+    <stroke android:width="0.5dp"
+        android:color="?attr/border_color" /> <!-- Цвет границы (черный) -->
 </shape>

@@ -5,7 +5,8 @@
     android:layout_marginEnd="8dp"
     android:layout_marginTop="8dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/background_item_color">
 
     <LinearLayout
         android:id="@+id/pharmacy_layout"
@@ -15,12 +16,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageButton
             android:id="@+id/show_geolocation_button"
-            android:layout_width="wrap_content"
+            android:layout_width="96dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/baseline_adjust_24"/>
+            android:backgroundTint="?attr/background_item_color"
+            android:src="@drawable/baseline_adjust_24" />
         <LinearLayout
             android:id="@+id/pharmacy_info_layout"
             android:layout_width="match_parent"
@@ -32,7 +35,9 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/background_item_color"
                 android:text="@string/unknown"
+                android:textColor="?attr/text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +46,9 @@
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/background_item_color"
                 android:text="@string/unknown"
+                android:textColor="?attr/text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/name" />
@@ -50,23 +57,29 @@
                 android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/background_item_color"
                 android:text="@string/unknown"
+                android:textColor="?attr/text_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/address" />
         </LinearLayout>
+
         <ImageButton
             android:id="@+id/hospital_wish_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="?attr/background_item_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@android:drawable/btn_star_big_off" />
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pricesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/background_item_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

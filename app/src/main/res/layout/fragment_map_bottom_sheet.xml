@@ -42,16 +42,17 @@
     app:layout_constraintTop_toBottomOf="@+id/textView"
     android:orientation="horizontal"
     >
+
     <ImageButton
         android:id="@+id/by_foot_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:src="@drawable/baseline_man_24"
-        android:text="@string/by_foot_text"
         android:layout_weight="1"
-         />
+        android:backgroundTint="?attr/background_item_color"
+        android:src="@drawable/baseline_man_24"
+        android:text="@string/by_foot_text" />
 
     <ImageButton
         android:id="@+id/by_car_button"
@@ -59,9 +60,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:backgroundTint="?attr/background_item_color"
         android:src="@drawable/baseline_directions_car_24"
-        android:text="@string/by_car_text"
-        android:layout_weight="1"/>
+        android:text="@string/by_car_text" />
 
     <ImageButton
         android:id="@+id/by_velo_button"
@@ -69,8 +71,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:backgroundTint="?attr/background_item_color"
         android:src="@drawable/baseline_bike_scooter_24"
-        android:text="@string/by_velo_text"
-        android:layout_weight="1"/>
+        android:text="@string/by_velo_text" />
 </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

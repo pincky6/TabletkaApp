@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="600dp">
+    android:layout_height="500dp"
+    android:background="?attr/background_color">
 
     <TextView
         android:id="@+id/road_type_text"
@@ -13,6 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back_button" />
 
@@ -23,6 +24,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toEndOf="@+id/to_text"
         app:layout_constraintTop_toBottomOf="@+id/from_address_text" />
 
@@ -33,6 +35,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="@string/from_address"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -43,6 +46,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="@string/to_address"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/from_text" />
 
@@ -53,6 +57,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="TextView"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toEndOf="@+id/from_text"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -62,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/road_type_text" />
 

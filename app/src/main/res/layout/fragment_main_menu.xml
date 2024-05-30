@@ -43,10 +43,10 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                android:background="#FFFFFF"
+                android:background="@drawable/grid_border"
                 android:layoutDirection="rtl"
                 android:queryHint="@string/search_medicine_hint"
-                app:queryHint="@string/search_medicine_hint"/>
+                app:queryHint="@string/search_medicine_hint" />
         </LinearLayout>
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="?attr/background_item_color"
                 android:contentDescription="@string/all_regions_string"
                 android:src="@drawable/baseline_wish_list_24"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="?attr/background_item_color"
                 android:contentDescription="@string/all_regions_string"
                 android:src="@drawable/baseline_local_hospital_24"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="24dp"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?attr/background_item_color"
             android:src="@drawable/baseline_move_to_site_app_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="?attr/background_item_color"
                 android:src="@drawable/baseline_enter_circle_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

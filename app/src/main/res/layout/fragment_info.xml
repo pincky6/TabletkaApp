@@ -21,5 +21,7 @@
         android:layout_marginStart="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
+        android:textColor="?attr/text_color"
+        android:background="?attr/background"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

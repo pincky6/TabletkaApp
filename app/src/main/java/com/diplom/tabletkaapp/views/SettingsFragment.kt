@@ -48,6 +48,7 @@ class SettingsFragment: Fragment() {
             binding.profileText.text = "Вы не зарегестрированы"
         }
         FirebaseSettingsDatabase.readAll(model){
+            model.settings = it
             initThemeModeSpinner()
             initNoteModeSpinner()
             initLoginButton()
@@ -120,7 +121,7 @@ class SettingsFragment: Fragment() {
                     view?.let {
                         if (parent.adapter.getItem(position).toString() == "Списком") {
                             model.settings.notesMode = 0
-                        } else if (parent.adapter.getItem(position).toString() == "Сетка") {
+                        } else if (parent.adapter.getItem(position).toString() == "Сеткой") {
                             model.settings.notesMode = 1
                         }
                         CoroutineScope(Dispatchers.IO).launch {

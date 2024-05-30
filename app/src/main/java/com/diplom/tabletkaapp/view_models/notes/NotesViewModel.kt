@@ -10,6 +10,7 @@ import com.diplom.tabletkaapp.view_models.firebase.database.FirebaseNotesDatabas
 object NotesViewModel: ViewModel() {
     var list: MutableList<AbstractModel> = mutableListOf()
     fun loadFromFirebase(onCompleteListener: OnCompleteListener, onReadCancelled: OnReadCancelled){
+        list.clear()
         FirebaseNotesDatabase.readAll(list, onCompleteListener, onReadCancelled)
     }
     fun add(note: Note){

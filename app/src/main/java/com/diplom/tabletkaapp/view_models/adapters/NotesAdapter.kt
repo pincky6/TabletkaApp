@@ -13,7 +13,8 @@ import com.diplom.tabletkaapp.views.notes.holders.NoteHolderLinear
 
 class NotesAdapter(
     var list: MutableList<AbstractModel>,
-    val noteMode: Int
+    val noteMode: Int,
+    val onUpdateUI: () -> Unit
 ): RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflate = LayoutInflater.from(parent.context)
@@ -28,9 +29,9 @@ class NotesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (noteMode == 0){
-            (holder as NoteHolderGrid).bind(list[position] as Note)
+            (holder as NoteHolderLinear).bind(list[position] as Note, onUpdateUI)
         } else {
-            (holder as NoteHolderGrid).bind(list[position] as Note)
+            (holder as NoteHolderGrid).bind(list[position] as Note, onUpdateUI)
         }
     }
 

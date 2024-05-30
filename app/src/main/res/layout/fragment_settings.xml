@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Unknown"
+        android:textColor="?attr/text_color"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -44,8 +45,10 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
+        android:background="?attr/button_color"
         android:text="@string/enter_string"
         android:textAlignment="viewStart"
+        android:textColor="?attr/text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/settings_common"
+        android:textColor="?attr/text_color"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/move_to_site_button" />
@@ -101,8 +105,10 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
+        android:background="?attr/button_color"
         android:text="@string/move_to_site_string"
         android:textAlignment="textStart"
+        android:textColor="?attr/text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +121,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
+        android:background="?attr/button_color"
         android:text="@string/reset_password_text"
+        android:textColor="?attr/text_color"
         app:layout_constraintBottom_toTopOf="@+id/exit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -128,7 +136,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
+        android:background="?attr/button_color"
         android:text="@string/exit_button_text"
+        android:textColor="?attr/text_color"
         app:layout_constraintBottom_toTopOf="@+id/delete_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -140,7 +150,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
+        android:background="?attr/button_color"
         android:text="@string/delete_button_text"
+        android:textColor="?attr/text_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -152,6 +164,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line4" />
 
@@ -162,6 +175,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textColor="?attr/text_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
