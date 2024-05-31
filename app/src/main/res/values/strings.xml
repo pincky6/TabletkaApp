@@ -76,4 +76,5 @@
     <string name="theme_spiner_text">Сменить тему</string>
     <string name="note_layout_spiner_text">Сменить вид заметки</string>
 
+    <string name="search_string">Поиск…</string>
 </resources>

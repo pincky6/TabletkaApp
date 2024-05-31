@@ -44,13 +44,15 @@ class NoteHolderGrid(
                         false -> View.GONE
                         true -> View.VISIBLE
                     }
-                    FirebaseNotesDatabase.add(note)
-                    onUpdateUI.invoke()
+                    FirebaseNotesDatabase.add(note) {
+                        onUpdateUI.invoke()
+                    }
                 }
                 .setNegativeButton("Удалить"
                 ) { dialog: DialogInterface?, id: Int ->
-                    FirebaseNotesDatabase.delete(note)
-                    onUpdateUI.invoke()
+                    FirebaseNotesDatabase.delete(note) {
+                        onUpdateUI.invoke()
+                    }
                 }
             val dialog = builder.create()
             dialog.show()

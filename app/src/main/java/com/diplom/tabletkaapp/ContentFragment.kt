@@ -1,13 +1,20 @@
 package com.diplom.tabletkaapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
+import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.diplom.tabletkaapp.databinding.FragmentContentBinding
+import com.diplom.tabletkaapp.views.mainmenu.MainMenuFragment
 
 class ContentFragment: Fragment() {
     private var _binding: FragmentContentBinding? = null
@@ -37,6 +44,16 @@ class ContentFragment: Fragment() {
             }
             binding.navView.setVisibility(View.GONE)
         }
+
+        val navigation = childFragmentManager.findFragmentById(R.id.content_navigation) as NavHostFragment
+        Log.d("jio", navigation.toString())
+        navigation.childFragmentManager.setFragmentResultListener(
+            MainMenuFragment.SWITCH_TO_WISH_LIST,
+            viewLifecycleOwner){_, _ ->
+            binding.navView.selectedItemId = R.id.navigation_wish_list
+        }
+//        NavHostFragment{762fdd3} (44a41aaf-e101-49bc-903c-27c0378f7746 id=0x7f08009c)
+
     }
 
     override fun onDestroyView() {

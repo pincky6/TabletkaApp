@@ -164,10 +164,20 @@ class MainMenuFragment : Fragment() {
                 MainMenuFragmentDirections.showLoginFragment()
             )
         }
+        Log.d("PARENT", parentFragment.toString())
+        binding.wishListButton.setOnClickListener {
+            parentFragmentManager.setFragmentResult(
+                SWITCH_TO_WISH_LIST,
+                Bundle())
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object{
+        const val SWITCH_TO_WISH_LIST = "SWITCH_TO_WISH_LIST"
     }
 }

@@ -47,12 +47,25 @@ object FirebaseNotesDatabase: TabletkaDatabase {
         notesDatabase.child(model.id
         ).setValue(pharmacy)
     }
+    fun add(model: AbstractModel, onUpdateListener: (()->Unit)?) {
+        val pharmacy = model as Note
+        notesDatabase.child(model.id
+        ).setValue(pharmacy).addOnSuccessListener{
+            onUpdateListener?.invoke()
+        }
+    }
 
     override fun delete(model: AbstractModel, requestId: Long, regionId: Int, query: String) {
     }
 
-    override fun delete(model: AbstractModel){
+    override fun delete(model: AbstractModel) {
         notesDatabase.child(model.id ).removeValue()
+
+    }
+    fun delete(model: AbstractModel, onUpdateListener: (()->Unit)?){
+        notesDatabase.child(model.id ).removeValue().addOnSuccessListener {
+            onUpdateListener?.invoke()
+        }
     }
     override fun generateKey(): String {
         return notesDatabase.push().key ?: "null_key"

@@ -21,12 +21,13 @@ class NoteHolderLinear(
                 NotesFragmentDirections.actionNavigationNotesToNotesRedactorFragment(note)
             )
         }
-        if (!note.name.isEmpty()) {
-            binding.title.setText(note.name)
-        } else if (note.name.isEmpty() && !note.describe.isEmpty()) {
+        if (note.name.isNotEmpty()) {
+            binding.title.text = note.name
+        } else if (note.name.isEmpty() && note.describe.isNotEmpty()) {
             val length: Int = note.describe.length
             val halfLength = length / 2
-            binding.title.setText(note.describe.substring(0, halfLength))
+            note.name = note.describe.substring(0, halfLength)
+            binding.title.text = note.describe.substring(0, halfLength)
             note.describe = note.describe.substring(halfLength, length)
         }
         binding.root.setOnLongClickListener { v ->
@@ -36,25 +37,28 @@ class NoteHolderLinear(
                 .setNeutralButton(
                     "Закрыть"
                 )
-                { dialog: DialogInterface?, which: Int -> }
+                { _, _ -> }
                 .setPositiveButton(getWishString(note)
-                ) { dialog: DialogInterface?, id: Int ->
+                ) { _, _ ->
                     note.wish = !note.wish
-
                     binding.linkImage.visibility = when (note.wish) {
                         false -> View.GONE
                         true -> View.VISIBLE
                     }
+                    FirebaseNotesDatabase.add(note)
+                }
+                .setNegativeButton("Удалить"
+                ) { _, _ ->
+                    FirebaseNotesDatabase.delete(note)
                     onUpdateUI.invoke()
                 }
-                .setNegativeButton("Удалить",
-                    { dialog: DialogInterface?, id: Int ->
-                        FirebaseNotesDatabase.delete(note)
-                        onUpdateUI.invoke()
-                    })
             val dialog = builder.create()
             dialog.show()
             true
+        }
+        binding.linkImage.visibility = when(note.wish){
+            false -> View.GONE
+            true -> View.VISIBLE
         }
     }
     private fun getWishString(note: Note): String{
