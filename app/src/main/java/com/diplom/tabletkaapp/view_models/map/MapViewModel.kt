@@ -17,7 +17,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentMapBinding
+import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.models.data_models.GeoPointsList
+import com.diplom.tabletkaapp.models.data_models.HospitalShort
+import com.diplom.tabletkaapp.models.data_models.HospitalsList
 import com.diplom.tabletkaapp.views.map.MapFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,35 +39,65 @@ class MapViewModel: ViewModel() {
     lateinit var geoPointsList: GeoPointsList
     lateinit var locationManager: LocationManager
     var currentGeoPoint: GeoPoint? = null
+    var currentHospital: AbstractModel? = null
     var currentMarker: Marker? = null
     var roadType = OSRMRoadManager.MEAN_BY_FOOT
-    var hospital: Hospital? = null
+    var hospitals: HospitalsList? = null
     fun setMarkers(context: Context, fragment: Fragment, binding: FragmentMapBinding){
+        if(geoPointsList.mutableList.size == 0)
+            return
         if(geoPointsList.mutableList.size == 1){
             setZoom(binding, geoPointsList.mutableList[0])
-            currentMarker = setMarker(context, binding, fragment, geoPointsList.mutableList[0])
+            hospitals?.list?.let {
+                currentMarker = setMarker(context, binding, fragment,
+                    it[0], geoPointsList.mutableList[0])
+
+            }
             return
         }
-        for(point in geoPointsList.mutableList){
-            setMarker(context, binding, fragment, point)
+        hospitals?.list?.let {
+            for (i in 0 until geoPointsList.mutableList.size) {
+                setMarker(
+                    context, binding, fragment,
+                    it[i], geoPointsList.mutableList[i]
+                )
+            }
         }
     }
     fun setZoom(binding: FragmentMapBinding, point: GeoPoint){
         binding.mapView.controller.setCenter(point)
         binding.mapView.controller.setZoom(12.0)
     }
-    fun setMarker(context: Context, binding: FragmentMapBinding, fragment: Fragment, geoPoint: GeoPoint): Marker{
+    fun setMarker(context: Context, binding: FragmentMapBinding, fragment: Fragment,
+                  abstractModel: AbstractModel, geoPoint: GeoPoint): Marker{
             val marker = Marker(binding.mapView)
             marker.position = geoPoint
             marker.icon = ContextCompat.getDrawable(context, R.drawable.baseline_location_on_24)
             marker.setOnMarkerClickListener { marker, _ ->
-                fragment.childFragmentManager.setFragmentResult(MapFragment.MARKER_PRESSED, Bundle())
+                if(currentMarker == marker){
+                    currentMarker = null
+                    fragment.childFragmentManager.setFragmentResult(MapFragment.HIDE_VIEW, Bundle())
+                    return@setOnMarkerClickListener true
+                }
+                val bundle = Bundle()
+                currentHospital = abstractModel
+                if(currentHospital is Hospital) {
+                    bundle.putSerializable(
+                        MapFragment.MARKER_PRESSED_HOSPITAL,
+                        abstractModel as Hospital
+                    )
+                    fragment.childFragmentManager.setFragmentResult(MapFragment.MARKER_PRESSED_HOSPITAL, bundle)
+                } else {
+                    bundle.putSerializable(
+                        MapFragment.MARKER_PRESSERD_HOSPITAL_SHORT,
+                        abstractModel as HospitalShort
+                    )
+                    fragment.childFragmentManager.setFragmentResult(MapFragment.MARKER_PRESSERD_HOSPITAL_SHORT, bundle)
+                }
                 currentMarker = marker
                 binding.mapView.overlays.removeAll {
                     it is Polyline
                 }
-                buildRoadMap(context, binding,
-                    geoPoint, roadType)
                 return@setOnMarkerClickListener true
             }
             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
@@ -113,5 +146,11 @@ class MapViewModel: ViewModel() {
                 }
             }
         }
+
+    fun removeRoad(binding: FragmentMapBinding, context: Context){
+        binding.mapView.overlays.removeAll{
+            it is Polyline
+        }
     }
+}
 

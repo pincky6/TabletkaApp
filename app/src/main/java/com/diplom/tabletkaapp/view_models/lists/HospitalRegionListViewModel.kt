@@ -9,8 +9,8 @@ class HospitalRegionListViewModel(
     var list: MutableList<AbstractModel>,
     var regionId: Int,
     val listFilter: ListFilterViewModel,
-    var database: AppDatabase
+    var database: AppDatabase? = null
 ): ViewModel()   {
     constructor(): this(mutableListOf(), 0,
-        ListFilterViewModel())
+        ListFilterViewModel(), null)
 }

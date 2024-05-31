@@ -17,6 +17,8 @@ import androidx.navigation.fragment.findNavController
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentMapBinding
 import com.diplom.tabletkaapp.models.data_models.GeoPointsList
+import com.diplom.tabletkaapp.models.data_models.HospitalShort
+import com.diplom.tabletkaapp.models.data_models.HospitalsList
 import com.diplom.tabletkaapp.util.MapUtil
 import com.diplom.tabletkaapp.view_models.map.MapViewModel
 import models.Hospital
@@ -88,8 +90,8 @@ class MapFragment: Fragment() {
         mapInfoBottomSheetFragment =
             childFragmentManager.findFragmentById(R.id.map_bottom_info) as MapInfoBottomSheetFragment?;
         model.geoPointsList = arguments?.getSerializable("pharmacyGeoPoints") as GeoPointsList
-        model.hospital = arguments?.getSerializable("hospital") as Hospital?
-        if(model.hospital == null){
+        model.hospitals = arguments?.getSerializable("hospitalList") as HospitalsList?
+        if(model.hospitals == null || model.hospitals!!.list.size > 1){
             model.currentGeoPoint?.let { model.setZoom(binding, it) }
         }
         initInfoBottomListeners()
@@ -115,12 +117,17 @@ class MapFragment: Fragment() {
             MapInfoBottomSheetFragment.REQUEST_HOSPITAL,
             viewLifecycleOwner
         ){ _, _ ->
-            if(model.hospital == null){
+            if(model.hospitals == null || model.hospitals!!.list.size > 1){
                 childFragmentManager.setFragmentResult(HOSPITAL_NULL_SEND, Bundle())
             } else{
                 val bundle = Bundle()
-                bundle.putSerializable("HOSPITAL_SEND", model.hospital)
-                childFragmentManager.setFragmentResult(HOSPITAL_SEND, bundle)
+                if(model.hospitals!!.list[0] is Hospital) {
+                    bundle.putSerializable(HOSPITAL_SEND, model.hospitals!!.list[0] as Hospital)
+                    childFragmentManager.setFragmentResult(HOSPITAL_SEND, bundle)
+                } else {
+                    bundle.putSerializable(HOSPITAL_SHORT_SEND, model.hospitals!!.list[0] as HospitalShort)
+                    childFragmentManager.setFragmentResult(HOSPITAL_SHORT_SEND, bundle)
+                }
             }
         }
     }
@@ -152,7 +159,7 @@ class MapFragment: Fragment() {
                 return@setFragmentResultListener
             }
             model.buildRoadMap(requireContext(), binding, model.currentMarker!!.position, model.roadType)
-            model.hospital?.let {
+            model.hospitals?.let {
                 model.currentGeoPoint?.distanceToAsDouble(model.currentMarker!!.position)?.let { distance->
                     Log.d("address", model.getCurrentAddress(requireContext(), binding))
                     val bundle = Bundle()
@@ -161,7 +168,12 @@ class MapFragment: Fragment() {
                     bundle.putDouble("hours",
                         MapUtil.calculateDistanceTime(distance/1000.0, model.roadType)
                     )
-                    bundle.putString("addressHospital", it.address)
+                    val address = if(model.currentHospital is Hospital){
+                        (model.currentHospital as Hospital).address
+                    } else {
+                        (model.currentHospital as HospitalShort).address
+                    }
+                    bundle.putString("addressHospital", address)
                     bundle.putInt("imageRes", MapUtil.getRoadImageFromFlag(model.roadType))
                     bundle.putString("roadText", MapUtil.getRoadStringFromFlag(requireContext(), model.roadType))
                     childFragmentManager.setFragmentResult(SEND_NAVIGATION_DATA, bundle)
@@ -176,13 +188,17 @@ class MapFragment: Fragment() {
             viewLifecycleOwner){_, _ ->
             binding.mapBottomInfo.visibility = View.VISIBLE
             binding.mapBottomRoad.visibility = View.GONE
+            model.removeRoad(binding, requireContext())
         }
     }
 
     companion object{
         const val HOSPITAL_SEND = "HOSPITAL_SEND"
+        const val HOSPITAL_SHORT_SEND = "HOSPITAL_SHORT_SEND"
         const val HOSPITAL_NULL_SEND = "HOSPITAL_NULL_SEND"
-        const val MARKER_PRESSED = "MARKER_PRESSED"
+        const val MARKER_PRESSED_HOSPITAL = "MARKER_PRESSED_HOSPITAL"
+        const val MARKER_PRESSERD_HOSPITAL_SHORT = "MARKER_PRESSERD_HOSPITAL_SHORT"
         const val SEND_NAVIGATION_DATA = "SEND_NAVIGATION_DATA"
+        const val HIDE_VIEW = "HIDE_VIEW"
     }
 }

@@ -14,6 +14,9 @@ import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentMapBottomSheetBinding
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.database.FirebaseHospitalDatabase
+import com.diplom.tabletkaapp.models.AbstractModel
+import com.diplom.tabletkaapp.models.data_models.HospitalShort
+import com.diplom.tabletkaapp.models.data_models.HospitalsList
 import com.diplom.tabletkaapp.view_models.map.MapBottomSheetViewModel
 import models.Hospital
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
@@ -84,13 +87,41 @@ class MapInfoBottomSheetFragment: Fragment() {
 
     fun setHospital(newHospital: Hospital){
         model.hospital = newHospital
-        setInfoContent()
+        binding.hospitalInfoPanel.name.text = newHospital.name
+        binding.hospitalInfoPanel.address.text = newHospital.address
+        binding.hospitalInfoPanel.phone.text = newHospital.phone
+        binding.hospitalInfoPanel.root.visibility = View.VISIBLE
     }
+
+    fun setHospitalShort(newHospital: HospitalShort){
+        model.hospital = newHospital
+        if(_binding == null) return
+        binding.hospitalInfoPanel.name.text = newHospital.name
+        binding.hospitalInfoPanel.address.text = newHospital.address
+        binding.hospitalInfoPanel.phone.text = newHospital.phone
+        binding.hospitalInfoPanel.root.visibility = View.VISIBLE
+        binding.hospitalInfoPanel.hospitalWishButton.visibility = View.GONE
+        //setInfoContent()
+    }
+
     private fun setInfoContent(){
-        if(_binding != null) {
-            binding.hospitalInfoPanel.name.text = model.hospital?.name
-            binding.hospitalInfoPanel.address.text =model.hospital?.address
-            binding.hospitalInfoPanel.phone.text = model.hospital?.phone
+        model.hospital?.let {
+            if(_binding == null) return
+            binding.hospitalInfoPanel.name.text = if(model.hospital is Hospital){
+                (model.hospital as Hospital).name
+            } else {
+                (model.hospital as HospitalShort).name
+            }
+            binding.hospitalInfoPanel.address.text = if(model.hospital is Hospital){
+                (model.hospital as Hospital).address
+            } else {
+                (model.hospital as HospitalShort).address
+            }
+            binding.hospitalInfoPanel.phone.text = if(model.hospital is Hospital){
+                (model.hospital as Hospital).phone
+            } else {
+                (model.hospital as HospitalShort).phone
+            }
         }
 
     }
@@ -159,9 +190,28 @@ class MapInfoBottomSheetFragment: Fragment() {
             setHospital(bundle.getSerializable(MapFragment.HOSPITAL_SEND) as Hospital)
         }
         parentFragmentManager.setFragmentResultListener(
-            MapFragment.MARKER_PRESSED,
-            viewLifecycleOwner){_, _ ->
+            MapFragment.HOSPITAL_SHORT_SEND,
+            viewLifecycleOwner){_, bundle ->
+            setHospitalShort(bundle.getSerializable(MapFragment.HOSPITAL_SHORT_SEND) as HospitalShort)
+        }
+        parentFragmentManager.setFragmentResultListener(
+            MapFragment.MARKER_PRESSED_HOSPITAL,
+            viewLifecycleOwner){_, bundle ->
+            setHospital(bundle.getSerializable(MapFragment.MARKER_PRESSED_HOSPITAL) as Hospital)
             setVisibilityRoadPart(View.VISIBLE);
+        }
+        parentFragmentManager.setFragmentResultListener(
+            MapFragment.MARKER_PRESSERD_HOSPITAL_SHORT,
+            viewLifecycleOwner){_, bundle ->
+            val hospitalShort = bundle.getSerializable(MapFragment.MARKER_PRESSERD_HOSPITAL_SHORT) as HospitalShort
+            setHospitalShort(hospitalShort)
+            setVisibilityRoadPart(View.VISIBLE);
+        }
+        parentFragmentManager.setFragmentResultListener(
+            MapFragment.HIDE_VIEW,
+            viewLifecycleOwner
+        ){_, _ ->
+            binding.hospitalInfoPanel.root.visibility = View.GONE
         }
     }
 

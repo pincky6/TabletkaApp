@@ -1,7 +1,12 @@
 package com.diplom.tabletkaapp.parser
 
+import android.util.Log
 import com.diplom.tabletkaapp.models.AbstractModel
+import com.diplom.tabletkaapp.models.data_models.HospitalShort
 import com.diplom.tabletkaapp.util.UrlStrings
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import models.Hospital
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -51,6 +56,76 @@ object HospitalParser: ITabletkaHealthParser() {
                                 addresses, phones,
                                 expirationDates, packageNumber, prices)
     }
+
+    fun parseFromRegionAndPage(regionId: Int, page: Int): MutableList<AbstractModel>{
+        val doc = Jsoup.connect("https://tabletka.by/pharmacies?region=$regionId&page=$page").get()
+        val table = doc.select("tbody")
+        val names = getTooltipInfo(table, pharmacyBodyTableString,"pharm-name", "text-wrap",
+            "a"){info, element ->
+            element.text()
+                .split("\n")
+                .map { it.trim() }
+                .filter { it.isNotEmpty() } as MutableList<String>
+        }
+        val updatesTime = mutableListOf<String>()
+        for (i in names.size - 1 downTo 0) {
+            if (i % 2 == 1) {
+                updatesTime.add(names.removeAt(i))
+            }
+        }
+        val hospitalsReference = getTooltipInfo(table, pharmacyBodyTableString,"pharm-name", "text-wrap",
+            "a"){ info, element ->
+            element.getElementsByTag("a").flatMap {
+                listOf(it.attr("href").trim().substring(1))
+            } as MutableList<String>
+        }
+        val hospitalsCoordinates = getHospitalCoordinates(hospitalsReference)
+        val addresses = getHospitalInfo(table, "address tooltip-info"){element ->
+            listOf(element.getElementsByTag("span").text()) as MutableList<String>
+        }
+        val openStates = mutableListOf<String>()
+        for (i in addresses.size - 1 downTo 0) {
+            if (i % 2 == 1) {
+                openStates.add(addresses.removeAt(i))
+            }
+        }
+        val phones = getHospitalInfo(table, "phone tooltip-info"){element ->
+            element.getElementsByTag("a").flatMap {
+                listOf(it.attr("href").substring(4))
+            } as MutableList<String>
+        }
+
+        return getShortHospitalsInfo(names, hospitalsReference,
+            hospitalsCoordinates,
+            addresses, phones, updatesTime, openStates)
+    }
+    private fun getShortHospitalsInfo(names: MutableList<String>, hospitalsReference: MutableList<String>,
+                                      hospitalCoordinates: MutableList<MutableList<Double>>,
+                                      phones: MutableList<String>, addresses: MutableList<String>,
+                                      updatesTime: MutableList<String>, openStates: MutableList<String>): MutableList<AbstractModel>{
+        val list = mutableListOf<AbstractModel>()
+        val size = mutableListOf(names.size, hospitalsReference.size,
+            hospitalCoordinates.size, addresses.size,
+            phones.size).maxOrNull() ?: 0
+        for(i in 0 until size / 2){
+            val name = if(names.size <= i) "" else names[i]
+            val updateTime = if(updatesTime.size <= i) "" else updatesTime[i]
+            val hospitalReference = if(hospitalsReference.size <= i) "" else hospitalsReference[i]
+            val hospitalCoordinate = if(hospitalCoordinates.size <= i) mutableListOf() else hospitalCoordinates[i]
+            val addressHospital = if(addresses.size <= i) "" else addresses[i]
+            val openState = if(openStates.size <= i) "" else openStates[i]
+            val phone = if(phones.size <= i) "" else phones[i]
+            list.add(
+                HospitalShort(
+                    i.toString(), false, name,
+                    hospitalReference, hospitalCoordinate[0], hospitalCoordinate[1],
+                    addressHospital, phone, updateTime, openState
+                )
+            )
+        }
+        return list
+    }
+
     private fun getHospitals(names: MutableList<String>, hospitalsReference: MutableList<String>,
                              hospitalCoordinates: MutableList<MutableList<Double>>, addresses: MutableList<String>,
                              phones: MutableList<String>, expirationDates: MutableList<MutableList<Date>>,

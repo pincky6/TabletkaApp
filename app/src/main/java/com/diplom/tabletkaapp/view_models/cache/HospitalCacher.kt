@@ -3,6 +3,8 @@ package com.diplom.tabletkaapp.view_models.cache
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.models.MedicineEntity
 import com.diplom.tabletkaapp.models.cache_data_models.pharmacy_entities.HospitalEntity
+import com.diplom.tabletkaapp.models.data_models.HospitalShort
+import com.diplom.tabletkaapp.views.lists.holders.HospitalShortHolder
 import models.Hospital
 
 object HospitalCacher{
@@ -26,6 +28,7 @@ object HospitalCacher{
     }
 
     suspend fun isValidData(appDatabase: AppDatabase, hospitalList: MutableList<AbstractModel>): Boolean{
+        if(hospitalList.size != 0 && (hospitalList[0] is HospitalShort)) return false
         val hospitalEntities = appDatabase.hospitalDao().getAllHospitals()
         if(hospitalList.size != hospitalEntities.size) return false
         for(i in hospitalEntities.indices){

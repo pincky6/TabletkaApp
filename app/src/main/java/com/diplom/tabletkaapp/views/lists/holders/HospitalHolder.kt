@@ -9,6 +9,7 @@ import com.diplom.tabletkaapp.databinding.ItemHospitalBinding
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.database.FirebaseHospitalDatabase
 import com.diplom.tabletkaapp.models.data_models.GeoPointsList
+import com.diplom.tabletkaapp.models.data_models.HospitalsList
 import com.diplom.tabletkaapp.ui.search.adapters.MedicineInfoAdapter
 import com.diplom.tabletkaapp.views.lists.simple_lists.HospitalModelListDirections
 import com.diplom.tabletkaapp.views.wishlists.lists.HospitalWishListFragmentDirections
@@ -82,9 +83,10 @@ class HospitalHolder(
     private fun initMapButton(hospital: Hospital){
             binding.showGeolocationButton.setOnClickListener {
                 val geoPointsList = GeoPointsList(mutableListOf(GeoPoint(hospital.latitude, hospital.longitude)))
+                val hospitals = HospitalsList(mutableListOf(hospital))
                 findNavController(binding.root).navigate(
-                    if(isWish) HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList, hospital)
-                    else HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList, hospital)
+                    if(isWish) HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList, hospitals)
+                    else HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList, hospitals)
                 )
             }
     }

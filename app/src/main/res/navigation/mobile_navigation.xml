@@ -62,6 +62,9 @@
         <action
             android:id="@+id/showMedicineModelList"
             app:destination="@id/medicineModelList" />
+        <action
+            android:id="@+id/action_navigation_main_menu_to_hospitalRegionFragment"
+            app:destination="@id/hospitalRegionFragment" />
     </fragment>
 
     <fragment
@@ -175,8 +178,8 @@
         app:argType="com.diplom.tabletkaapp.models.data_models.GeoPointsList"
         />
         <argument
-            android:name="hospital"
-            app:argType="models.Hospital"
+            android:name="hospitalList"
+            app:argType="com.diplom.tabletkaapp.models.data_models.HospitalsList"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -194,5 +197,16 @@
         <argument
             android:name="note"
             app:argType="com.diplom.tabletkaapp.models.data_models.Note" />
+    </fragment>
+    <fragment
+        android:id="@+id/hospitalRegionFragment"
+        android:name="com.diplom.tabletkaapp.views.lists.simple_lists.HospitalRegionFragment"
+        android:label="HospitalRegionFragment" >
+        <action
+            android:id="@+id/action_hospitalRegionFragment_to_listFilterDialogFragment"
+            app:destination="@id/listFilterDialogFragment" />
+        <action
+            android:id="@+id/action_hospitalRegionFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>

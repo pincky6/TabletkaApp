@@ -13,6 +13,7 @@ import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.database.FirebaseHospitalDatabase
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.models.data_models.GeoPointsList
+import com.diplom.tabletkaapp.models.data_models.HospitalsList
 import com.diplom.tabletkaapp.parser.HospitalParser
 import com.diplom.tabletkaapp.util.CacheHospitalConverter
 import com.diplom.tabletkaapp.view_models.lists.HospitalModelListViewModel
@@ -135,8 +136,9 @@ AbstractModelList() {
                 val hospital = (it as Hospital)
                 mutableListOf(GeoPoint(hospital.latitude, hospital.longitude))
             } as MutableList<GeoPoint>)
+
             Navigation.findNavController(binding.root).navigate(
-                HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList, null)
+                HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList, HospitalsList(model.modelList))
             )
         }
     }

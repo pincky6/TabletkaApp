@@ -170,7 +170,9 @@ class MainMenuFragment : Fragment() {
                 Bundle())
         }
         binding.pharmacyButton.setOnClickListener {
-
+            findNavController(binding.root).navigate(
+                MainMenuFragmentDirections.actionNavigationMainMenuToHospitalRegionFragment()
+            )
         }
     }
 
