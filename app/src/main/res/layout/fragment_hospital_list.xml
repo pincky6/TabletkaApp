@@ -9,7 +9,7 @@
         android:id="@+id/materialToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2196F3"
+        android:background="?attr/button_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,14 +73,14 @@
 
 
         <Button
-            android:id="@+id/filter_button"
+            android:id="@+id/filter_pharmacy_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:background="?attr/button_color"
             android:text="@string/hospital_filter_and_sort_button"
-            android:textColor="?attr/text_color" />
+            android:backgroundTint="?attr/button_color"
+            android:textColor="?attr/button_text_color" />
 
         <Spinner
             android:id="@+id/region_spinner"
@@ -90,8 +90,6 @@
             android:layout_weight="1"
             android:background="?attr/button_color"
             android:text="@string/all_regions_string"
-            android:textColor="?attr/text_color"
-            tools:layout_editor_absoluteX="211dp"
-            tools:layout_editor_absoluteY="322dp" />
+            android:textColor="?attr/button_text_color" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

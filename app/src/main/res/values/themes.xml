@@ -12,7 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="text_color"      >#000000</item>
-        <item name="button_color"    >#5261ff</item>
+        <item name="button_text_color"      >#FFFFFF</item>
+        <item name="button_color"    >#2817a3</item>
         <item name="border_color"    >#000000</item>
         <item name="note_color"      >#FFFFFF</item>
         <item name="background_color">#FFFFFF</item>

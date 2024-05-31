@@ -16,7 +16,8 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/button_color"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -59,9 +60,9 @@
             android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/background_color"
+            android:backgroundTint="?attr/button_color"
             android:text="@string/sign_up_register_text"
-            android:textColor="?attr/text_color"
+            android:textColor="?attr/button_text_color"
             tools:layout_editor_absoluteX="265dp"
             tools:layout_editor_absoluteY="490dp" />
     </LinearLayout>

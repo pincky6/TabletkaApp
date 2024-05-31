@@ -19,6 +19,7 @@ import com.diplom.tabletkaapp.firebase.database.OnCompleteListener
 import com.diplom.tabletkaapp.firebase.database.OnReadCancelled
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.models.data_models.GeoPointsList
+import com.diplom.tabletkaapp.models.data_models.HospitalsList
 import com.diplom.tabletkaapp.parser.HospitalParser
 import com.diplom.tabletkaapp.util.CacheHospitalConverter
 import com.diplom.tabletkaapp.view_models.adapters.lists.WishListAdapter
@@ -47,9 +48,10 @@ class HospitalWishListFragment: AbstractModelList() {
         hideUselessUI()
         initGetFilter(true)
         binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
-        initFirebaseRecylcerView()
         wishModel.database = FirebaseHospitalDatabase
+        initFirebaseRecylcerView()
         initUpdateButton()
+        binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()
         initFloatingButton()
         return binding.root
@@ -78,7 +80,7 @@ class HospitalWishListFragment: AbstractModelList() {
                 mutableListOf(GeoPoint(hospital.latitude, hospital.longitude))
             } as MutableList<GeoPoint>)
             findNavController(binding.root).navigate(
-                HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList, null)
+                HospitalWishListFragmentDirections.actionHospitalWishListFragmentToMapFragment(geoPointsList, HospitalsList(model.modelList))
             )
         }
     }
@@ -123,10 +125,9 @@ class HospitalWishListFragment: AbstractModelList() {
             })
     }
     fun updateFirebaseUI(list: MutableList<AbstractModel>){
-        wishModel.list.clear()
-        wishModel.list = list
+        model.modelList = list
         if(binding != null && binding.recyclerView.adapter != null){
-            (binding.recyclerView.adapter as WishListAdapter).resetList(wishModel.list)
+            (binding.recyclerView.adapter as WishListAdapter).resetList(list)
             (binding.recyclerView.adapter as WishListAdapter).notifyDataSetChanged()
         }
     }

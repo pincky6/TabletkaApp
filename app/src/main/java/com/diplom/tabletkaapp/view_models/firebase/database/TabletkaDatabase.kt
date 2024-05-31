@@ -25,7 +25,11 @@ open interface TabletkaDatabase {
         }
     }
     fun delete(model: AbstractModel){
-        FirebaseMedicineDatabase.medicineDatabase.child(model.id).removeValue()
+        if(model is Hospital){
+            FirebaseHospitalDatabase.pharmacyDatabase.child(model.id).removeValue()
+        } else {
+            FirebaseMedicineDatabase.medicineDatabase.child(model.id).removeValue()
+        }
     }
     fun generateKey(): String
 }

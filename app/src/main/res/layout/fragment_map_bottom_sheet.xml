@@ -10,6 +10,7 @@
         android:id="@+id/toogle_button"
         android:layout_width="match_parent"
         android:layout_height="32dp"
+        android:backgroundTint="?attr/button_color"
         android:foregroundGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

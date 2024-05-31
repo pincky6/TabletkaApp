@@ -194,22 +194,24 @@ class SettingsFragment: Fragment() {
             ) {
                 binding_?.let {
                     view?.let {
-                        if(model.settings.languageMode == position) return
-                        if (parent.adapter.getItem(position).toString() == getString(R.string.eng_lang)) {
+                        if (parent.adapter.getItem(position).toString() == getString(R.string.eng_lang) &&
+                            Locale.getDefault() != Locale("en")) {
                             LocaleHelper.setLocale(requireContext(), "en")
                             model.settings.languageMode = 0
                             CoroutineScope(Dispatchers.IO).launch {
                                 FirebaseSettingsDatabase.add(model.settings)
                             }
                             activity?.recreate()
-                        } else if (parent.adapter.getItem(position).toString() == getString(R.string.bel_lang)) {
+                        } else if (parent.adapter.getItem(position).toString() == getString(R.string.bel_lang) &&
+                            Locale.getDefault() != Locale("be")) {
                             LocaleHelper.setLocale(requireContext(), "be")
                             model.settings.languageMode = 1
                             CoroutineScope(Dispatchers.IO).launch {
                                 FirebaseSettingsDatabase.add(model.settings)
                             }
                             activity?.recreate()
-                        } else if(parent.adapter.getItem(position).toString() == getString(R.string.rus_lang)){
+                        } else if(parent.adapter.getItem(position).toString() == getString(R.string.rus_lang) &&
+                            Locale.getDefault() != Locale("ru")){
                             LocaleHelper.setLocale(requireContext(), "ru")
                             model.settings.languageMode = 2
                             CoroutineScope(Dispatchers.IO).launch {

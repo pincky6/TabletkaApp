@@ -7,4 +7,5 @@
     <attr name="background_color" format="reference|color"/>
     <attr name="background_item_color" format="reference|color"/>
     <attr name="note_color_border" format="reference|color"/>
+    <attr name="button_text_color" format="reference|color"/>
 </resources>

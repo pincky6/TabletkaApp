@@ -18,6 +18,8 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            android:background="?attr/button_color"
+            android:textColor="?attr/button_text_color"
             android:layout_height="?attr/actionBarSize" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -30,7 +32,6 @@
         android:hint="@string/gmail_hint"
         android:textColorHighlight="?attr/text_color"
         android:inputType="text"
-        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,8 +67,8 @@
             android:layout_height="wrap_content"
             android:text="@string/sign_in_text"
             android:layout_marginBottom="8dp"
-            android:textColorHighlight="?attr/text_color"
-            android:background="?attr/button_color"
+            android:textColorHighlight="?attr/button_text_color"
+            android:backgroundTint="?attr/button_color"
             tools:layout_editor_absoluteX="265dp"
             tools:layout_editor_absoluteY="490dp" />
 
@@ -77,8 +78,8 @@
             android:layout_height="wrap_content"
             android:text="@string/sign_up_text"
             android:layout_marginBottom="8dp"
-            android:textColorHighlight="?attr/text_color"
-            android:background="?attr/button_color"
+            android:textColorHighlight="?attr/button_text_color"
+            android:backgroundTint="?attr/button_color"
             tools:layout_editor_absoluteX="299dp"
             tools:layout_editor_absoluteY="579dp" />
 
@@ -87,8 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/reset_password_text"
-            android:textColorHighlight="?attr/text_color"
-            android:background="?attr/button_color"
+            android:textColorHighlight="?attr/button_text_color"
+            android:backgroundTint="?attr/button_color"
             tools:layout_editor_absoluteX="279dp"
             tools:layout_editor_absoluteY="701dp" />
     </LinearLayout>
