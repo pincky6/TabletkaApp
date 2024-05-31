@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TabletkaApp</string>
+
+    <string name="title_main_menu">Main Menu</string>
+    <string name="title_wish_list">Favorites</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_notes">Notes</string>
+
+    <string name="sign_in_text">Sign In</string>
+    <string name="sign_up_text">Sign Up</string>
+    <string name="reset_password_text">Reset Password</string>
+
+    <string name="gmail_hint">Gmail</string>
+    <string name="password_hint">Password</string>
+
+    <string name="sign_up_register_text">Register</string>
+
+    <string name="all_regions_string">All Regions</string>
+    <string name="search_medicine_hint">Enter Medicine</string>
+    <string name="select_region_string">Select Region</string>
+
+    <string name="wish_row_string">Favorites</string>
+    <string name="pharmacy_string">Pharmacies</string>
+    <string name="move_to_site_string">Go to Website</string>
+    <string name="enter_string">Log In</string>
+
+    <string name="medicine_search_hint">Enter Medicine Name</string>
+    <string name="medicine_filter_and_sort_button">Filters and Sorting</string>
+    <string name="hospital_search_hint">Enter Pharmacy Name</string>
+    <string name="hospital_filter_and_sort_button">Pharmacy Filters and Sorting</string>
+
+    <string name="unknown">Unknown</string>
+
+    <string name="filter_title">Filters</string>
+    <string name="sort_title">Sorting</string>
+
+    <string name="from_price">Price: From</string>
+    <string name="to_price">To</string>
+    <string name="price_string">Price</string>
+
+    <string name="distance_title">Distance</string>
+    <string name="price_sort_title">Price (Lowest First)</string>
+    <string name="title_sort_title">Title (Alphabetical)</string>
+    <string name="count_cort_title">Count</string>
+
+    <string name="move_to_medicine_list_text">My Medicines</string>
+    <string name="move_to_hospital_list_text">My Pharmacies</string>
+
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancel</string>
+
+    <string name="exit_button_text">Log Out</string>
+    <string name="delete_button_text">Delete Account</string>
+
+    <string name="settings_common">Common Settings</string>
+
+    <string name="by_foot_text">By Foot</string>
+    <string name="by_car_text">By Car</string>
+    <string name="by_velo_text">By Scooter/Bike</string>
+    <string name="build_road_text">Build Route</string>
+
+    <string name="on_car_text">Car Route:</string>
+    <string name="on_foot_text">Foot Route:</string>
+    <string name="on_bike_text">Scooter/Bike Route:</string>
+
+    <string name="from_address">From</string>
+    <string name="to_address">To</string>
+
+    <string name="add_note_text">Add Notes</string>
+    <string name="note_title_text">Note Title</string>
+    <string name="note_text">Note Text</string>
+
+    <string name="update_wish_list">Update Wish List</string>
+
+    <string name="theme_spiner_text">Change Theme</string>
+    <string name="note_layout_spiner_text">Change Note Layout</string>
+
+    <string name="search_string">Search...</string>
+
+    <string name="check_gmail_error">Error. Please check your email later or verify your email and password.</string>
+    <string name="check_gmail">Check your email</string>
+    <string name="you_registered">You are registered</string>
+    <string name="you_not_registered">You are not registered</string>
+    <string name="you_not_registered_text">If you want to add something to favorites, you need to register</string>
+
+    <string name="you_leave_from_account">You have logged out</string>
+    <string name="you_delete_account">You have deleted your account</string>
+
+    <string name="list_text">List</string>
+    <string name="grid_text">Grid</string>
+
+    <string name="dark_theme">Dark Theme</string>
+    <string name="light_theme">Light Theme</string>
+
+    <string name="language">Language</string>
+    <string name="bel_lang">Belarussian</string>
+    <string name="rus_lang">Russian</string>
+    <string name="eng_lang">English</string>
+</resources>

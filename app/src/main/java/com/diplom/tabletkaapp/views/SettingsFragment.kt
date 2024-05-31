@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.R
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
+import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentSettingsBinding
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.database.FirebaseSettingsDatabase
+import com.diplom.tabletkaapp.util.LocaleHelper
 import com.diplom.tabletkaapp.util.UrlStrings
 import com.diplom.tabletkaapp.view_models.SettingsViewModel
 import com.diplom.tabletkaapp.views.mainmenu.MainMenuFragmentDirections
@@ -25,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Locale
 
 class SettingsFragment: Fragment() {
     var binding_: FragmentSettingsBinding? = null
@@ -45,7 +48,7 @@ class SettingsFragment: Fragment() {
             binding.profileText.text = FirebaseAuth.getInstance().currentUser?.email.toString()
         } else {
             binding.profileImage.visibility = View.GONE
-            binding.profileText.text = "Вы не зарегестрированы"
+            binding.profileText.text = getString(R.string.you_not_registered)
         }
         FirebaseSettingsDatabase.readAll(model){
             model.settings = it
@@ -56,6 +59,7 @@ class SettingsFragment: Fragment() {
             initResetPassword()
             initDeleteButton()
             initMoveToSiteButton()
+            initLanguageModeSpinner()
         }
         return binding.root
     }
@@ -87,14 +91,14 @@ class SettingsFragment: Fragment() {
     private fun initExitButton(){
         binding.exitButton.setOnClickListener {
             FirebaseSingInRepository.signOut()
-            Toast.makeText(context, "Вы вышли из аккаунта", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(com.diplom.tabletkaapp.R.string.you_leave_from_account), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun initDeleteButton(){
         binding.deleteButton.setOnClickListener {
             FirebaseSingInRepository.deleteAccount{
-                Toast.makeText(context, "Ваш аккаунт был удален", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(com.diplom.tabletkaapp.R.string.you_delete_account), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -106,8 +110,8 @@ class SettingsFragment: Fragment() {
         val noteModeAdapter =
             ArrayAdapter(
                 requireContext(),
-                R.layout.support_simple_spinner_dropdown_item,
-                arrayOf("Сеткой", "Списком")
+                R.layout.search_item,
+                arrayOf(getString(R.string.list_text), getString(R.string.grid_text))
             )
         binding.noteModeSpinner.adapter = noteModeAdapter
         binding.noteModeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -119,9 +123,9 @@ class SettingsFragment: Fragment() {
             ) {
                 binding_?.let {
                     view?.let {
-                        if (parent.adapter.getItem(position).toString() == "Списком") {
+                        if (parent.adapter.getItem(position).toString() == getString(R.string.list_text)) {
                             model.settings.notesMode = 0
-                        } else if (parent.adapter.getItem(position).toString() == "Сеткой") {
+                        } else if (parent.adapter.getItem(position).toString() == getString(R.string.grid_text)) {
                             model.settings.notesMode = 1
                         }
                         CoroutineScope(Dispatchers.IO).launch {
@@ -140,8 +144,8 @@ class SettingsFragment: Fragment() {
         val themeAdapter =
             ArrayAdapter(
                 requireContext(),
-                R.layout.support_simple_spinner_dropdown_item,
-                arrayOf("Светлая Тема", "Темная Тема")
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                arrayOf(getString(R.string.light_theme), getString(R.string.dark_theme))
             )
         binding.themeSpinner.setAdapter(themeAdapter)
         binding.themeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -153,10 +157,10 @@ class SettingsFragment: Fragment() {
             ) {
                 binding_?.let {
                     view?.let {
-                        if (parent.adapter.getItem(position).toString() == "Светлая Тема") {
+                        if (parent.adapter.getItem(position).toString() == getString(R.string.light_theme)) {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                             model.settings.themeMode = 0
-                        } else if (parent.adapter.getItem(position).toString() == "Темная Тема") {
+                        } else if (parent.adapter.getItem(position).toString() == getString(R.string.dark_theme)) {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                             model.settings.themeMode = 1
                         }
@@ -171,5 +175,57 @@ class SettingsFragment: Fragment() {
             }
         }
         binding.themeSpinner.setSelection(model.settings.themeMode)
+    }
+
+    private fun initLanguageModeSpinner() {
+        val languageAdapter =
+            ArrayAdapter(
+                requireContext(),
+                R.layout.search_item,
+                arrayOf(getString(R.string.eng_lang), getString(R.string.bel_lang), getString(R.string.rus_lang))
+            )
+        binding.languageSpinner.setAdapter(languageAdapter)
+        binding.languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                binding_?.let {
+                    view?.let {
+                        if(model.settings.languageMode == position) return
+                        if (parent.adapter.getItem(position).toString() == getString(R.string.eng_lang)) {
+                            LocaleHelper.setLocale(requireContext(), "en")
+                            model.settings.languageMode = 0
+                            CoroutineScope(Dispatchers.IO).launch {
+                                FirebaseSettingsDatabase.add(model.settings)
+                            }
+                            activity?.recreate()
+                        } else if (parent.adapter.getItem(position).toString() == getString(R.string.bel_lang)) {
+                            LocaleHelper.setLocale(requireContext(), "be")
+                            model.settings.languageMode = 1
+                            CoroutineScope(Dispatchers.IO).launch {
+                                FirebaseSettingsDatabase.add(model.settings)
+                            }
+                            activity?.recreate()
+                        } else if(parent.adapter.getItem(position).toString() == getString(R.string.rus_lang)){
+                            LocaleHelper.setLocale(requireContext(), "ru")
+                            model.settings.languageMode = 2
+                            CoroutineScope(Dispatchers.IO).launch {
+                                FirebaseSettingsDatabase.add(model.settings)
+                            }
+                            activity?.recreate()
+                        } else {
+
+                        }
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+        binding.languageSpinner.setSelection(model.settings.languageMode)
     }
 }

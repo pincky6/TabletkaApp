@@ -43,13 +43,13 @@ class RegisterFragment: Fragment() {
                 binding.passwordEditText.getText().toString().trim(),
                 { successful ->
                     if (successful) {
-                        Toast.makeText(context, "Вы зарегестрированы", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, getString(R.string.you_registered), Toast.LENGTH_SHORT).show()
                         binding.getRoot().findNavController().popBackStack()
                     } else {
                         EditorsUtil.setErrorState(binding.passwordEditText)
                         Toast.makeText(
                             context,
-                            "Ошибка. Попытайтесь зарегистрироваться позже или проверьте gmail и пароль",
+                            getString(R.string.check_gmail_error),
                             Toast.LENGTH_LONG
                         ).show()
                     }

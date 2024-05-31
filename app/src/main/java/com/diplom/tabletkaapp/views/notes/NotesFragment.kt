@@ -19,6 +19,10 @@ import com.diplom.tabletkaapp.models.data_models.Note
 import com.diplom.tabletkaapp.view_models.SettingsViewModel
 import com.diplom.tabletkaapp.view_models.adapters.NotesAdapter
 import com.diplom.tabletkaapp.view_models.notes.NotesViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 import java.util.function.Predicate
 import java.util.stream.Collectors
@@ -58,15 +62,24 @@ class NotesFragment: Fragment() {
     private fun updateUI(){
         model.loadFromFirebase(object : OnCompleteListener{
             override fun complete(list: MutableList<AbstractModel>) {
-                FirebaseSettingsDatabase.readAll(SettingsViewModel()){ it ->
-                    if(it.notesMode == 0){
-                        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                    } else {
-                        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                    }
-                    list.sortBy{note -> !note.wish}
-                    binding.recyclerView.adapter = NotesAdapter(list, it.notesMode){
-                        updateUI()
+                FirebaseSettingsDatabase.readAll(SettingsViewModel()) { it ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        withContext(Dispatchers.Main) {
+                            if (it.notesMode == 0) {
+                                binding.recyclerView.layoutManager =
+                                    LinearLayoutManager(requireContext())
+                            } else {
+                                binding.recyclerView.layoutManager =
+                                    StaggeredGridLayoutManager(
+                                        2,
+                                        StaggeredGridLayoutManager.VERTICAL
+                                    )
+                            }
+                            list.sortBy { note -> !note.wish }
+                            binding.recyclerView.adapter = NotesAdapter(list, it.notesMode) {
+                                updateUI()
+                            }
+                        }
                     }
                 }
             }
@@ -88,6 +101,7 @@ class NotesFragment: Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
+                if(binding_ == null || binding.recyclerView.adapter == null) return false
                 if(newText.isEmpty()){
                     (binding.recyclerView.adapter as NotesAdapter).resetList(model.list)
                 }

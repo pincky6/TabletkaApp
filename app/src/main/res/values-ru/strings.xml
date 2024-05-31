@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TabletkaApp</string>
+
+    <string name="title_main_menu">Главное</string>
+    <string name="title_wish_list">Избранное</string>
+    <string name="title_profile">Профиль</string>
+    <string name="title_notes">Заметки</string>
+
+    <string name="sign_in_text">Войти</string>
+    <string name="sign_up_text">Зарегистрироваться</string>
+    <string name="reset_password_text">Восстановить Пароль</string>
+
+    <string name="gmail_hint">Gmail</string>
+    <string name="password_hint">Пароль</string>
+
+    <string name="sign_up_register_text">Зарегистрироваться</string>
+
+    <string name="all_regions_string">Все регионы</string>
+    <string name="search_medicine_hint">Введите лекарство</string>
+    <string name="select_region_string">Выберите регион</string>
+
+
+    <string name="wish_row_string">Избранное</string>
+    <string name="pharmacy_string">Аптеки</string>
+    <string name="move_to_site_string">Перейти на сайт</string>
+    <string name="enter_string">Вход</string>
+
+    <string name="medicine_search_hint">Введите название лекарства</string>
+    <string name="medicine_filter_and_sort_button">Сортировка</string>
+    <string name="hospital_search_hint">Введите название аптеки</string>
+    <string name="hospital_filter_and_sort_button">Фильтры и сортировка</string>
+
+    <string name="unknown">Неизвестно</string>
+
+    <string name="filter_title">Фильтры</string>
+    <string name="sort_title">Сортировка</string>
+
+    <string name="from_price">Цена: От</string>
+    <string name="to_price">До</string>
+    <string name="price_string">Цена</string>
+
+    <string name="distance_title">По расстроянию</string>
+    <string name="price_sort_title">По минимальной цене</string>
+    <string name="title_sort_title">По названию</string>
+    <string name="count_cort_title">По количеству</string>
+
+    <string name="move_to_medicine_list_text">Мои лекарства</string>
+    <string name="move_to_hospital_list_text">Мои аптеки</string>
+
+    <string name="ok_button">Ок</string>
+    <string name="cancel_button">Закрыть</string>
+
+    <string name="exit_button_text">Выйти из аккаунта</string>
+    <string name="delete_button_text">Удалить аккаунт</string>
+
+    <string name="settings_common">Общие настройки</string>
+
+    <string name="by_foot_text">Пешком</string>
+    <string name="by_car_text">На машине</string>
+    <string name="by_velo_text">На самокате</string>
+    <string name="build_road_text">Построить маршрут</string>
+
+    <string name="on_car_text">На машине:</string>
+    <string name="on_foot_text">Пешком:</string>
+    <string name="on_bike_text">На скутере/велосипеде:</string>
+
+    <string name="from_address">От</string>
+    <string name="to_address">До</string>
+
+    <string name="add_note_text">Добавить Заметки</string>
+    <string name="note_title_text">Заголовок</string>
+    <string name="note_text">Текст Заметки</string>
+
+    <string name="update_wish_list">Обновить список</string>
+
+    <string name="theme_spiner_text">Сменить тему</string>
+    <string name="note_layout_spiner_text">Сменить вид заметки</string>
+
+    <string name="search_string">Поиск…</string>
+
+    <string name="check_gmail_error">Ошибка. Зайдите на почту позже или проверьте почту и пароль</string>
+    <string name="check_gmail">Проверьте свою почту</string>
+    <string name="you_registered">Вы зарегестрированы</string>
+
+    <string name="you_not_registered">Вы не зарегестрированы</string>
+    <string name="you_not_registered_text">Если вы хотите добавлять что-то в избранное, то вы должны зарегестрироваться</string>
+
+    <string name="you_leave_from_account">Вы вышли из аккаунта</string>
+    <string name="you_delete_account">Вы удалили аккаунт</string>
+
+    <string name="list_text">Списком</string>
+    <string name="grid_text">Сеткой</string>
+
+    <string name="dark_theme">Темная тема</string>
+    <string name="light_theme">Светлая тема</string>
+
+    <string name="language">Язык</string>
+    <string name="bel_lang">Белорусский</string>
+    <string name="rus_lang">Русский</string>
+    <string name="eng_lang">Английский</string>
+</resources>

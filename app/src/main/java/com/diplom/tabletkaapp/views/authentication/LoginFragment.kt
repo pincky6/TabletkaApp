@@ -59,7 +59,7 @@ class LoginFragment: Fragment() {
                         EditorsUtil.setErrorState(binding.passwordEditText)
                         Toast.makeText(
                             binding.root.context,
-                            "Ошибка. Зайдите на почту позже или проверьте почту и пароль",
+                            getString(R.string.check_gmail_error),
                             Toast.LENGTH_LONG
                         ).show()
                         return@signInWithGmailAndPassword
@@ -67,7 +67,7 @@ class LoginFragment: Fragment() {
                     if (!FirebaseSingInRepository.isVerified) {
                         Toast.makeText(
                             binding.root.context,
-                            "Проверьте свою почту",
+                            R.string.check_gmail,
                             Toast.LENGTH_LONG
                         ).show()
                         sendVerificationMessage()
@@ -120,7 +120,7 @@ class LoginFragment: Fragment() {
                 EditorsUtil.setErrorState(binding.passwordEditText)
                 Toast.makeText(
                     binding.root.context,
-                    "Произошла ошибка. Попытайтесь войти в аккаунт позже или проверьте gmail и почту",
+                    getString(R.string.check_gmail_error),
                     Toast.LENGTH_LONG
                 ).show()
         },

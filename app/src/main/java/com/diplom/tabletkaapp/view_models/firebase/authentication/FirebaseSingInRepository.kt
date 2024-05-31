@@ -2,6 +2,7 @@ package com.diplom.tabletkaapp.firebase.authentication
 
 import android.app.AlertDialog
 import android.content.Context
+import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.view_models.firebase.authentication.OnDeleteAccountListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -79,9 +80,8 @@ object FirebaseSingInRepository {
     fun checkUserExistWithWarningDialog(context: Context): Boolean{
         if(!isUserExist){
             AlertDialog.Builder(context)
-                .setTitle("¬ы не зарегестрированы")
-                .setMessage("≈сли вы хотите добавл€ть что-то в избранное," +
-                        " то вы должны зарегестрироватьс€")
+                .setTitle(context.getString(R.string.you_not_registered))
+                .setMessage(context.getString(R.string.you_not_registered_text))
                 .setPositiveButton("OK") { _, _ ->
                 }
                 .create().show()

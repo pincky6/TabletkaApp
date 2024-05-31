@@ -61,14 +61,14 @@ class ResetPasswordFragment: Fragment() {
                     if (successful) {
                         Toast.makeText(
                             binding.root.context,
-                            "Проверьте свою почту",
+                            getString(R.string.check_gmail),
                             Toast.LENGTH_LONG
                         ).show()
                         binding.getRoot().findNavController().popBackStack()
                     } else {
                         Toast.makeText(
                             binding.root.context,
-                            "Произошла ошибка",
+                            getString(R.string.check_gmail_error),
                             Toast.LENGTH_LONG
                         ).show()
                     }

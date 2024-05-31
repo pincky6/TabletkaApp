@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TabletkaApp</string>
+
+    <string name="title_main_menu">Галоўнае</string>
+    <string name="title_wish_list">Абранае</string>
+    <string name="title_profile">Профіль</string>
+    <string name="title_notes">Запіскі</string>
+
+    <string name="sign_in_text">Увайсці</string>
+    <string name="sign_up_text">Зарэгістравацца</string>
+    <string name="reset_password_text">Аднавіць пароль</string>
+
+    <string name="gmail_hint">Gmail</string>
+    <string name="password_hint">Пароль</string>
+
+    <string name="sign_up_register_text">Зарэгістравацца</string>
+
+    <string name="all_regions_string">Усе рэгіёны</string>
+    <string name="search_medicine_hint">Увядзіце лекарства</string>
+    <string name="select_region_string">Выберыце рэгіён</string>
+
+    <string name="wish_row_string">Абранае</string>
+    <string name="pharmacy_string">Аптэкі</string>
+    <string name="move_to_site_string">Перайсці на сайт</string>
+    <string name="enter_string">Уваход</string>
+
+    <string name="medicine_search_hint">Увядзіце назву лекарства</string>
+    <string name="medicine_filter_and_sort_button">Сартаванне</string>
+    <string name="hospital_search_hint">Увядзіце назву аптэкі</string>
+    <string name="hospital_filter_and_sort_button">Фільтры і сартаванне</string>
+
+    <string name="unknown">Невядома</string>
+
+    <string name="filter_title">Фільтры</string>
+    <string name="sort_title">Сартаванне</string>
+
+    <string name="from_price">Цана: ад</string>
+    <string name="to_price">да</string>
+    <string name="price_string">Цана</string>
+
+    <string name="distance_title">Па адлегласці</string>
+    <string name="price_sort_title">Па мінімальнай цане</string>
+    <string name="title_sort_title">Па назве</string>
+    <string name="count_cort_title">Па колькасці</string>
+
+    <string name="move_to_medicine_list_text">Мае лекарства</string>
+    <string name="move_to_hospital_list_text">Мае аптэкі</string>
+
+    <string name="ok_button">Добра</string>
+    <string name="cancel_button">Зачыніць</string>
+
+    <string name="exit_button_text">Выйсці з акаўнта</string>
+    <string name="delete_button_text">Выдаліць акаўнт</string>
+
+    <string name="settings_common">Агульныя настройкі</string>
+
+    <string name="by_foot_text">Пешкам</string>
+    <string name="by_car_text">На машыне</string>
+    <string name="by_velo_text">На самакате</string>
+    <string name="build_road_text">Пабудаваць маршрут</string>
+
+    <string name="on_car_text">На машыне:</string>
+    <string name="on_foot_text">Пешкам:</string>
+    <string name="on_bike_text">На самакате/веласіпедзе:</string>
+
+    <string name="from_address">Ад</string>
+    <string name="to_address">Да</string>
+
+    <string name="add_note_text">Дадаць запіскі</string>
+    <string name="note_title_text">Загаловак</string>
+    <string name="note_text">Тэкст запіскі</string>
+
+    <string name="update_wish_list">Абнавіць спіс</string>
+
+    <string name="theme_spiner_text">Змяніць тэму</string>
+    <string name="note_layout_spiner_text">Змяніць выгляд запіскі</string>
+
+    <string name="search_string">Пошук…</string>
+
+    <string name="check_gmail_error">Памылка. Зайдзіце на пошту пазней або праверце пошту і пароль</string>
+    <string name="check_gmail">Праверце сваю пошту</string>
+    <string name="you_registered">Вы зарэганы</string>
+
+    <string name="you_not_registered">Вы не зарэгістраваны</string>
+    <string name="you_not_registered_text">Калі вы хочаце дадаваць нешта ў абранае, вам трэба зарэгістравацца</string>
+
+    <string name="you_leave_from_account">Вы выйшлі з акаўнта</string>
+    <string name="you_delete_account">Вы выдалілі акаўнт</string>
+
+    <string name="list_text">Спісам</string>
+    <string name="grid_text">Сеткай</string>
+
+    <string name="dark_theme">Цёмная тэма</string>
+    <string name="light_theme">Светлая тэма</string>
+
+    <string name="language">Мова</string>
+    <string name="bel_lang">Беларуская</string>
+    <string name="rus_lang">Руская</string>
+    <string name="eng_lang">Англійская</string>
+</resources>

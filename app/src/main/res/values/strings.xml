@@ -77,4 +77,27 @@
     <string name="note_layout_spiner_text">Сменить вид заметки</string>
 
     <string name="search_string">Поиск…</string>
+
+    <string name="check_gmail_error">Ошибка. Зайдите на почту позже или проверьте почту и пароль</string>
+    <string name="check_gmail">Проверьте свою почту</string>
+    <string name="you_registered">Вы зарегестрированы</string>
+
+    <string name="you_not_registered">Вы не зарегестрированы</string>
+    <string name="you_not_registered_text">Если вы хотите добавлять что-то в избранное, то вы должны зарегестрироваться</string>
+
+    <string name="you_leave_from_account">Вы вышли из аккаунта</string>
+    <string name="you_delete_account">Вы удалили аккаунт</string>
+
+    <string name="list_text">Списком</string>
+    <string name="grid_text">Сеткой</string>
+
+    <string name="dark_theme">Темная тема</string>
+    <string name="light_theme">Светлая тема</string>
+
+    <string name="language">Язык</string>
+    <string name="bel_lang">Белорусский</string>
+    <string name="rus_lang">Русский</string>
+    <string name="eng_lang">Английский</string>
+
+
 </resources>

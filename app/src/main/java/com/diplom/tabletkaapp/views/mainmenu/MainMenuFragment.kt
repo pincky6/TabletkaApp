@@ -109,7 +109,7 @@ class MainMenuFragment : Fragment() {
     private fun initSearchView()
     {
         val from = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
-        val to = intArrayOf(R.id.search_item)
+        val to = intArrayOf(R.layout.search_item)
 
         binding.searchMedicines.suggestionsAdapter = SimpleCursorAdapter(context, R.layout.search_item,
                                         null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER)
