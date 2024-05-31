@@ -73,7 +73,7 @@
 
 
         <Button
-            android:id="@+id/update_button"
+            android:id="@+id/filter_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
@@ -82,8 +82,8 @@
             android:text="@string/hospital_filter_and_sort_button"
             android:textColor="?attr/text_color" />
 
-        <Button
-            android:id="@+id/filter_button"
+        <Spinner
+            android:id="@+id/region_spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"

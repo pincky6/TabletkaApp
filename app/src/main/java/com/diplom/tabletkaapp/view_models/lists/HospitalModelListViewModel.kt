@@ -1,4 +1,4 @@
-package com.diplom.tabletkaapp.view_models
+package com.diplom.tabletkaapp.view_models.lists
 
 import models.Medicine
 

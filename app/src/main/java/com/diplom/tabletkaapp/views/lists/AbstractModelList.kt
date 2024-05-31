@@ -19,10 +19,9 @@ import com.diplom.tabletkaapp.ui.search.filter.ListFilterDialogFragment
 import com.diplom.tabletkaapp.util.DatabaseInfo
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.list.adapters.AbstractAdapter
-import com.diplom.tabletkaapp.views.lists.simple_lists.AbstractModelViewModel
+import com.diplom.tabletkaapp.view_models.lists.AbstractModelViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import models.Medicine
 
 abstract class AbstractModelList: Fragment() {
     protected var binding_: FragmentListBinding? = null
@@ -46,6 +45,7 @@ abstract class AbstractModelList: Fragment() {
         }
         initBackButton()
         initSearchView()
+        initUpdateButton {  }
         return binding.root
     }
 

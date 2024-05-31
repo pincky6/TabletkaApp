@@ -164,11 +164,13 @@ class MainMenuFragment : Fragment() {
                 MainMenuFragmentDirections.showLoginFragment()
             )
         }
-        Log.d("PARENT", parentFragment.toString())
         binding.wishListButton.setOnClickListener {
             parentFragmentManager.setFragmentResult(
                 SWITCH_TO_WISH_LIST,
                 Bundle())
+        }
+        binding.pharmacyButton.setOnClickListener {
+
         }
     }
 
