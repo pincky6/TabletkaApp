@@ -115,7 +115,19 @@ class MainMenuFragment : Fragment() {
         val to = intArrayOf(R.id.search_item_text)
 
         binding.searchMedicines.suggestionsAdapter = DeletableCustomAdapter(requireContext(), R.layout.search_item,
-                                        null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER, binding.searchMedicines)
+                                        null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER, binding.searchMedicines, object: OnSuggestionListener{
+                override fun onSuggestionSelect(position: Int): Boolean {
+                    return false
+                }
+                override fun onSuggestionClick(position: Int): Boolean {
+                    val cursor = binding.searchMedicines.suggestionsAdapter.getItem(position) as Cursor
+                    val columnIndex = cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1)
+                    val suggestion = cursor.getString(columnIndex)
+
+                    binding.searchMedicines.setQuery(suggestion, true)
+                    return true
+                }
+            })
         binding.searchMedicines.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query == null) return false
@@ -136,19 +148,6 @@ class MainMenuFragment : Fragment() {
                 return false
             }
 
-        })
-        binding.searchMedicines.setOnSuggestionListener(object: OnSuggestionListener{
-            override fun onSuggestionSelect(position: Int): Boolean {
-                return false
-            }
-            override fun onSuggestionClick(position: Int): Boolean {
-                val cursor = binding.searchMedicines.suggestionsAdapter.getItem(position) as Cursor
-                val columnIndex = cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1)
-                val suggestion = cursor.getString(columnIndex)
-
-                binding.searchMedicines.setQuery(suggestion, true)
-                return true
-            }
         })
     }
     private fun navigateToMedicineList(query: String, requestId: Long) {

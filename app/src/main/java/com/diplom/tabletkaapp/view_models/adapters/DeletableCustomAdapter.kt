@@ -25,11 +25,16 @@ class DeletableCustomAdapter (
         from: List<String>,
         to: IntArray,
         flags: Int,
-        var searchView: SearchView
+        var searchView: SearchView,
+    var listener: SearchView.OnSuggestionListener
 ) : SimpleCursorAdapter(context, layout, c, from.toTypedArray(), to, flags) {
-
     override fun bindView(view: View, context: Context, cursor: Cursor) {
         super.bindView(view, context, cursor)
+
+        view.setOnClickListener{
+            listener.onSuggestionClick(cursor.position)
+        }
+
         val button = view.findViewById<ImageButton>(R.id.delete_button)
         button.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {

@@ -62,7 +62,7 @@ class NotesFragment: Fragment() {
     private fun updateUI(){
         model.loadFromFirebase(object : OnCompleteListener{
             override fun complete(list: MutableList<AbstractModel>) {
-                FirebaseSettingsDatabase.readAll(SettingsViewModel()) { it ->
+                FirebaseSettingsDatabase.readAll(SettingsViewModel(),{ it ->
                     CoroutineScope(Dispatchers.IO).launch {
                         withContext(Dispatchers.Main) {
                             if (it.notesMode == 0) {
@@ -81,7 +81,15 @@ class NotesFragment: Fragment() {
                             }
                         }
                     }
-                }
+                },
+                    {
+                        binding.recyclerView.layoutManager =
+                            LinearLayoutManager(context)
+                        list.sortBy { note -> !note.wish }
+                        binding.recyclerView.adapter = NotesAdapter(list, 0) {
+                            updateUI()
+                        }
+                    })
             }
         },
             object : OnReadCancelled{

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/background_color">
+    android:background="?attr/background_color"
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar"
@@ -19,14 +20,233 @@
         app:titleCentered="true"
         app:titleTextColor="?attr/button_text_color" />
 
-    <TextView
-        android:id="@+id/infoTextView"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:background="?attr/background_color"
-        android:textColor="?attr/text_color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/normal_background">
+
+        <TextView
+            android:id="@+id/medicine_title"
+            android:layout_weight="1"
+            android:textColor="?attr/text_color"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medicine_title"/>
+
+        <TextView
+            android:id="@+id/medicine_text"
+            android:layout_weight="3"
+            android:textAlignment="center"
+            android:textColor="?attr/text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/normal_background">
+
+
+        <TextView
+            android:id="@+id/medicine_reference_title"
+            android:layout_weight="1"
+            android:textColor="?attr/text_color"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medicine_reference_title"
+            tools:layout_editor_absoluteY="148dp" />
+
+        <TextView
+            android:id="@+id/medicine_reference_text"
+            android:layout_weight="30"
+            android:textAlignment="center"
+            android:textColor="?attr/text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/normal_background">
+
+
+        <TextView
+            android:id="@+id/compound_title"
+            android:layout_width="wrap_content"
+            android:textColor="?attr/text_color"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/compound_title" />
+
+        <TextView
+            android:id="@+id/compound_text"
+            android:layout_weight="2.35"
+            android:textAlignment="center"
+            android:textColor="?attr/text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="0dp"
+        android:background="@drawable/normal_background">
+
+
+        <TextView
+            android:id="@+id/compound_reference_title"
+            android:layout_weight="1"
+            android:textColor="?attr/text_color"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/compound_reference_title"/>
+
+        <TextView
+            android:id="@+id/compound_reference_text"
+            android:layout_weight="7.7"
+            android:textAlignment="center"
+            android:textColor="?attr/text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/normal_background">
+
+
+        <TextView
+            android:id="@+id/recipe_title"
+            android:textColor="?attr/text_color"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/recipe_title" />
+
+        <TextView
+            android:id="@+id/recipe_text"
+            android:layout_weight="2.35"
+            android:textAlignment="center"
+            android:textColor="?attr/text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+        android:background="@drawable/normal_background">
+
+
+        <TextView
+            android:id="@+id/recipe_info_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/text_color"
+
+            android:layout_weight="1"
+            android:text="@string/recipe_reference_title" />
+
+        <TextView
+            android:id="@+id/recipe_info_text"
+            android:layout_weight="30"
+            android:textAlignment="center"
+            android:textColor="?attr/text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/normal_background">
+        >
+
+        <TextView
+            android:id="@+id/company_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/text_color"
+
+            android:text="@string/company_title"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/company_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="?attr/text_color"
+            android:layout_weight="2.85"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/normal_background">
+
+
+        <TextView
+            android:id="@+id/company_reference_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/text_color"
+
+            android:text="@string/company_reference_title"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/company_reference_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="?attr/text_color"
+            android:layout_weight="26"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/normal_background">
+
+
+        <TextView
+            android:id="@+id/hospitals_count_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/text_color"
+
+            android:text="@string/hospitals_count"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/hospitals_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="?attr/text_color"
+            android:layout_weight="7.3"/>
+    </LinearLayout>
+
+</LinearLayout>

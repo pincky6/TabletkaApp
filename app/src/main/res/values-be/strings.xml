@@ -119,9 +119,19 @@
     <string name="check_with_the_pharmacy">Праверце з аптэкай</string>
     <string name="quantity_specify">Укажыце колькасць</string>
     <string name="items_count">Колькасць элементаў:</string>
-    <string name="good_for">Прыдатны да </string>
+    <string name="good_for">Прыдатны да</string>
     <string name="price">Цана</string>
 
     <string name="kilometers">кяламетраў</string>
+
+    <string name="medicine_title">Лекарства: </string>
+    <string name="medicine_reference_title">Спасылка на лекарства: </string>
+    <string name="compound_title">Склад: </string>
+    <string name="compound_reference_title">Спасылка на склад: </string>
+    <string name="recipe_title">Рэцэпт: </string>
+    <string name="recipe_reference_title">Спасылка на рэцэпт: </string>
+    <string name="company_title">Кампанія: </string>
+    <string name="company_reference_title">Спасылка на кампанію: </string>
+    <string name="hospitals_count">Колькасць аптэк: </string>
 
 </resources>

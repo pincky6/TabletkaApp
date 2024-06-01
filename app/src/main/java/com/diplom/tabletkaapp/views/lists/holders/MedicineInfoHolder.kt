@@ -20,8 +20,8 @@ class MedicineInfoHolder(
         binding.packagesNumber.text = if(packageNumber == 0) {
             binding.root.context.getString(R.string.quantity_specify)
         } else {
-            binding.root.context.getString(R.string.items_count) + "${packageNumber}"
+            "${binding.root.context.getString(R.string.items_count)} ${packageNumber}"
         }
-        binding.price.text = binding.root.context.getString(R.string.price) + "${price} p."
+        binding.price.text = "${binding.root.context.getString(R.string.price)} ${price} p."
     }
 }

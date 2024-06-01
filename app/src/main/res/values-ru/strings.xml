@@ -121,9 +121,18 @@
     <string name="check_with_the_pharmacy">Уточните В Аптеке</string>
     <string name="quantity_specify">Количество Уточняйте</string>
     <string name="items_count">Количество Упаковок</string>
-    <string name="good_for">Годен До </string>
+    <string name="good_for">Годен До</string>
     <string name="price">Цена</string>
 
     <string name="kilometers">километров</string>
 
+    <string name="medicine_title"> Лекарство: </string>
+    <string name="medicine_reference_title"> Ссылка На Лекарство: </string>
+    <string name="compound_title"> Состав: </string>
+    <string name="compound_reference_title"> Ссылка На Состав: </string>
+    <string name="recipe_title"> Рецепт: </string>
+    <string name="recipe_reference_title"> Ссылка На Рецепт: </string>
+    <string name="company_title"> Компания: </string>
+    <string name="company_reference_title"> Ссылка На Компанию: </string>
+    <string name="hospitals_count">Количество Аптек: </string>
 </resources>

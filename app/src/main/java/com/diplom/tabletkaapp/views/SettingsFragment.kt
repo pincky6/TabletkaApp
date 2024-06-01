@@ -32,11 +32,7 @@ import java.util.Locale
 class SettingsFragment: Fragment() {
     var binding_: FragmentSettingsBinding? = null
     val binding get() = binding_!!
-    lateinit var model: SettingsViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        model = SettingsViewModel()
-    }
+    var model: SettingsViewModel = SettingsViewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,7 +46,7 @@ class SettingsFragment: Fragment() {
             binding.profileImage.visibility = View.GONE
             binding.profileText.text = getString(R.string.you_not_registered)
         }
-        FirebaseSettingsDatabase.readAll(model){
+        FirebaseSettingsDatabase.readAll(model, {
             model.settings = it
             initThemeModeSpinner()
             initNoteModeSpinner()
@@ -60,7 +56,17 @@ class SettingsFragment: Fragment() {
             initDeleteButton()
             initMoveToSiteButton()
             initLanguageModeSpinner()
-        }
+        },
+            {
+                initThemeModeSpinner()
+                initNoteModeSpinner()
+                initLoginButton()
+                initExitButton()
+                initResetPassword()
+                initDeleteButton()
+                initMoveToSiteButton()
+                initLanguageModeSpinner()
+            })
         return binding.root
     }
 

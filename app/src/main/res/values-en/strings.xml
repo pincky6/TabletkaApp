@@ -119,9 +119,19 @@
     <string name="check_with_the_pharmacy">Check With The Pharmacy</string>
     <string name="quantity_specify">Quantity Specify</string>
     <string name="items_count">Items Count:</string>
-    <string name="good_for">Good For </string>
-    <string name="price">Price: </string>
+    <string name="good_for">Good For</string>
+    <string name="price">Price:</string>
 
     <string name="kilometers">kilometers</string>
 
+
+    <string name="medicine_title">Medicine: </string>
+    <string name="medicine_reference_title">Medicine Reference: </string>
+    <string name="compound_title">Composition: </string>
+    <string name="compound_reference_title">Composition Reference: </string>
+    <string name="recipe_title">Recipe: </string>
+    <string name="recipe_reference_title">Recipe Reference: </string>
+    <string name="company_title">Company: </string>
+    <string name="company_reference_title">Company Reference: </string>
+    <string name="hospitals_count">Number of Pharmacies: </string>
 </resources>

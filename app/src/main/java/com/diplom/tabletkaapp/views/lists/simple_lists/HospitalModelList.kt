@@ -107,7 +107,7 @@ AbstractModelList() {
         }
         binding.infoButton.setOnClickListener{
             Navigation.findNavController(binding.root).navigate(
-                HospitalModelListDirections.showInfoFragment(hospitalModel.medicine.toString())
+                HospitalModelListDirections.showInfoFragment(hospitalModel.medicine)
             )
         }
     }

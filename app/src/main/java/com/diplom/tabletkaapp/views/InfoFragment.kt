@@ -6,10 +6,13 @@ import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentInfoBinding
+import com.diplom.tabletkaapp.util.UrlStrings
+import models.Medicine
 
 class InfoFragment: Fragment() {
     var binding_: FragmentInfoBinding? = null
@@ -20,11 +23,24 @@ class InfoFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding_ = FragmentInfoBinding.inflate(inflater, container, false)
-        binding.infoTextView.text = arguments?.getString("info")
-        Linkify.addLinks(binding.infoTextView, Linkify.WEB_URLS)
-        binding.infoTextView.movementMethod = LinkMovementMethod.getInstance()
+        val medicine = arguments?.getSerializable("medicine") as Medicine
+        binding.medicineText.text = medicine.name
+        linkText(binding.medicineReferenceText, UrlStrings.SITE_REFERENCE + medicine.medicineReference)
+        binding.compoundText.text = medicine.compound
+        linkText(binding.compoundReferenceText, UrlStrings.SITE_REFERENCE + medicine.compoundReference)
+        binding.recipeText.text = medicine.recipe
+        binding.recipeInfoText.text = medicine.recipeInfo
+        binding.companyNameText.text = medicine.companyName
+        linkText(binding.companyReferenceText, UrlStrings.SITE_REFERENCE + medicine.companyReference)
+        binding.hospitalsCountText.text = medicine.hospitalCount.toString()
         initBackButton()
         return binding.root
+    }
+
+    private fun linkText(textView: TextView, reference: String){
+        textView.setText(reference)
+        Linkify.addLinks(textView, Linkify.WEB_URLS)
+        textView.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

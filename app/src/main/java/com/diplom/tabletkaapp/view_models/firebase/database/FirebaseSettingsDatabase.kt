@@ -24,7 +24,8 @@ object FirebaseSettingsDatabase {
     }
     fun readAll(
         model: SettingsViewModel,
-        initFunction: ((Settings)->Unit)?
+        initFunction: ((Settings)->Unit)?,
+        initFunctionCancelled:  (()->Unit)
     ){
         getDatabase().addListenerForSingleValueEvent(object :
             ValueEventListener {
@@ -37,6 +38,7 @@ object FirebaseSettingsDatabase {
                 initFunction?.invoke(model.settings)
             }
             override fun onCancelled(error: DatabaseError) {
+                initFunctionCancelled.invoke()
             }
         })
     }
