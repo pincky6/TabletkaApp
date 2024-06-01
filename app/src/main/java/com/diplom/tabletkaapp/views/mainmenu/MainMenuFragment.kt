@@ -111,9 +111,9 @@ class MainMenuFragment : Fragment() {
     private fun initSearchView()
     {
         val from = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
-        val to = intArrayOf(android.R.layout.simple_list_item_1)
+        val to = intArrayOf(R.layout.search_item)
 
-        binding.searchMedicines.suggestionsAdapter = SimpleCursorAdapter(context, android.R.layout.simple_list_item_1,
+        binding.searchMedicines.suggestionsAdapter = SimpleCursorAdapter(context, R.layout.search_item,
                                         null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER)
         binding.searchMedicines.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
