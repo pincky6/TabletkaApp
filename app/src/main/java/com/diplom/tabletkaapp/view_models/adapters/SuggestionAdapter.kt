@@ -1,32 +1,43 @@
 package com.diplom.tabletkaapp.view_models.adapters
 
+import android.content.Context
+import android.database.Cursor
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.diplom.tabletkaapp.databinding.ItemEmptyBinding
-import com.diplom.tabletkaapp.databinding.ItemNoteGridBinding
-import com.diplom.tabletkaapp.databinding.ItemNoteLinearBinding
-import com.diplom.tabletkaapp.databinding.SearchItemBinding
-import com.diplom.tabletkaapp.models.data_models.Note
-import com.diplom.tabletkaapp.views.lists.holders.SuggestionHolder
-import com.diplom.tabletkaapp.views.notes.holders.EmptyHolder
-import com.diplom.tabletkaapp.views.notes.holders.NoteHolderGrid
-import com.diplom.tabletkaapp.views.notes.holders.NoteHolderLinear
+import android.widget.CursorAdapter
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.room.Room
+import com.diplom.tabletkaapp.R
+import com.diplom.tabletkaapp.util.DatabaseInfo
+import com.diplom.tabletkaapp.view_models.cache.AppDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
-class SuggestionAdapter(var suggestionList: List<String>): RecyclerView.Adapter<ViewHolder>() {
+class SuggestionAdapter(context: Context, cursor: Cursor) :
+    CursorAdapter(context, cursor, false) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflate = LayoutInflater.from(parent.context)
-        val binding = SearchItemBinding.inflate(inflate, parent, false)
-        return SuggestionHolder(binding)
+    override fun newView(context: Context, cursor: Cursor, parent: ViewGroup): View {
+        return LayoutInflater.from(context).inflate(R.layout.search_item, parent, false)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        (holder as SuggestionHolder).bind(suggestionList[position])
-    }
-
-    override fun getItemCount(): Int {
-        return suggestionList.size ?: 1
+    override fun bindView(view: View, context: Context, cursor: Cursor) {
+        // Здесь вы можете связать данные с вашим view
+        val textView = view.findViewById<TextView>(R.id.suggestion)
+        val imageButton = view.findViewById<ImageButton>(R.id.delete_button)
+        val text = cursor.getString(cursor.getColumnIndex("column_name"))
+        imageButton.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                Room.databaseBuilder(
+                    view.context.applicationContext,
+                    AppDatabase::class.java,
+                    DatabaseInfo.DATABASE_NAME
+                ).build().requestDao().getRequests().first()
+            }
+        }
+        textView.text = text
     }
 }
