@@ -100,4 +100,22 @@
     <string name="bel_lang">Белорусский</string>
     <string name="rus_lang">Русский</string>
     <string name="eng_lang">Английский</string>
+
+    <string name="wish_title">Избранное</string>
+    <string name="pharmacy_title">Аптеки</string>
+    <string name="login_title">Логин</string>
+    <string name="register_title">Регистрация</string>
+    <string name="reset_password_title">Восстановление Пароля</string>
+    <string name="notes_title">Заметки</string>
+    <string name="settings_title">Настройки</string>
+    <string name="medicine_search_title">Поиск Лекарства</string>
+    <string name="pharmacy_search_title">Поиск Аптек</string>
+    <string name="maps_title">Карты</string>
+    <string name="reduct_note_title">Редактирование Заметок</string>
+    <string name="info_title">Информация о лекарстве</string>
+    <string name="wish_pharmacy">Избранные Аптеки</string>
+    <string name="wish_medicine">Избранные Лекарства</string>
+
+    <string name="send_button_text">Отправить</string>
+
 </resources>

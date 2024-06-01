@@ -13,7 +13,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/title_wish_list"
+        app:titleCentered="true"
+        app:titleTextColor="?attr/button_text_color" />
 
     <Button
         android:id="@+id/move_to_medicine_wish_list_button"

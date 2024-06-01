@@ -67,7 +67,7 @@ class NotesFragment: Fragment() {
                         withContext(Dispatchers.Main) {
                             if (it.notesMode == 0) {
                                 binding.recyclerView.layoutManager =
-                                    LinearLayoutManager(requireContext())
+                                    LinearLayoutManager(context)
                             } else {
                                 binding.recyclerView.layoutManager =
                                     StaggeredGridLayoutManager(
@@ -94,8 +94,8 @@ class NotesFragment: Fragment() {
     }
 
     private fun initSearchView(){
-        val searchView: SearchView? = binding.materialToolbar.findViewById(R.id.app_bar_search)
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.noteSearchView.setOnQueryTextListener(object :
+            android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }

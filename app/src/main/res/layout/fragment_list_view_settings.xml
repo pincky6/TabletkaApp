@@ -144,11 +144,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="152dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginBottom="12dp"
         android:backgroundTint="?attr/button_color"
-        android:textColor="?attr/button_text_color"
         android:text="@string/ok_button"
+        android:textColor="?attr/button_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cancel_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/distance_sort_check_box" />
 
@@ -156,15 +158,13 @@
         android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
         android:backgroundTint="?attr/button_color"
-        android:textColor="?attr/button_text_color"
         android:text="@string/cancel_button"
+        android:textColor="?attr/button_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ok_button"
         app:layout_constraintTop_toBottomOf="@+id/distance_sort_check_box" />
 </androidx.constraintlayout.widget.ConstraintLayout>

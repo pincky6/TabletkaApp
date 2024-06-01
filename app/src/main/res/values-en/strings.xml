@@ -97,4 +97,23 @@
     <string name="bel_lang">Belarussian</string>
     <string name="rus_lang">Russian</string>
     <string name="eng_lang">English</string>
+
+
+    <string name="wish_title">Favorites</string>
+    <string name="pharmacy_title">Pharmacies</string>
+    <string name="login_title">Login</string>
+    <string name="register_title">Registration</string>
+    <string name="reset_password_title">Password Reset</string>
+    <string name="notes_title">Notes</string>
+    <string name="settings_title">Settings</string>
+    <string name="medicine_search_title">Medicine Search</string>
+    <string name="pharmacy_search_title">Pharmacy Search</string>
+    <string name="maps_title">Maps</string>
+    <string name="reduct_note_title">Edit Notes</string>
+    <string name="info_title">Medicine Information</string>
+    <string name="wish_pharmacy">Favorite Pharmacies</string>
+    <string name="wish_medicine">Favorite Medicines</string>
+
+    <string name="send_button_text">Send</string>
+
 </resources>

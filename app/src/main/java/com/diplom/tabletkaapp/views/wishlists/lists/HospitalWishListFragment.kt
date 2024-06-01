@@ -51,7 +51,6 @@ class HospitalWishListFragment: AbstractModelList() {
         wishModel.database = FirebaseHospitalDatabase
         initFirebaseRecylcerView()
         initUpdateButton()
-        binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()
         initFloatingButton()
         return binding.root

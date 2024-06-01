@@ -98,4 +98,22 @@
     <string name="bel_lang">Беларуская</string>
     <string name="rus_lang">Руская</string>
     <string name="eng_lang">Англійская</string>
+
+    <string name="wish_title">Выбранае</string>
+    <string name="pharmacy_title">Аптэкі</string>
+    <string name="login_title">Уваход</string>
+    <string name="register_title">Рэгістрацыя</string>
+    <string name="reset_password_title">Скід пароля</string>
+    <string name="notes_title">Нататкі</string>
+    <string name="settings_title">Налады</string>
+    <string name="medicine_search_title">Пошук лекарстваў</string>
+    <string name="pharmacy_search_title">Пошук аптэк</string>
+    <string name="maps_title">Карты</string>
+    <string name="reduct_note_title">Рэдагаванне нататак</string>
+    <string name="info_title">Інфармацыя аб лекарстве</string>
+    <string name="wish_pharmacy">Выбраныя аптэкі</string>
+    <string name="wish_medicine">Выбраныя лекарствы</string>
+
+    <string name="send_button_text">Адправіць</string>
+
 </resources>

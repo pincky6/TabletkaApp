@@ -46,6 +46,7 @@ class MedicineModelList:
         }
         binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()
+
         return binding.root
     }
 

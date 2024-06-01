@@ -7,8 +7,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:background="@drawable/grid_border"
-    android:backgroundTint="?attr/background_item_color">
+    android:background="@drawable/grid_border">
 
     <TextView
         android:id="@+id/name"

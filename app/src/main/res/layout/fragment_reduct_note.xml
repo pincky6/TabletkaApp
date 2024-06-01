@@ -13,7 +13,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/reduct_note_title"
+        app:titleCentered="true"
+        app:titleTextColor="?attr/button_text_color" />
 
     <EditText
         android:id="@+id/note_title"
