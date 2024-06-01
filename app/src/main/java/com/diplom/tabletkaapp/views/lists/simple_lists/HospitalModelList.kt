@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.database.FirebaseHospitalDatabase
+import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.models.data_models.GeoPointsList
 import com.diplom.tabletkaapp.models.data_models.HospitalsList
@@ -123,10 +124,10 @@ AbstractModelList() {
             }
             medicine.wish = !medicine.wish
             if(medicine.wish){
-                FirebaseHospitalDatabase.add(hospitalModel.medicine, requestId, regionId, query)
+                FirebaseMedicineDatabase.add(hospitalModel.medicine, requestId, regionId, query)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_on)
             } else {
-                FirebaseHospitalDatabase.delete(hospitalModel.medicine, requestId, regionId, query)
+                FirebaseMedicineDatabase.delete(hospitalModel.medicine, requestId, regionId, query)
                 binding.wishButton.setImageResource(android.R.drawable.btn_star_big_off)
             }
         }

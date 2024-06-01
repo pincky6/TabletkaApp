@@ -68,8 +68,6 @@ class MainMenuFragment : Fragment() {
         initButtons()
 
         binding.materialToolbar.isTitleCentered = true
-        binding.materialToolbar.title = "Приложение По Мониторингу лекарственных препаратов"
-
         return binding.root
     }
 
