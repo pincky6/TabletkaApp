@@ -97,6 +97,8 @@ AbstractModelList() {
 
     private fun initMedicineInfo(){
         binding.medicineTitle.text = hospitalModel.medicine.name
+        binding.medicineRecipe.text = hospitalModel.medicine.recipe
+        binding.medicineCountry.text = hospitalModel.medicine.country
         binding.copyButton.setOnClickListener{
             val clipboard = binding.root.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("Медикамент", hospitalModel.medicine.toString())

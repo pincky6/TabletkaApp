@@ -12,7 +12,12 @@
         android:id="@+id/pharmacy_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/normal_background"
         android:orientation="horizontal"
+        android:paddingStart="4dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,6 +29,7 @@
             android:layout_weight="1"
             android:backgroundTint="?attr/background_item_color"
             android:src="@drawable/baseline_adjust_24" />
+
         <LinearLayout
             android:id="@+id/pharmacy_info_layout"
             android:layout_width="match_parent"
@@ -79,7 +85,7 @@
         android:id="@+id/pricesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/background_item_color"
+        android:background="@drawable/normal_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

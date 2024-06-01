@@ -115,4 +115,11 @@
     <string name="wish_medicine">Избранные Лекарства</string>
 
     <string name="send_button_text">Отправить</string>
+
+    <string name="check_with_the_pharmacy">Уточните В Аптеке</string>
+    <string name="quantity_specify">Количество Уточняйте</string>
+    <string name="items_count">Количество Упаковок</string>
+    <string name="good_for">Годен До </string>
+    <string name="price">Цена</string>
+
 </resources>

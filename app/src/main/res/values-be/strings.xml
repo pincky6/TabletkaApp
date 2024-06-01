@@ -116,4 +116,11 @@
 
     <string name="send_button_text">Адправіць</string>
 
+    <string name="check_with_the_pharmacy">Праверце з аптэкай</string>
+    <string name="quantity_specify">Укажыце колькасць</string>
+    <string name="items_count">Колькасць элементаў:</string>
+    <string name="good_for">Прыдатны да </string>
+    <string name="price">Цана</string>
+
+
 </resources>

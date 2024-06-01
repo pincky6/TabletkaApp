@@ -116,4 +116,10 @@
 
     <string name="send_button_text">Send</string>
 
+    <string name="check_with_the_pharmacy">Check With The Pharmacy</string>
+    <string name="quantity_specify">Quantity Specify</string>
+    <string name="items_count">Items Count:</string>
+    <string name="good_for">Good For </string>
+    <string name="price">Price: </string>
+
 </resources>
