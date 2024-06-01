@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentMapNavigationSheetBinding
 import com.diplom.tabletkaapp.util.MapUtil
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
@@ -36,7 +37,7 @@ class MapNavigationBottomSheetFragment: Fragment() {
             viewLifecycleOwner){_, bundle ->
             binding.roadTypeText.text = bundle.getString("roadText")
             binding.timeAndWayText.text = String.format(Locale.US, "%.2f", bundle.getDouble("distance")) +
-                    " километров(${String.format(Locale.US, "%.2f", bundle.getDouble("hours"))} часов)"
+                     " ${getString(R.string.kilometers)}(${bundle.getString("hours")})"
             binding.imageView.setImageResource(bundle.getInt("imageRes"))
             binding.fromAddressText.text = bundle.getString("userAddress")
             binding.toAddressText.text = bundle.getString("addressHospital")

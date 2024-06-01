@@ -124,4 +124,6 @@
     <string name="good_for">Годен До </string>
     <string name="price">Цена</string>
 
+    <string name="kilometers">километров</string>
+
 </resources>

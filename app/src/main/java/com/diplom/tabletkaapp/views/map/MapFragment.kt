@@ -28,6 +28,8 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class MapFragment: Fragment() {
     var _binding: FragmentMapBinding? = null
@@ -165,9 +167,10 @@ class MapFragment: Fragment() {
                     val bundle = Bundle()
                     bundle.putString("userAddress", model.getCurrentAddress(requireContext(), binding).split(", ")[0])
                     bundle.putDouble("distance", distance/1000.0)
-                    bundle.putDouble("hours",
-                        MapUtil.calculateDistanceTime(distance/1000.0, model.roadType)
-                    )
+                    val time = MapUtil.calculateDistanceTime(distance/1000.0, model.roadType).toLong() * 3600
+                    bundle.putString("hours",
+                        SimpleDateFormat("dd д. HH ч. mm м.").format(Date(time as Long)))
+
                     val address = if(model.currentHospital is Hospital){
                         (model.currentHospital as Hospital).address
                     } else {

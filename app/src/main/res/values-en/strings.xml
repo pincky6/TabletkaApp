@@ -122,4 +122,6 @@
     <string name="good_for">Good For </string>
     <string name="price">Price: </string>
 
+    <string name="kilometers">kilometers</string>
+
 </resources>

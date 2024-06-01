@@ -110,7 +110,7 @@ class SettingsFragment: Fragment() {
         val noteModeAdapter =
             ArrayAdapter(
                 requireContext(),
-                R.layout.search_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 arrayOf(getString(R.string.list_text), getString(R.string.grid_text))
             )
         binding.noteModeSpinner.adapter = noteModeAdapter
@@ -144,7 +144,7 @@ class SettingsFragment: Fragment() {
         val themeAdapter =
             ArrayAdapter(
                 requireContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 arrayOf(getString(R.string.light_theme), getString(R.string.dark_theme))
             )
         binding.themeSpinner.setAdapter(themeAdapter)
@@ -181,7 +181,7 @@ class SettingsFragment: Fragment() {
         val languageAdapter =
             ArrayAdapter(
                 requireContext(),
-                R.layout.search_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 arrayOf(getString(R.string.eng_lang), getString(R.string.bel_lang), getString(R.string.rus_lang))
             )
         binding.languageSpinner.setAdapter(languageAdapter)

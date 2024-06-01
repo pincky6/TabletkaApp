@@ -19,7 +19,8 @@ interface RequestDao {
 
     @Delete
     suspend fun deleteRequest(request: RequestEntity)
-
+    @Query("DELETE FROM request WHERE request = :request")
+    fun deleteByRequest(request: String)
     @Query("SELECT * FROM request WHERE id = :id")
     fun getRequestById(id: String): Flow<RequestEntity>
 

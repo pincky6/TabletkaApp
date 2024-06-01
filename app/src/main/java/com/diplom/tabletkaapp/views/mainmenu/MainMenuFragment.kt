@@ -28,6 +28,7 @@ import com.diplom.tabletkaapp.databinding.FragmentMainMenuBinding
 import com.diplom.tabletkaapp.models.cache_data_models.RequestEntity
 import com.diplom.tabletkaapp.util.DatabaseInfo
 import com.diplom.tabletkaapp.util.UrlStrings
+import com.diplom.tabletkaapp.view_models.adapters.SuggestionAdapter
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.cache.RequestDao
 import com.diplom.tabletkaapp.viewmodel.adapters.mainmenu.RegionAdapter
@@ -35,6 +36,7 @@ import com.diplom.tabletkaapp.viewmodel.parser.RegionParser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -113,8 +115,7 @@ class MainMenuFragment : Fragment() {
         val from = arrayOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
         val to = intArrayOf(R.layout.search_item)
 
-        binding.searchMedicines.suggestionsAdapter = SimpleCursorAdapter(context, R.layout.search_item,
-                                        null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER)
+        binding.searchMedicines.suggestionsAdapter = SuggestionAdapter(model.database.requestDao().getRequests().first())
         binding.searchMedicines.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query == null) return false
