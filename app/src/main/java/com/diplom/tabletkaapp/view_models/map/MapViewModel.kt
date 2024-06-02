@@ -129,7 +129,7 @@ class MapViewModel: ViewModel() {
                     val roadManager = OSRMRoadManager(context, System.getProperty("http.agent"))
                     roadManager.setMean(roadManagerRoadChoose)
                     val location: Location? = locationManager.getLastKnownLocation(
-                        LocationManager.NETWORK_PROVIDER)
+                        LocationManager.GPS_PROVIDER)
                     location?.let {
                         val userLocation = GeoPoint(it.latitude, it.longitude)
                         val wayPoints = arrayListOf(userLocation, endPoint)

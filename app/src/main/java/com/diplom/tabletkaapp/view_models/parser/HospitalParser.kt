@@ -73,8 +73,8 @@ object HospitalParser: ITabletkaHealthParser() {
                 updatesTime.add(names.removeAt(i))
             }
         }
-        val hospitalsReference = getTooltipInfo(table, pharmacyBodyTableString,"pharm-name", "text-wrap",
-            "a"){ info, element ->
+        val hospitalsReference = getTooltipInfo(table, pharmacyBodyTableString,"pharm-name",
+            "text-wrap", "a"){ info, element ->
             element.getElementsByTag("a").flatMap {
                 listOf(it.attr("href").trim().substring(1))
             } as MutableList<String>

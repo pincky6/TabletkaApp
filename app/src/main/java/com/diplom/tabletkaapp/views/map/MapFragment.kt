@@ -56,8 +56,6 @@ class MapFragment: Fragment() {
             override fun onLocationChanged(location: Location){
                 if(model.currentGeoPoint != GeoPoint(location.latitude, location.longitude)) {
                     model.currentGeoPoint = GeoPoint(location.latitude, location.longitude)
-
-                    Log.d("DISTAMCE", (model.currentMarker?.position?.distanceToAsDouble(model.currentGeoPoint)).toString())
                 }
             }
 
@@ -135,7 +133,7 @@ class MapFragment: Fragment() {
     }
     private fun initUserLocation(){
         val gpsProvider = GpsMyLocationProvider(context)
-        gpsProvider.locationSources.add(LocationManager.NETWORK_PROVIDER)
+        gpsProvider.locationSources.add(LocationManager.GPS_PROVIDER)
         val locationOverlay = MyLocationNewOverlay(gpsProvider, binding.mapView)
         locationOverlay.enableMyLocation()
         binding.mapView.overlays.add(locationOverlay)
@@ -167,7 +165,7 @@ class MapFragment: Fragment() {
                     val bundle = Bundle()
                     bundle.putString("userAddress", model.getCurrentAddress(requireContext(), binding).split(", ")[0])
                     bundle.putDouble("distance", distance/1000.0)
-                    val time = MapUtil.calculateDistanceTime(distance/1000.0, model.roadType).toLong() * 3600
+                    val time = MapUtil.calculateDistanceTime(distance/1000.0, model.roadType).toLong()
                     bundle.putString("hours",
                         SimpleDateFormat("dd д. HH ч. mm м.").format(Date(time as Long)))
 

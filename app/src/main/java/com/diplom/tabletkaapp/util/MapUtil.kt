@@ -31,9 +31,9 @@ object MapUtil {
 
     fun calculateDistanceTime(distance: Double, roadType: String): Double {
         return when(roadType){
-            OSRMRoadManager.MEAN_BY_FOOT -> (((distance) / AVERAGE_FOOT_SPEED.toDouble())) * 3600
-            OSRMRoadManager.MEAN_BY_BIKE -> (((distance) / AVERAGE_VELO_SPEED.toDouble())) * 3600
-            OSRMRoadManager.MEAN_BY_CAR  -> (((distance) / AVERAGE_CAR_SPEED.toDouble())) * 3600
+            OSRMRoadManager.MEAN_BY_FOOT -> (((distance) / AVERAGE_FOOT_SPEED.toDouble())) * 3600000
+            OSRMRoadManager.MEAN_BY_BIKE -> (((distance) / AVERAGE_VELO_SPEED.toDouble())) * 3600000
+            OSRMRoadManager.MEAN_BY_CAR  -> (((distance) / AVERAGE_CAR_SPEED.toDouble())) * 3600000
             else -> {0.0}
         }
     }
