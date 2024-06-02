@@ -28,7 +28,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:background="?attr/button_color"
         android:gravity="center"
         android:orientation="vertical"
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/grid_border"
             android:spinnerMode="dialog"
@@ -58,6 +58,16 @@
             android:layoutDirection="rtl"
             android:queryHint="@string/search_medicine_hint"
             app:queryHint="@string/search_medicine_hint" />
+
+        <Button
+            android:id="@+id/history_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:text="@string/hisotory_search" />
+
     </LinearLayout>
 
     <GridLayout

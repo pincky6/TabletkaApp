@@ -176,6 +176,11 @@ class MainMenuFragment : Fragment() {
                 MainMenuFragmentDirections.actionNavigationMainMenuToHospitalRegionFragment()
             )
         }
+        binding.historyButton.setOnClickListener {
+            findNavController(binding.root).navigate(
+                MainMenuFragmentDirections.actionNavigationMainMenuToHistoryFragment()
+            )
+        }
     }
 
     override fun onDestroyView() {

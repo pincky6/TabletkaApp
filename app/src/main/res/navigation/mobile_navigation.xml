@@ -65,6 +65,9 @@
         <action
             android:id="@+id/action_navigation_main_menu_to_hospitalRegionFragment"
             app:destination="@id/hospitalRegionFragment" />
+        <action
+            android:id="@+id/action_navigation_main_menu_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
 
     <fragment
@@ -209,4 +212,8 @@
             android:id="@+id/action_hospitalRegionFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.diplom.tabletkaapp.views.HistoryFragment"
+        android:label="HistoryFragment" />
 </navigation>

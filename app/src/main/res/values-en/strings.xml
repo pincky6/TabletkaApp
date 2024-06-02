@@ -74,7 +74,7 @@
     <string name="update_wish_list">Update Wish List</string>
 
     <string name="theme_spiner_text">Change Theme</string>
-    <string name="note_layout_spiner_text">Change Note Layout</string>
+    <string name="note_layout_spiner_text">Note Layout</string>
 
     <string name="search_string">Search...</string>
 
@@ -134,4 +134,7 @@
     <string name="company_title">Company: </string>
     <string name="company_reference_title">Company Reference: </string>
     <string name="hospitals_count">Number of Pharmacies: </string>
+
+    <string name="hisotory_search">History Search</string>
+
 </resources>

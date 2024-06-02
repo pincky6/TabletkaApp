@@ -76,7 +76,7 @@
     <string name="update_wish_list">Обновить список</string>
 
     <string name="theme_spiner_text">Сменить тему</string>
-    <string name="note_layout_spiner_text">Сменить вид заметки</string>
+    <string name="note_layout_spiner_text">Вид заметки</string>
 
     <string name="search_string">Поиск…</string>
 
@@ -135,4 +135,6 @@
     <string name="company_title"> Компания: </string>
     <string name="company_reference_title"> Ссылка На Компанию: </string>
     <string name="hospitals_count">Количество Аптек: </string>
+
+    <string name="hisotory_search">История Поиска</string>
 </resources>

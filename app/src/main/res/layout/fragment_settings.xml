@@ -123,6 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
         android:backgroundTint="?attr/button_color"
@@ -131,7 +132,8 @@
         app:layout_constraintBottom_toTopOf="@+id/exit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/language_spinner" />
 
     <Button
         android:id="@+id/exit_button"
@@ -169,6 +171,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/theme_spiner_text"
         android:textColor="?attr/text_color"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line4" />
 
@@ -180,6 +183,7 @@
         android:layout_marginTop="36dp"
         android:text="@string/note_layout_spiner_text"
         android:textColor="?attr/text_color"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -202,6 +206,7 @@
         android:layout_marginTop="36dp"
         android:text="@string/language"
         android:textColor="?attr/text_color"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 

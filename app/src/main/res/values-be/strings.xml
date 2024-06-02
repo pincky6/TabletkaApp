@@ -74,7 +74,7 @@
     <string name="update_wish_list">Абнавіць спіс</string>
 
     <string name="theme_spiner_text">Змяніць тэму</string>
-    <string name="note_layout_spiner_text">Змяніць выгляд запіскі</string>
+    <string name="note_layout_spiner_text">Выгляд заметак</string>
 
     <string name="search_string">Пошук…</string>
 
@@ -133,5 +133,7 @@
     <string name="company_title">Кампанія: </string>
     <string name="company_reference_title">Спасылка на кампанію: </string>
     <string name="hospitals_count">Колькасць аптэк: </string>
+
+    <string name="hisotory_search">Гісторыя Пошуку</string>
 
 </resources>
