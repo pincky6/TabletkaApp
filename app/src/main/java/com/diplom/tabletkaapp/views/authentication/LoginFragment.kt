@@ -121,13 +121,6 @@ class LoginFragment: Fragment() {
             if (successful) {
                 findNavController(binding.root).popBackStack()
                 return@sendVerification
-            } else {
-                EditorsUtil.setErrorState(binding.passwordEditText)
-                Toast.makeText(
-                    binding.root.context,
-                    getString(R.string.check_gmail_error),
-                    Toast.LENGTH_LONG
-                ).show()
             }
         },
             object : OnFailrueSignListener {
