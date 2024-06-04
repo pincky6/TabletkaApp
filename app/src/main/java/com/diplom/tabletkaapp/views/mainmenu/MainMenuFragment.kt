@@ -18,6 +18,7 @@ import android.widget.SearchView.OnQueryTextListener
 import android.widget.SearchView.OnSuggestionListener
 import android.widget.SimpleCursorAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -25,9 +26,12 @@ import androidx.navigation.Navigation.findNavController
 import androidx.room.Room
 import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.databinding.FragmentMainMenuBinding
+import com.diplom.tabletkaapp.firebase.database.FirebaseSettingsDatabase
 import com.diplom.tabletkaapp.models.cache_data_models.RequestEntity
 import com.diplom.tabletkaapp.util.DatabaseInfo
+import com.diplom.tabletkaapp.util.LocaleHelper
 import com.diplom.tabletkaapp.util.UrlStrings
+import com.diplom.tabletkaapp.view_models.SettingsViewModel
 import com.diplom.tabletkaapp.view_models.adapters.DeletableCustomAdapter
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.cache.RequestDao
@@ -38,6 +42,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Locale
 
 
 class MainMenuFragment : Fragment() {
@@ -105,6 +110,29 @@ class MainMenuFragment : Fragment() {
                             override fun onNothingSelected(parent: AdapterView<*>?) {
                             }
                         }
+                    FirebaseSettingsDatabase.readAll(
+                        SettingsViewModel(), { settings ->
+                        if (settings.languageMode == 0 && Locale.getDefault() != Locale("en")) {
+                            LocaleHelper.setLocale(requireContext(), "en")
+                            activity?.recreate()
+                        } else if (settings.languageMode == 1 && Locale.getDefault() != Locale("be")) {
+                            LocaleHelper.setLocale(requireContext(), "be")
+                            activity?.recreate()
+                        } else if(settings.languageMode == 2 && Locale.getDefault() != Locale("ru")){
+                            LocaleHelper.setLocale(requireContext(), "ru")
+                            activity?.recreate()
+                        } else {
+
+                        }
+                        if (settings.themeMode == 0 && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_NO) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        } else if(settings.themeMode == 1 && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        }
+                    },
+
+                        {
+                        })
                 }
             }
         }

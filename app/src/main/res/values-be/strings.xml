@@ -136,4 +136,7 @@
 
     <string name="hisotory_search">Гісторыя Пошуку</string>
 
+    <string name="search_title">Пошук</string>
+
+    <string name="search_hospital_hint">Пошук аптек</string>
 </resources>

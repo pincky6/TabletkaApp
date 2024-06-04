@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.fragment.app.setFragmentResultListener
@@ -14,7 +15,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.diplom.tabletkaapp.databinding.FragmentContentBinding
+import com.diplom.tabletkaapp.firebase.database.FirebaseSettingsDatabase
+import com.diplom.tabletkaapp.util.LocaleHelper
+import com.diplom.tabletkaapp.view_models.SettingsViewModel
 import com.diplom.tabletkaapp.views.mainmenu.MainMenuFragment
+import java.util.Locale
 
 class ContentFragment: Fragment() {
     private var _binding: FragmentContentBinding? = null

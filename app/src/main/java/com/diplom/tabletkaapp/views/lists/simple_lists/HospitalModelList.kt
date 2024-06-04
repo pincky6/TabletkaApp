@@ -12,6 +12,8 @@ import com.diplom.tabletkaapp.R
 import com.diplom.tabletkaapp.firebase.authentication.FirebaseSingInRepository
 import com.diplom.tabletkaapp.firebase.database.FirebaseHospitalDatabase
 import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
+import com.diplom.tabletkaapp.firebase.database.OnCompleteListener
+import com.diplom.tabletkaapp.firebase.database.OnReadCancelled
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.models.data_models.GeoPointsList
 import com.diplom.tabletkaapp.models.data_models.HospitalsList
@@ -24,6 +26,7 @@ import com.diplom.tabletkaapp.views.lists.AbstractModelList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import models.Hospital
 import models.Medicine
 import org.osmdroid.util.GeoPoint
@@ -68,9 +71,30 @@ AbstractModelList() {
             }
             HospitalCacher.validateMedicineDatabase(model.database, regionId, hospitalModel.medicine.id.toLong(), requestId,
                 hospitalList, hospitalEntities)
-            initRecyclerViewWithMainContext(HospitalAdapter(convertedList, model.database, maxPage, query, regionId,
-                hospitalModel.medicine,
-                hospitalModel.medicine.id.toLong(), requestId, null), hospitalList)
+            FirebaseHospitalDatabase.readAll(
+                mutableListOf(), object: OnCompleteListener{
+                override fun complete(list: MutableList<AbstractModel>) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            for (element in list){
+                                val findElement = hospitalList.find{it.id == element.id}
+                                if(findElement != null){
+                                    findElement.wish = true
+                                }
+                            }
+                            withContext(Dispatchers.Main){
+                            initRecyclerViewWithMainContext(HospitalAdapter(hospitalList, model.database, maxPage, query, regionId,
+                                hospitalModel.medicine,
+                                hospitalModel.medicine.id.toLong(), requestId, null), hospitalList)
+                        }
+                    }
+                }
+
+            },
+            object: OnReadCancelled{
+                override fun cancel() {
+                }
+
+            })
         }
         binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()

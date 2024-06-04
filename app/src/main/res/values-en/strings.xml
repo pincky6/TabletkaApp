@@ -137,4 +137,7 @@
 
     <string name="hisotory_search">History Search</string>
 
+    <string name="search_title">Search</string>
+    <string name="search_hospital_hint">Pharmacy Search</string>
+
 </resources>

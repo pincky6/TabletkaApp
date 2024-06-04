@@ -51,7 +51,6 @@ class MapViewModel: ViewModel() {
             hospitals?.list?.let {
                 currentMarker = setMarker(context, binding, fragment,
                     it[0], geoPointsList.mutableList[0])
-
             }
             return
         }

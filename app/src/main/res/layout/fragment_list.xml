@@ -13,7 +13,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/search_title"
+        app:titleCentered="true"
+        app:titleTextColor="#FFFFFF" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/medicineInfo"
@@ -22,6 +25,7 @@
         android:background="@drawable/normal_background"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialToolbar">
 
@@ -29,9 +33,10 @@
             android:id="@+id/medicineTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
             android:textColor="?attr/text_color"
             app:layout_constraintEnd_toStartOf="@+id/info_button"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
@@ -81,16 +86,16 @@
             android:id="@+id/medicineRecipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
             app:layout_constraintEnd_toStartOf="@+id/info_button"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/medicineTitle" />
 
         <TextView
             android:id="@+id/medicineCountry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
             app:layout_constraintEnd_toStartOf="@+id/info_button"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/medicineRecipe" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,6 +109,7 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/grid_border"
         android:iconifiedByDefault="false"
+        android:queryHint="@string/search_string"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/update_button" />

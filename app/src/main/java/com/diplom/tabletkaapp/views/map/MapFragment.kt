@@ -122,11 +122,11 @@ class MapFragment: Fragment() {
             } else{
                 val bundle = Bundle()
                 if(model.hospitals!!.list[0] is Hospital) {
-                    bundle.putSerializable(HOSPITAL_SEND, model.hospitals!!.list[0] as Hospital)
-                    childFragmentManager.setFragmentResult(HOSPITAL_SEND, bundle)
+                    bundle.putSerializable(MARKER_PRESSED_HOSPITAL, model.hospitals!!.list[0] as Hospital)
+                    childFragmentManager.setFragmentResult(MARKER_PRESSED_HOSPITAL, bundle)
                 } else {
-                    bundle.putSerializable(HOSPITAL_SHORT_SEND, model.hospitals!!.list[0] as HospitalShort)
-                    childFragmentManager.setFragmentResult(HOSPITAL_SHORT_SEND, bundle)
+                    bundle.putSerializable(MARKER_PRESSERD_HOSPITAL_SHORT, model.hospitals!!.list[0] as HospitalShort)
+                    childFragmentManager.setFragmentResult(MARKER_PRESSERD_HOSPITAL_SHORT, bundle)
                 }
             }
         }
@@ -165,9 +165,8 @@ class MapFragment: Fragment() {
                     val bundle = Bundle()
                     bundle.putString("userAddress", model.getCurrentAddress(requireContext(), binding).split(", ")[0])
                     bundle.putDouble("distance", distance/1000.0)
-                    val time = MapUtil.calculateDistanceTime(distance/1000.0, model.roadType).toLong()
                     bundle.putString("hours",
-                        SimpleDateFormat("dd д. HH ч. mm м.").format(Date(time as Long)))
+                        MapUtil.getDistanceTimeAsString(distance/1000.0, model.roadType))
 
                     val address = if(model.currentHospital is Hospital){
                         (model.currentHospital as Hospital).address

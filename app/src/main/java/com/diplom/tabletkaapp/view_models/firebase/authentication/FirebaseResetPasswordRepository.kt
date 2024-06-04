@@ -10,6 +10,9 @@ import com.google.firebase.auth.FirebaseAuth
 object FirebaseResetPasswordRepository {
     private var _auth: FirebaseAuth? = null
     val auth get() = _auth!!
+    init {
+        _auth = FirebaseAuth.getInstance()
+    }
     fun resetPasswordFromGmail(
         gmail: String,
         onCompleteListener: OnCompleteSignListener?,

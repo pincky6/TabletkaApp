@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation.findNavController
 import com.diplom.tabletkaapp.R
+import com.diplom.tabletkaapp.firebase.database.FirebaseHospitalDatabase
+import com.diplom.tabletkaapp.firebase.database.OnCompleteListener
+import com.diplom.tabletkaapp.firebase.database.OnReadCancelled
 import com.diplom.tabletkaapp.models.AbstractModel
 import com.diplom.tabletkaapp.parser.MedicineParser
 import com.diplom.tabletkaapp.util.CacheMedicineConverter
 import com.diplom.tabletkaapp.view_models.cache.MedicineCacher
+import com.diplom.tabletkaapp.view_models.list.adapters.HospitalAdapter
 import com.diplom.tabletkaapp.view_models.list.adapters.MedicineAdapter
 import com.diplom.tabletkaapp.views.lists.AbstractModelList
 import kotlinx.coroutines.CoroutineScope
@@ -42,7 +46,27 @@ class MedicineModelList:
             val medicineList = MedicineParser.parseFromName(query, regionId)
             MedicineCacher.validateMedicineDatabase(model.database, requestId,
                                                     medicineList, medicineEntities)
-            initRecyclerViewWithMainContext(MedicineAdapter(medicineList, query, regionId, requestId, null), medicineList)
+            FirebaseHospitalDatabase.readAll(mutableListOf(), object: OnCompleteListener {
+                override fun complete(list: MutableList<AbstractModel>) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        for (element in list){
+                            val findElement = medicineList.find{it.id == element.id}
+                            if(findElement != null){
+                                findElement.wish = true
+                            }
+                        }
+                        withContext(Dispatchers.Main){
+                            initRecyclerViewWithMainContext(MedicineAdapter(medicineList, query, regionId, requestId, null), medicineList)
+                        }
+                    }
+                }
+
+            },
+                object: OnReadCancelled {
+                    override fun cancel() {
+                    }
+
+                })
         }
         binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()

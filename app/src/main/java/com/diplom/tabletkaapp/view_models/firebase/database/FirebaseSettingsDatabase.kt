@@ -30,8 +30,8 @@ object FirebaseSettingsDatabase {
         getDatabase().addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(pharmacy in snapshot.children){
-                    pharmacy.getValue<Settings>()?.let {
+                for(settings in snapshot.children){
+                    settings.getValue<Settings>()?.let {
                         model.settings = it
                     }
                 }

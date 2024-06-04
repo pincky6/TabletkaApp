@@ -137,4 +137,8 @@
     <string name="hospitals_count">Количество Аптек: </string>
 
     <string name="hisotory_search">История Поиска</string>
+
+    <string name="search_title">Поиск</string>
+    <string name="search_hospital_hint">Поиск аптек</string>
+
 </resources>
