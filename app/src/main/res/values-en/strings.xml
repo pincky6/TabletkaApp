@@ -139,5 +139,6 @@
 
     <string name="search_title">Search</string>
     <string name="search_hospital_hint">Pharmacy Search</string>
+    <string name="you_enter_in_account">You enter in account</string>
 
 </resources>

@@ -48,6 +48,7 @@ class MapViewModel: ViewModel() {
             return
         if(geoPointsList.mutableList.size == 1){
             setZoom(binding, geoPointsList.mutableList[0])
+            currentHospital = hospitals!!.list[0]
             hospitals?.list?.let {
                 currentMarker = setMarker(context, binding, fragment,
                     it[0], geoPointsList.mutableList[0])

@@ -140,5 +140,6 @@
 
     <string name="search_title">Поиск</string>
     <string name="search_hospital_hint">Поиск аптек</string>
+    <string name="you_enter_in_account">Вы вошли в аккаунт</string>
 
 </resources>

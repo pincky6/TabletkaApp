@@ -55,15 +55,6 @@ class LoginFragment: Fragment() {
                 binding.gmailEditText.getText().toString().trim(),
                 binding.passwordEditText.getText().toString().trim(),
                 { successful: Boolean ->
-                    if (!successful) {
-                        EditorsUtil.setErrorState(binding.passwordEditText)
-                        Toast.makeText(
-                            binding.root.context,
-                            getString(R.string.check_gmail_error),
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return@signInWithGmailAndPassword
-                    }
                     if (!FirebaseSingInRepository.isVerified) {
                         Toast.makeText(
                             binding.root.context,
@@ -75,7 +66,21 @@ class LoginFragment: Fragment() {
                     }
                     else
                     {
+                        Toast.makeText(
+                            binding.root.context,
+                            getString(R.string.you_enter_in_account),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         findNavController(binding.root).popBackStack()
+                    }
+                    if (!successful) {
+                        EditorsUtil.setErrorState(binding.passwordEditText)
+                        Toast.makeText(
+                            binding.root.context,
+                            getString(R.string.check_gmail_error),
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return@signInWithGmailAndPassword
                     }
                 },
                 object : OnFailrueSignListener {
@@ -116,13 +121,14 @@ class LoginFragment: Fragment() {
             if (successful) {
                 findNavController(binding.root).popBackStack()
                 return@sendVerification
-            }
+            } else {
                 EditorsUtil.setErrorState(binding.passwordEditText)
                 Toast.makeText(
                     binding.root.context,
                     getString(R.string.check_gmail_error),
                     Toast.LENGTH_LONG
                 ).show()
+            }
         },
             object : OnFailrueSignListener {
                 override fun failrueTask(exception: Exception) {
