@@ -125,11 +125,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
         android:backgroundTint="?attr/button_color"
         android:text="@string/reset_password_text"
         android:textColor="?attr/button_text_color"
-        app:layout_constraintBottom_toTopOf="@+id/exit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -140,28 +138,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
         android:backgroundTint="?attr/button_color"
         android:text="@string/exit_button_text"
         android:textColor="?attr/button_text_color"
-        app:layout_constraintBottom_toTopOf="@+id/delete_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reset_password_button" />
 
     <Button
         android:id="@+id/delete_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
         android:backgroundTint="?attr/button_color"
         android:text="@string/delete_button_text"
         android:textColor="?attr/button_text_color"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exit_button" />
 
     <TextView
         android:id="@+id/textView2"
