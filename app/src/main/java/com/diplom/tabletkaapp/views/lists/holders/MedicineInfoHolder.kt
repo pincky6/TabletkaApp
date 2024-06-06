@@ -14,7 +14,7 @@ class MedicineInfoHolder(
         val dateStr: String = if(SimpleDateFormat("MM/yyyy").format(expirationDate) == "01/1970"){
             binding.root.context.getString(R.string.check_with_the_pharmacy)
         } else {
-            binding.root.context.getString(R.string.good_for) + SimpleDateFormat("MM/yyyy").format(expirationDate)
+            binding.root.context.getString(R.string.good_for) + ": "+ SimpleDateFormat("MM/yyyy").format(expirationDate)
         }
         binding.expirationDate.text = dateStr
         binding.packagesNumber.text = if(packageNumber == 0) {

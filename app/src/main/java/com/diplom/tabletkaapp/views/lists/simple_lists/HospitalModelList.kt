@@ -19,6 +19,7 @@ import com.diplom.tabletkaapp.models.data_models.GeoPointsList
 import com.diplom.tabletkaapp.models.data_models.HospitalsList
 import com.diplom.tabletkaapp.parser.HospitalParser
 import com.diplom.tabletkaapp.util.CacheHospitalConverter
+import com.diplom.tabletkaapp.util.ComparatorUtil
 import com.diplom.tabletkaapp.view_models.lists.HospitalModelListViewModel
 import com.diplom.tabletkaapp.view_models.cache.HospitalCacher
 import com.diplom.tabletkaapp.view_models.list.adapters.HospitalAdapter
@@ -55,9 +56,7 @@ AbstractModelList() {
                                                                                                                requestId)
             var maxPage = model.database.hospitalDao().getMaxPage(requestId, regionId, hospitalModel.medicine.id.toLong())
             val convertedList = CacheHospitalConverter.fromEntityListToModelList(hospitalEntities)
-            initRecyclerViewWithMainContext(HospitalAdapter(convertedList, model.database, maxPage, query, regionId,
-                hospitalModel.medicine,
-                hospitalModel.medicine.id.toLong(), requestId, null), convertedList)
+            setWish(convertedList, maxPage, query, regionId, requestId)
             val hospitalList = mutableListOf<AbstractModel>()
             if(maxPage == 0) maxPage++
             for(i in 0 until maxPage) {
@@ -71,30 +70,7 @@ AbstractModelList() {
             }
             HospitalCacher.validateMedicineDatabase(model.database, regionId, hospitalModel.medicine.id.toLong(), requestId,
                 hospitalList, hospitalEntities)
-            FirebaseHospitalDatabase.readAll(
-                mutableListOf(), object: OnCompleteListener{
-                override fun complete(list: MutableList<AbstractModel>) {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            for (element in list){
-                                val findElement = hospitalList.find{it.id == element.id}
-                                if(findElement != null){
-                                    findElement.wish = true
-                                }
-                            }
-                            withContext(Dispatchers.Main){
-                            initRecyclerViewWithMainContext(HospitalAdapter(hospitalList, model.database, maxPage, query, regionId,
-                                hospitalModel.medicine,
-                                hospitalModel.medicine.id.toLong(), requestId, null), hospitalList)
-                        }
-                    }
-                }
-
-            },
-            object: OnReadCancelled{
-                override fun cancel() {
-                }
-
-            })
+            setWish(hospitalList, maxPage, query, regionId, requestId)
         }
         binding.filterButton.text = context?.getString(R.string.hospital_filter_and_sort_button)
         initFilterButton()
@@ -168,5 +144,31 @@ AbstractModelList() {
                 HospitalModelListDirections.actionHospitalModelListToMapFragment(geoPointsList, HospitalsList(model.modelList))
             )
         }
+    }
+    private fun setWish(hospitalList: MutableList<AbstractModel>, maxPage: Int, query: String, regionId: Int, requestId: Long){
+        FirebaseHospitalDatabase.readAll(
+            mutableListOf(), object: OnCompleteListener{
+                override fun complete(list: MutableList<AbstractModel>) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        for (element in list){
+                            val findElement = hospitalList.find{ComparatorUtil.compare(it as Hospital, element as Hospital)}
+                            if(findElement != null){
+                                findElement.wish = true
+                            }
+                        }
+                        withContext(Dispatchers.Main){
+                            initRecyclerViewWithMainContext(HospitalAdapter(hospitalList, model.database, maxPage, query, regionId,
+                                hospitalModel.medicine,
+                                hospitalModel.medicine.id.toLong(), requestId, null), hospitalList)
+                        }
+                    }
+                }
+
+            },
+            object: OnReadCancelled{
+                override fun cancel() {
+                }
+
+            })
     }
 }
