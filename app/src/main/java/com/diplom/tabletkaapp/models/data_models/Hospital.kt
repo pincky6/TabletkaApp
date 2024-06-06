@@ -5,7 +5,7 @@ import java.io.Serializable
 import java.util.Date
 
 data class Hospital(
-    override val id: String, override var wish: Boolean,
+    override var id: String, override var wish: Boolean,
     override val name: String, val hospitalReference: String,
     val latitude: Double, val longitude: Double,
     val address: String, val phone: String,

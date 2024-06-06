@@ -5,7 +5,7 @@ import com.diplom.tabletkaapp.util.UrlStrings
 import java.io.Serializable
 
 data class Medicine(
-    override val id: String,
+    override var id: String,
     override var wish: Boolean,
     override val name: String,
     val medicineReference: String,

@@ -24,7 +24,11 @@ object FirebaseMedicineDatabase: TabletkaDatabase {
         medicineDatabase.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(medicine in snapshot.children){
-                        medicine?.getValue<Medicine>()?.let { list.add(it) }
+                        medicine?.getValue<Medicine>()?.let {
+                            list.add(it)
+                            list.last().id = medicine.key!!
+                        }
+
                 }
                 onCompleteListener.complete(list)
             }

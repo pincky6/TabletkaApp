@@ -37,8 +37,6 @@ class MedicineHolder(
         }
 
         initWishButton(medicine, requestId, regionId, query, onWishListClicked)
-//        initCopyButton(medicine)
-//        initInfoButton(medicine)
         if(!isWish) {
             binding.root.setOnClickListener {
                 findNavController(binding.root).navigate(
@@ -84,18 +82,4 @@ class MedicineHolder(
             onWishListClicked?.invoke(medicine.wish)
         }
     }
-//    private fun initCopyButton(medicine: Medicine){
-//        binding.copyButton.setOnClickListener{
-//            val clipboard = binding.root.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-//            val clip = ClipData.newPlainText("Медикамент", medicine.toString())
-//            clipboard.setPrimaryClip(clip)
-//        }
-//    }
-//    private fun initInfoButton(medicine: Medicine){
-//        binding.infoButton.setOnClickListener{
-//            findNavController(binding.root).navigate(
-//                MedicineModelListDirections.showInfoFragment(medicine.toString())
-//            )
-//        }
-//    }
 }
