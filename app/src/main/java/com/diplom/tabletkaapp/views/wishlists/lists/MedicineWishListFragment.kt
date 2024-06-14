@@ -95,6 +95,7 @@ class MedicineWishListFragment: AbstractModelList() {
             })
     }
     fun updateFirebaseUI(list: MutableList<AbstractModel>){
+        model.modelList = list
         if(binding != null && binding.recyclerView.adapter != null){
             (binding.recyclerView.adapter as WishListAdapter).resetList(list)
             (binding.recyclerView.adapter as WishListAdapter).notifyDataSetChanged()
