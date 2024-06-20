@@ -14,11 +14,20 @@ import com.diplom.tabletkaapp.views.notes.holders.EmptyHolder
 import com.diplom.tabletkaapp.views.notes.holders.NoteHolderGrid
 import com.diplom.tabletkaapp.views.notes.holders.NoteHolderLinear
 
+/**
+ * Класс для отображения списка заметок в спсике
+ * @param list список заметок
+ * @param noteMode режим отображения
+ * @param onUpdateUI функция для обновления ui
+ */
 class NotesAdapter(
     override var list: MutableList<AbstractModel>?,
     val noteMode: Int,
     val onUpdateUI: () -> Unit
 ): AbstractAdapter(list, null) {
+    /**
+     *
+     */
     override fun getItemViewType(position: Int): Int {
         if(list?.size == 0){
             return 0

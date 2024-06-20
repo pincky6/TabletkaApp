@@ -14,9 +14,19 @@ import com.diplom.tabletkaapp.firebase.authentication.FirebaseSignUpRepository
 import com.diplom.tabletkaapp.firebase.authentication.OnFailrueSignListener
 import com.diplom.tabletkaapp.util.EditorsUtil
 
+/**
+ * Класс описывающий окно регистрации
+ */
 class RegisterFragment: Fragment() {
+    /**
+     * Привязка к элементам макета
+     */
     private var _binding: FragmentRegisterBinding? = null
     val binding get() = _binding!!
+    /**
+    * Метод создания представления
+    * Здесь производится инициалиазция кнопок, полей ввода и тулбара
+    */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +43,13 @@ class RegisterFragment: Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    /**
+     * Инициализация кнопок.
+     * При нажатии на кнопку регистрации проверяются данные
+     * При неверном формате ввода ставится фон ошибки для полей ввода
+     * Иначе создается аккаунт в Firebase
+     */
     fun initButtons() {
         binding.signUpButton.setOnClickListener { v ->
             if (EditorsUtil.checkEditors(binding.gmailEditText, binding.passwordEditText)) {
@@ -66,10 +83,16 @@ class RegisterFragment: Fragment() {
                 })
         }
     }
+    /**
+     * Инициализация наблюдателей и фильтров полей ввода
+     */
     fun initEditTexts(){
         EditorsUtil.initTextWatchers(binding.gmailEditText, binding.passwordEditText)
         EditorsUtil.initTextFilters(binding.gmailEditText, binding.passwordEditText)
     }
+    /**
+     * Инициализация кнопки выхода из окна
+     */
     private fun initToolbar() {
         binding.toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
         binding.toolbar.setNavigationOnClickListener { v: View ->

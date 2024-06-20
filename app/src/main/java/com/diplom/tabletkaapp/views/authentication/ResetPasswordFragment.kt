@@ -14,13 +14,23 @@ import com.diplom.tabletkaapp.firebase.authentication.FirebaseResetPasswordRepos
 import com.diplom.tabletkaapp.firebase.authentication.OnFailrueSignListener
 import com.diplom.tabletkaapp.util.EditorsUtil
 
+/**
+ * Класс представлеения окна переустановки пароля
+ */
 class ResetPasswordFragment: Fragment() {
+    /**
+     * Привязка к элементам макета
+     */
     private var _binding: FragmentResetPasswordBinding? = null
     val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
+    /**
+     * Метод для создания окна.
+     * Здесь инициализируется наблюдатель корректности введенных данных, кнопок и тулбара
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +51,9 @@ class ResetPasswordFragment: Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
+    /**
+     * Инициализация кнопки выхода из окна
+     */
     private fun initToolbar() {
         binding.toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
         binding.toolbar.setNavigationOnClickListener { v: View ->
@@ -49,6 +61,12 @@ class ResetPasswordFragment: Fragment() {
         }
     }
 
+    /**
+     * Инициализация кнопки отправки переустановки пароля
+     * При нажатии проверяется введенная почта. Если формат не устравивает, выставляем поле ошибки и выходим
+     * Иначе переустанавливаем пароль
+     *
+     */
     private fun initButton() {
         binding.sendButton.setOnClickListener { v: View ->
             if (binding.gmailTextText.getText().toString().isEmpty()) {

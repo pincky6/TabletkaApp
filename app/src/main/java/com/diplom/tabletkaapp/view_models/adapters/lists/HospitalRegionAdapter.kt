@@ -20,10 +20,20 @@ import kotlinx.coroutines.withContext
 import models.Hospital
 import models.Medicine
 
-class HospitalRegionAdapter(override var list: MutableList<AbstractModel>?, val appDatabase: AppDatabase,
+/**
+ * Класс для отображения аптек, которые ищутся по региону
+ * @param list список аптек
+ * @param maxPage количество загруженных страниц
+ * @param regionId id региона, по которому поиск проводится
+ * @param onWishListClicked определяет поведение, если данный адаптер используется в списке желания
+ */
+class HospitalRegionAdapter(override var list: MutableList<AbstractModel>?,
                       var maxPage: Int,
                       val regionId: Int, override val onWishListClicked: ((Boolean)->Unit)?
 ) : AbstractAdapter(list, onWishListClicked) {
+    /**
+     * Создание представления модели данных аптек
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
@@ -31,6 +41,9 @@ class HospitalRegionAdapter(override var list: MutableList<AbstractModel>?, val 
         return HospitalShortHolder(binding)
     }
 
+    /**
+     * Привязка представления HospitalShortHolder к модели HospitalShort
+     */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         list?.let {
             (holder as HospitalShortHolder).bind(it[position] as HospitalShort)
@@ -40,10 +53,20 @@ class HospitalRegionAdapter(override var list: MutableList<AbstractModel>?, val 
         }
     }
 
+    /**
+     * Метод для получения количества элементов списка
+     */
     override fun getItemCount(): Int {
         return list?.size ?: 0
     }
-
+    /**
+     * Метод для дозагрузки аптек
+     * Вначале проверяется, сколько уже страниц аптек уже загружено
+     * Если количество аптек в списке не соответствует количеству загруженных аптек,
+     * то ничего не происходит(данные еще не загружены)
+     * Иначе загружаем данные и переносим их в кеш
+     * Обновляем список
+     */
     private fun downloadPage(){
         if(maxPage * 20 != list?.size) return
         maxPage++

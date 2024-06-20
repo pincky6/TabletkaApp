@@ -7,13 +7,21 @@ import java.time.Duration
 import java.util.Calendar
 import java.util.Date
 
+/**
+ * Утилита для работ с картам
+ */
 object MapUtil {
+    //средняя скорость машины
     const val AVERAGE_CAR_SPEED:  Double = 60.0
+    //средняя скорость пешехода
     const val AVERAGE_FOOT_SPEED: Double = 6.0
+    //средняя скорость самоката/скутера
     const val AVERAGE_VELO_SPEED: Double = 20.0
 
-    const val DAY_IN_SECOND: Double = 86400.0
-
+    /**
+     * @param flag тип перемещения
+     * Метод для получения иконки исходя из флага
+     */
     fun getRoadImageFromFlag(flag: String): Int{
         return when(flag){
             OSRMRoadManager.MEAN_BY_FOOT -> R.drawable.baseline_man_24
@@ -23,6 +31,11 @@ object MapUtil {
         }
     }
 
+    /**
+     * @param context контекст приложения
+     * @param flag тип перемещения
+     * Возвращает строку о типе перемещения
+     */
     fun getRoadStringFromFlag(context: Context, flag: String): String{
         return when(flag){
             OSRMRoadManager.MEAN_BY_FOOT -> context.getString(R.string.by_foot_text)
@@ -32,6 +45,11 @@ object MapUtil {
         }
     }
 
+    /**
+     *@param distance дистанция
+     *@param roadType тип перемещения
+     * Метод для расчета времени дистанции
+     */
     fun calculateDistanceTime(distance: Double, roadType: String): Double {
         return when(roadType){
             OSRMRoadManager.MEAN_BY_FOOT -> (((distance) / AVERAGE_FOOT_SPEED.toDouble()) * 3600)
@@ -41,8 +59,13 @@ object MapUtil {
         }
     }
 
-    fun getDistanceTimeAsString(seconds: Double, roadType: String): String {
-        val seconds = calculateDistanceTime(seconds, roadType).toLong()
+    /**
+     * @param distance дистанция
+     * @param roadType тип перемещения
+     * Метод для получения строки о количестве времени на заданный маршрут
+     */
+    fun getDistanceTimeAsString(distance: Double, roadType: String): String {
+        val seconds = calculateDistanceTime(distance, roadType).toLong()
         val duration = Duration.ofSeconds(seconds)
         val days = duration.toDays()
         val hours = duration.toHours() - duration.toDays() * 24

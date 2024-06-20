@@ -7,7 +7,18 @@ import com.diplom.tabletkaapp.models.data_models.HospitalShort
 import com.diplom.tabletkaapp.views.lists.holders.HospitalShortHolder
 import models.Hospital
 
+/**
+ * Класс для работы с кешем аптек
+ */
 object HospitalCacher{
+    /**
+     * Метод для добавления аптеки в таблицу с аптеками
+     * @param appDatabase даза данных
+     * @param hospital аптека
+     * @param page страница
+     * @param regionId идентификатор региона
+     * @param requestId идентификатор запроса
+     */
     suspend fun add(appDatabase: AppDatabase, hospital: Hospital, page: Int,
                     regionId: Int, medicineId: Long, requestId: Long){
         val hospitalDao = appDatabase.hospitalDao()
@@ -16,10 +27,24 @@ object HospitalCacher{
             hospital.expirationDates, hospital.packagesNumber, hospital.prices, page, regionId, medicineId, requestId)
         hospitalDao.insertHospital(hospitalEntity)
     }
+
+    /**
+     * Метод для удаления аптек по индентификатору
+     * @param appDatabase база данных
+     * @param requestId идентификатор запроса
+     */
     suspend fun deleteById(appDatabase: AppDatabase, requestId: Long){
         val medicineDao = appDatabase.medicineDao()
         medicineDao.deleteByRecordId(requestId)
     }
+
+    /**
+     * Загрузить список аптек в кеш
+     * @param appDatabase даза данных
+     * @param hospitalList аптека
+     * @param regionId идентификатор региона
+     * @param requestId идентификатор запроса
+     */
     suspend fun addHospitalList(appDatabase: AppDatabase, hospitalList: MutableList<AbstractModel>,
                                 regionId: Int, medicineId: Long, requestId: Long){
         for(i in 0 until hospitalList.size){
@@ -27,6 +52,11 @@ object HospitalCacher{
         }
     }
 
+    /**
+     * Метод для проверки валидности данных аптек
+     * @param appDatabase база данных
+     * @param hospitalList список аптек
+     */
     suspend fun isValidData(appDatabase: AppDatabase, hospitalList: MutableList<AbstractModel>): Boolean{
         if(hospitalList.size != 0 && (hospitalList[0] is HospitalShort)) return false
         val hospitalEntities = appDatabase.hospitalDao().getAllHospitals()
@@ -50,6 +80,16 @@ object HospitalCacher{
         return true
     }
 
+    /**
+     * Метод для проверки списка аптек на валидность данных
+     * В случае их не валиндности обновляем список
+     * @param appDatabase даза данных
+     * @param medicineId идентификатор медикамента
+     * @param hospitalList список аптек
+     * @param hospitalEntities список закешированных аптек
+     * @param regionId идентификатор региона
+     * @param requestId идентификатор запроса
+     */
     suspend fun validateMedicineDatabase(
         appDatabase: AppDatabase, regionId: Int, medicineId: Long, requestId: Long,
         hospitalList: MutableList<AbstractModel>,

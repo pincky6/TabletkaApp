@@ -15,9 +15,21 @@ import com.diplom.tabletkaapp.firebase.authentication.OnFailrueSignListener
 import com.diplom.tabletkaapp.util.EditorsUtil
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Класс представления окна логина
+ */
 class LoginFragment: Fragment() {
+    /**
+     * Привязка к элементам макета
+     */
     private var _binding: FragmentLoginBinding? = null
     val binding get() = _binding!!
+
+    /**
+     * Метод обозначающий начало работы фрагмента
+     * В нем инициализируется базовый класс, а также текстовые поля, также производится получение gmail и установка
+     * в поле ввода gmail если тот есть
+     */
     override fun onStart() {
         super.onStart()
         EditorsUtil.initTextWatchers(binding.gmailEditText, binding.passwordEditText)
@@ -29,6 +41,11 @@ class LoginFragment: Fragment() {
             }
         }
     }
+
+    /**
+     * Метод создания представления
+     * Здесь производится инициалиазция кнопок, полей ввода и тулбара
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,10 +58,20 @@ class LoginFragment: Fragment() {
         return binding.root
     }
 
+    /**
+     * Метод уничтожения представления
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    /**
+     * Инициализация кнопок входа, где проверяются данные и если те корректны производится вход в аккаунт, если уже
+     * было пройдена верификация, иначе производится верификация и после этого вход в аккаунт
+     * Если данные не валидны, то устанавливаем тему ошибки для поля ввода
+     * Кнопка регистрации и кнопка переустановки пароля перемещают в соответствующие представления
+     */
     private fun initButtons() {
         binding.signInButton.setOnClickListener { v ->
             if (EditorsUtil.checkEditors(binding.gmailEditText, binding.passwordEditText)) {
@@ -105,17 +132,28 @@ class LoginFragment: Fragment() {
             )
         }
     }
+
+    /**
+     * Инициализация кнопки выхода из окна
+     */
     private fun initToolbar() {
         binding.toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
         binding.toolbar.setNavigationOnClickListener { v: View ->
             Navigation.findNavController(binding.root).popBackStack()
         }
     }
+
+    /**
+     * Инициализация наблюдателей и фильтров полей ввода
+     */
     private fun initEditTexts(){
         EditorsUtil.initTextWatchers(binding.gmailEditText, binding.passwordEditText)
         EditorsUtil.initTextFilters(binding.gmailEditText, binding.passwordEditText)
     }
 
+    /**
+     * Метод для отправки верификационного сообщения на почту
+     */
     private fun sendVerificationMessage(){
         FirebaseSingInRepository.sendVerification({ successful: Boolean ->
             if (successful) {

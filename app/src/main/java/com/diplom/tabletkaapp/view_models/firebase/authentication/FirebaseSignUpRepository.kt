@@ -11,13 +11,33 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Класс для работы с регистрацией в Firebase Authentication
+ */
 object FirebaseSignUpRepository {
+    /**
+     * Объект для работы с Firebase Authentication
+     */
     private var _auth: FirebaseAuth? = null
+    /**
+     * Вспомогательный геттер с проверкой на null
+     */
     val auth get() = _auth!!
 
     init {
+        /**
+         * Инициализация объекта
+         */
         _auth = FirebaseAuth.getInstance()
     }
+
+    /**
+     * Метод для создания аккаунта связанный с почтой и паролем
+     * @param gmail почта
+     * @param password пароль
+     * @param onCompleteListener слушатель завершения работы
+     * @param onFailrueSignListener слушатель неудачного завершения работы
+     */
     fun createUserWithGmailAndPassword(
         gmail: String,
         password: String,

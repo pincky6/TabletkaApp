@@ -12,9 +12,19 @@ import com.diplom.tabletkaapp.view_models.list.adapters.AbstractAdapter
 import models.Hospital
 import models.Medicine
 
+/**
+ * Класс который отвечает за отображения списка желаний аптек и лекарств
+ * @param list список аптек/лекарств
+ * @param onWishListClicked функция которая при нажатии на элемент списка может что-то делать(если не null)
+ */
 class WishListAdapter(override var list: MutableList<AbstractModel>?,
                       override val onWishListClicked: ((Boolean)->Unit)?
 ) : AbstractAdapter(list, onWishListClicked) {
+    /**
+     * Возврат типа данных
+     * 0 если медикамент
+     * 1 если аптека
+     */
     override fun getItemViewType(position: Int): Int {
         if(list?.get(position) is Medicine){
             return 0
@@ -22,6 +32,10 @@ class WishListAdapter(override var list: MutableList<AbstractModel>?,
             return 1
         }
     }
+
+    /**
+     * Возвращение представления в зависимости от того что это, аптека или медкамент
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         if(viewType == 0) {
@@ -33,6 +47,9 @@ class WishListAdapter(override var list: MutableList<AbstractModel>?,
         }
     }
 
+    /**
+     * Метод привязывает модель Medicine или Hospital к представлению MedicineHolder или HospitalHolder
+     */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         list?.let {
             if(holder is MedicineHolder){
@@ -43,6 +60,9 @@ class WishListAdapter(override var list: MutableList<AbstractModel>?,
         }
     }
 
+    /**
+     * Метод возвращает количество элементов списка
+     */
     override fun getItemCount(): Int {
         return list?.size ?: 0
     }

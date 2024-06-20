@@ -23,11 +23,27 @@ import kotlinx.coroutines.withContext
 import models.Hospital
 import models.Medicine
 
+/**
+ * Адаптер аптек
+ * @param list список аптек
+ * @param appDatabase кещ базы данных
+ * @param maxPage максимальное количество загруженных страниц
+ * @param query запрос
+ * @param regionId заданный регион
+ * @param medicine медикамент по которому проводится поиск аптек
+ * @param medicineId уникальный идентификатор данного медикамента
+ * @param requestId уникальный идентификатор запроса
+ * @param onWishListClicked функция, которая позволяет определять поведение
+ *                          приложения при использовании данного класса в списке желания
+ */
 class HospitalAdapter(override var list: MutableList<AbstractModel>?, val appDatabase: AppDatabase,
                       var maxPage: Int, val query: String,
                       val regionId: Int, val medicine: Medicine,
                       val medicineId: Long, val requestId: Long, override val onWishListClicked: ((Boolean)->Unit)?
 ) : AbstractAdapter(list, onWishListClicked) {
+    /**
+     * Метод для создания элементов списка аптек
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
@@ -35,6 +51,9 @@ class HospitalAdapter(override var list: MutableList<AbstractModel>?, val appDat
         return HospitalHolder(binding, false, false)
     }
 
+    /**
+     * Метод для связки представления HospitalHolder с моделью Hospital
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         list?.let {
             (holder as HospitalHolder).bind(it[position] as Hospital, regionId,
@@ -45,10 +64,21 @@ class HospitalAdapter(override var list: MutableList<AbstractModel>?, val appDat
         }
     }
 
+    /**
+     * метод возвращающий количество элементов списка
+     */
     override fun getItemCount(): Int {
         return list?.size ?: 0
     }
 
+    /**
+     * Метод для дозагрузки аптек
+     * Вначале проверяется, сколько уже страниц аптек уже загружено
+     * Если количество аптек в списке не соответствует количеству загруженных аптек,
+     * то ничего не происходит(данные еще не загружены)
+     * Иначе загружаем данные и переносим их в кеш
+     * Обновляем список
+     */
     private fun downloadPage(){
         if(maxPage * 20 != list?.size) return
         maxPage++

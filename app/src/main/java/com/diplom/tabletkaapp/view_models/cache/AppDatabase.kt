@@ -17,6 +17,9 @@ import com.diplom.tabletkaapp.util.DatabaseInfo
 import com.diplom.tabletkaapp.view_models.cache.medicine_daos.MedicineDao
 import com.diplom.tabletkaapp.view_models.cache.pharmacy_daos.HospitalDao
 
+/**
+ * Класс описывающий базу данных приложения
+ */
 @Database(entities = [
     MedicineEntity::class,
     HospitalEntity::class,
@@ -26,7 +29,18 @@ import com.diplom.tabletkaapp.view_models.cache.pharmacy_daos.HospitalDao
                 ExpirationDatesConverter::class,
                 PackagesNumberConverter::class)
 abstract class AppDatabase : RoomDatabase() {
+    /**
+     * Метод для получения таблицы медикаментов
+     */
     abstract fun medicineDao(): MedicineDao
+
+    /**
+     * Метод для получения таблицы аптек
+     */
     abstract fun hospitalDao(): HospitalDao
+
+    /**
+     * Метод для получения таблицы запросов
+     */
     abstract fun requestDao(): RequestDao
 }

@@ -46,7 +46,9 @@ class InfoFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-
+    /**
+     * Инициализация кнопки выхода из окна
+     */
     private fun initBackButton(){
         binding.materialToolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
         binding.materialToolbar.setNavigationOnClickListener { v: View ->

@@ -5,7 +5,13 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import java.util.Locale
 
+/**
+ * Объект для установки необходимого нам языка
+ */
 object LocaleHelper {
+    /**
+     * Установка необходимого нам языка
+     */
     fun setLocale(context: Context, language: String) {
         val locale = Locale(language)
         Locale.setDefault(locale)

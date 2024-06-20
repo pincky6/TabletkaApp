@@ -60,7 +60,9 @@ class HospitalRegionFragment: Fragment() {
         loadData()
         return binding.root
     }
-
+    /**
+     * Инициализация кнопки выхода из окна
+     */
     private fun initBackButton(){
         binding.materialToolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
         binding.materialToolbar.setNavigationOnClickListener { v: View ->
@@ -79,7 +81,7 @@ class HospitalRegionFragment: Fragment() {
                         )
                     )
                 model.list = hospitalList
-                initRecyclerView(HospitalRegionAdapter(hospitalList, it, 1, model.regionId, null))
+                initRecyclerView(HospitalRegionAdapter(hospitalList, 1, model.regionId, null))
             }
         }
     }

@@ -1,5 +1,8 @@
 package com.diplom.tabletkaapp.util
 
+/**
+ * Утилита содержащая ссылки на разные части tabletka.by
+ */
 object UrlStrings {
     const val BASIC_URL = "https://tabletka.by/"
 

@@ -18,6 +18,9 @@ import kotlinx.coroutines.withContext
 
 import java.lang.reflect.Array;
 
+/**
+ * Класс отображающий элементы запросов в истории при поиске медикаментов
+ */
 class DeletableCustomAdapter (
         context:Context,
         layout: Int,
@@ -28,6 +31,10 @@ class DeletableCustomAdapter (
         var searchView: SearchView,
     var listener: SearchView.OnSuggestionListener
 ) : SimpleCursorAdapter(context, layout, c, from.toTypedArray(), to, flags) {
+    /**
+     * Получение элемента списка, установка текста и функционала кнопки удаления,
+     * а именно удаления записи из истории поиска
+     */
     override fun bindView(view: View, context: Context, cursor: Cursor) {
         super.bindView(view, context, cursor)
 

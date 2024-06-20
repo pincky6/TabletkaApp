@@ -4,7 +4,13 @@ import models.Hospital
 import models.Medicine
 import kotlin.math.abs
 
+/**
+ * Утилита для сравнения объектов firebase
+ */
 object ComparatorUtil {
+    /**
+     * Метод сравнивающий медикаменты
+     */
     fun compare(medicineLhs: Medicine, medicineRhs: Medicine): Boolean{
         return !(medicineLhs.name             != medicineRhs.name ||
                 medicineLhs.compound          != medicineRhs.compound ||
@@ -13,7 +19,9 @@ object ComparatorUtil {
                 medicineLhs.companyName       != medicineRhs.companyName ||
                 medicineLhs.country           != medicineRhs.country)
     }
-
+    /**
+     * Метод сравнивающий аптеки
+     */
     fun compare(hospitalLhs: Hospital, hospitalRhs: Hospital): Boolean{
         return !(hospitalLhs.name             != hospitalRhs.name ||
                 hospitalLhs.address           != hospitalRhs.address ||

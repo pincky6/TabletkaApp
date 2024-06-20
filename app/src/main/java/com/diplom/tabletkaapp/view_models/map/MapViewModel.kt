@@ -35,6 +35,16 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
 import java.util.Locale
 
+/**
+ * Класс модель-представление для работы с картами
+ * @param geoPointsList геолокации аптек
+ * @param locationManager менеджер для определения местоположения пользователя
+ * @param currentGeoPoint текущая геолокация пользователя
+ * @param currentHospital текущая выбранная аптека
+ * @param currentMarker текущий выбранный маркер
+ * @param roadType тип перемещения
+ * @param hospitals список аптек
+ */
 class MapViewModel: ViewModel() {
     lateinit var geoPointsList: GeoPointsList
     lateinit var locationManager: LocationManager
@@ -43,6 +53,16 @@ class MapViewModel: ViewModel() {
     var currentMarker: Marker? = null
     var roadType = OSRMRoadManager.MEAN_BY_FOOT
     var hospitals: HospitalsList? = null
+
+    /**
+     * Метод устанавливающий маркеры на карте
+     * Если список геолокаций аптек пуст, то ничего не делаем
+     * Если есть только одна геолокация, то устанавливаем эту аптеку, как уже выбранную
+     * Иначе устанавливаем все маркеры аптек на карте
+     * @param context контекст приложения
+     * @param fragment фрагмент представления для отправки сообщений дочерним фрагментам
+     * @param binding привязка к элементам макета
+     */
     fun setMarkers(context: Context, fragment: Fragment, binding: FragmentMapBinding){
         if(geoPointsList.mutableList.size == 0)
             return
@@ -64,10 +84,31 @@ class MapViewModel: ViewModel() {
             }
         }
     }
+
+    /**
+     * Метод по установке 12-кратного зума в точку, указанную в point
+     * @param binding привязка к элементам макета
+     * @param point позиция
+     */
     fun setZoom(binding: FragmentMapBinding, point: GeoPoint){
         binding.mapView.controller.setCenter(point)
         binding.mapView.controller.setZoom(12.0)
     }
+
+    /**
+     * Метод для установки маркера
+     * Устанавливамем его позицию, иконку, а также слушатель нажатия на маркер
+     * Если был нажат тот же маркер, то обнуляем текущий маркер и отправляем дочернему представлению сигнал о том
+     * что он должен убрать информацию о данной аптеке, котоую описывает маркер
+     * Иначе устанавливаем текующую аптеку и маркер, а также отправляем сигнал об отображении текущей аптеки
+     * Удаляем все ранее построенные маршруты
+     * Перемещаем пользователя к заданному маркеру и обновляем ui
+     *
+     * @param context контекст приложения
+     * @param binding привязка к элементам макета
+     * @param fragment фрагмент представления для отправки сообщений дочерним фрагментам
+     * @param geoPoint текущая геопозиция
+     */
     fun setMarker(context: Context, binding: FragmentMapBinding, fragment: Fragment,
                   abstractModel: AbstractModel, geoPoint: GeoPoint): Marker{
             val marker = Marker(binding.mapView)
@@ -105,6 +146,12 @@ class MapViewModel: ViewModel() {
             binding.mapView.invalidate()
             return marker
         }
+
+    /**
+     * Получаем текущий адресс пользователя
+     * @param context контекст приложения
+     * @param binding привязка к элементам макета
+     */
     fun getCurrentAddress(context: Context, binding: FragmentMapBinding): String{
         val geocoder = Geocoder(context, Locale.getDefault())
         var address: String = ""
@@ -115,6 +162,17 @@ class MapViewModel: ViewModel() {
         return address
     }
 
+    /**
+     * Метод для построения маршрута к заданному маркеру
+     * Проверяем наличие прав о геолокции
+     * Если права есть, то получаем геолокацию пользователя, строим маршрут к заданной аптеке, удаляем все предыдущие маршруты
+     * Строим текущий маршрут, обновляем ui карты
+     *
+     * @param context контекст приложения
+     * @param binding привязка к элементам макета
+     * @param endPoint точка назначения
+     * @param roadManagerRoadChoose выбранный тип маршрута(пешком, машина, велик)
+     */
         fun buildRoadMap(context: Context, binding: FragmentMapBinding,
                          endPoint: GeoPoint, roadManagerRoadChoose: String) {
             if (ActivityCompat.checkSelfPermission(
@@ -147,6 +205,11 @@ class MapViewModel: ViewModel() {
             }
         }
 
+    /**
+     * Метод для удаления маршрута
+     * @param binding привязка к элементам макета
+     * @param context контекст приложения
+     */
     fun removeRoad(binding: FragmentMapBinding, context: Context){
         binding.mapView.overlays.removeAll{
             it is Polyline

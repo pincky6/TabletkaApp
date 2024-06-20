@@ -9,10 +9,22 @@ import org.jsoup.select.Elements
 import java.util.UUID
 
 object MedicineParser: ITabletkaHealthParser()  {
+    /**
+     * Метод для получения медикаментов с определенной страницы сайта
+     * @param name строка с которой будет создаваться запрос на сайт
+     * @param regionId индентификатор региона
+     * @param page страница таблетки
+     */
     override fun parsePageFromName(name: String, regionId: Int, page: Int): MutableList<AbstractModel>{
         val pagedUrl = "${name}${UrlStrings.PAGE_CONDITION}${page}"
         return parseFromName(pagedUrl, regionId)
     }
+
+    /**
+     * Метод для получения списка медикаментов
+     * @param name строка с которой будет создаваться запрос на сайт
+     * @param regionId индентификатор региона
+     */
     override fun parseFromName(name: String, regionId: Int): MutableList<AbstractModel>{
         val doc = Jsoup.connect("${UrlStrings.REQUEST_URL}${name}" +
                 "${UrlStrings.REGION_CONDITION}${regionId}").get()
@@ -83,6 +95,12 @@ object MedicineParser: ITabletkaHealthParser()  {
                             companies, companiesReference,
                             countries, prices, hospitalsCount)
     }
+
+    /**
+     * Получение цен на лекарство
+     * @param table таблица с медикаментами
+     * @param priceClass класс цены
+     */
     private fun getMedicinePriceInfo(
         table: Elements, priceClass: String
     ): MutableList<MutableList<Double>>{
@@ -96,6 +114,11 @@ object MedicineParser: ITabletkaHealthParser()  {
             }
         } as MutableList<MutableList<Double>>
     }
+
+    /**
+     * Парсинг цены на медикамент
+     * @param price строка для парсинга цены
+     */
     private fun parsePrice(price: String): MutableList<Double> {
         var list: MutableList<Double> = arrayListOf()
         if(price.contains(" ... ")){
@@ -109,6 +132,10 @@ object MedicineParser: ITabletkaHealthParser()  {
         }
         return list
     }
+
+    /**
+     * Получение количества аптек у которых есть данный препарат
+     */
     private fun getHospitalsCount(
         table: Elements, contentClass: String, priceClass: String
     ): MutableList<Int>{
@@ -124,6 +151,11 @@ object MedicineParser: ITabletkaHealthParser()  {
             }
         } as MutableList<Int>
     }
+
+    /**
+     * Парсинг количества аптек с данных медикаментом
+     * @param string строка для парсинга
+     */
     private fun parseHospitalCount(string: String): MutableList<Int>{
         val hospitalInfo = string.split(" ")
         var hospitalCount: Int = 0
@@ -132,6 +164,11 @@ object MedicineParser: ITabletkaHealthParser()  {
         }
         return listOf(hospitalCount).toMutableList()
     }
+
+    /**
+     * Метод для загрузки информации об медикаменте в список медикаментов
+     * Если некоторые поля в таблице медикаментов отсутствовали, то вставляем пустую строку
+     */
     private fun getMedicines(names: MutableList<String>, medicinesReferences: MutableList<String>,
                             compounds: MutableList<String>, compoundReferences: MutableList<String>,
                             recipes: MutableList<String>, recipesInfo: MutableList<String>,

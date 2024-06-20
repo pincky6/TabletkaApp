@@ -6,7 +6,13 @@ import com.diplom.tabletkaapp.models.cache_data_models.pharmacy_entities.Hospita
 import models.Hospital
 import models.Medicine
 
+/**
+ * Утилита написаная для конвертации объектов из формата для кеширования в формат Firebase и наоборот
+ */
 object CacheHospitalConverter {
+    /**
+     * Конвертация из класса для кеша в класс для firebase
+     */
     fun fromEntityToModel(entity: HospitalEntity): Hospital {
         return Hospital(
             entity.id, entity.wish,
@@ -17,6 +23,9 @@ object CacheHospitalConverter {
             entity.prices
         )
     }
+    /**
+     * Конвертация из списка классов для кеша в класс для firebase
+     */
     fun fromEntityListToModelList(hospitalEntities: List<HospitalEntity>): MutableList<AbstractModel>{
         val medicineList : MutableList<AbstractModel> = mutableListOf()
         for(entity in hospitalEntities){

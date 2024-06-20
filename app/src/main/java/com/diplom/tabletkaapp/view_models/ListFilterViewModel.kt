@@ -6,19 +6,43 @@ import models.Hospital
 import models.Medicine
 import java.util.Locale
 
+/**
+ * Класс модель-представления фильтра
+ */
 class ListFilterViewModel: ViewModel() {
+    /**
+     * Название
+     */
     var title: String = ""
+
+    /**
+     * Маска сортировки
+     */
     var sortMask: Int = 0
+
+    /**
+     * Минимальная цена
+     */
     var minPrice: Double = 0.0
+
+    /**
+     * Максимальная цена
+     */
     var maxPrice: Double = 0.0
     //var userGeoPoint = GeoPoint(0.0, 0.0)
-
+    /**
+     * Фильтрация по списку лекарств или аптек
+     */
     fun filter(list: MutableList<AbstractModel>, choosedList: Boolean): MutableList<AbstractModel>{
         if(!choosedList){
             return filterMedicineList(list)
         }
         return filterPharmacyList(list)
     }
+
+    /**
+     * Производится фильтрация по цене аптек
+     */
     private fun filterPharmacyList(list: MutableList<AbstractModel>): MutableList<AbstractModel>{
         return list.filter {
             val pharmacyElement = (it as Hospital)
@@ -27,6 +51,9 @@ class ListFilterViewModel: ViewModel() {
                     pharmacyElement.prices[0] < maxPrice
         } as MutableList<AbstractModel>
     }
+    /**
+     * Производится фильтрация по цене лекарств
+     */
     private fun filterMedicineList(list: MutableList<AbstractModel>): MutableList<AbstractModel>{
         return list.filter {
             val medicineElement = (it as Medicine)
@@ -39,13 +66,19 @@ class ListFilterViewModel: ViewModel() {
             return@filter false
         } as MutableList<AbstractModel>
     }
-
+    /**
+     * Сортировка аптек или медикаментов
+     */
     fun sort(list: MutableList<AbstractModel>, choosedList: Boolean): MutableList<AbstractModel>{
         if(!choosedList){
             return sortMedicine(list)
         }
         return sortPharmacy(list)
     }
+
+    /**
+     * Сортировка медикаментов по цене, названию, количеству аптек
+     */
     private fun sortMedicine(list: MutableList<AbstractModel>): MutableList<AbstractModel>{
         val sortedList: MutableList<AbstractModel> = list
         if((sortMask and 1) == 1) {
@@ -59,6 +92,10 @@ class ListFilterViewModel: ViewModel() {
         }
         return sortedList
     }
+
+    /**
+     * Сортировка аптек по цене, названию, количеству упаковок и геопозиции
+     */
     private fun sortPharmacy(list: MutableList<AbstractModel>): MutableList<AbstractModel>{
         val sortedList: MutableList<AbstractModel> = list
         if(sortMask and 1 == 1){
@@ -85,6 +122,10 @@ class ListFilterViewModel: ViewModel() {
         }
         return sortedList
     }
+
+    /**
+     * Фильтрация по названию
+     */
     fun filterByTitle(list: MutableList<AbstractModel>): MutableList<AbstractModel> {
         val regex = Regex(title.lowercase(Locale.ROOT))
         return list.filter {element -> regex.findAll(element.name.lowercase()).count() != 0 }

@@ -14,11 +14,27 @@ import org.jsoup.select.Elements
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Класс парсера аптек из tabletka.by
+ */
 object HospitalParser: ITabletkaHealthParser() {
+    /**
+     * Метод для получения аптек по странице и региону
+     * @param medicineCode код медикамента
+     * @param regionId идентификатор региона
+     * @param page страница аптек с которой берем информацию
+     */
     override fun parsePageFromName(medicineCode: String, regionId: Int, page: Int): MutableList<AbstractModel>{
         val pagedUrl = "${medicineCode}${UrlStrings.PAGE_CONDITION}${page}"
         return parseFromName(pagedUrl, regionId)
     }
+
+    /**
+     * Метод для парсинга информации с tabletka.by
+     * Получаем все необходимые сведения об аптеках
+     * @param medicineCode код медикамента
+     * @param regionId идентификатор региона
+     */
     override fun parseFromName(medicineCode : String, regionId: Int): MutableList<AbstractModel>{
         val doc = Jsoup.connect("${UrlStrings.BASIC_URL}${medicineCode}" +
                 "${UrlStrings.REGION_CONDITION}${regionId}").get()
@@ -57,6 +73,11 @@ object HospitalParser: ITabletkaHealthParser() {
                                 expirationDates, packageNumber, prices)
     }
 
+    /**
+     * Метод для парсинга аптек с краткой информацией о них
+     * @param regionId идентификатор региона
+     * @param page страница с которой берем инфу
+     */
     fun parseFromRegionAndPage(regionId: Int, page: Int): MutableList<AbstractModel>{
         val doc = Jsoup.connect("https://tabletka.by/pharmacies?region=$regionId&page=$page").get()
         val table = doc.select("tbody")
@@ -99,6 +120,11 @@ object HospitalParser: ITabletkaHealthParser() {
             hospitalsCoordinates,
             addresses, phones, updatesTime, openStates)
     }
+
+    /**
+     * Метод для загрузки информации в список аптек с краткой инфой о них
+     * Здесь происходит проверка пустых полей, которые не указаны на сайте. Вместо них вставляем пустую строку
+     */
     private fun getShortHospitalsInfo(names: MutableList<String>, hospitalsReference: MutableList<String>,
                                       hospitalCoordinates: MutableList<MutableList<Double>>,
                                       phones: MutableList<String>, addresses: MutableList<String>,
@@ -125,7 +151,10 @@ object HospitalParser: ITabletkaHealthParser() {
         }
         return list
     }
-
+    /**
+     * Метод для загрузки информации в список аптек
+     * Здесь происходит проверка пустых полей, которые не указаны на сайте. Вместо них вставляем пустую строку
+     */
     private fun getHospitals(names: MutableList<String>, hospitalsReference: MutableList<String>,
                              hospitalCoordinates: MutableList<MutableList<Double>>, addresses: MutableList<String>,
                              phones: MutableList<String>, expirationDates: MutableList<MutableList<Date>>,
@@ -158,6 +187,11 @@ object HospitalParser: ITabletkaHealthParser() {
         }
         return hospitals
     }
+
+    /**
+     * Метод для получения координат аптек
+     * @param hospitalReference список ссылок на аптеки
+     */
     private fun getHospitalCoordinates(hospitalReference: MutableList<String>): MutableList<MutableList<Double>>{
         val hospitalCoordinates: MutableList<MutableList<Double>> = arrayListOf()
         for(i in 0 until hospitalReference.size) {
@@ -178,6 +212,13 @@ object HospitalParser: ITabletkaHealthParser() {
         }
         return hospitalCoordinates
     }
+
+    /**
+     * Получение некоторой информации, которую невозможно получить из метода getTooltipInfo класса ITabletkaParser
+     * @param table таблица аптек
+     * @param contentClass тип информации
+     * @param contentGetter функция, которая вызывается при обнаружении инфы аптеки
+     */
     private fun getHospitalInfo(table: Elements, contentClass: String,
                                 contentGetter: (element: Element)-> MutableList<String>): MutableList<String>{
         return table.flatMap { bodyBase ->
@@ -190,6 +231,11 @@ object HospitalParser: ITabletkaHealthParser() {
             }
         } as MutableList<String>
     }
+
+    /**
+     * Получение цен на препараты в аптеках
+     * @param table таблица с аптеками
+     */
     private fun getHospitalPrice(table: Elements): MutableList<MutableList<MutableList<String>>>{
         return table.flatMap { bodyBase ->
             bodyBase.getElementsByClass("price tooltip-info").flatMap {content ->
@@ -205,6 +251,10 @@ object HospitalParser: ITabletkaHealthParser() {
             }
         } as MutableList<MutableList<MutableList<String>>>
     }
+    /**
+     * Получение срока годности на препараты в аптеках
+     * @param table таблица с аптеками
+     */
     private fun parseExpirationDates(priceInfo: MutableList<MutableList<MutableList<String>>>) : MutableList<MutableList<Date>>{
         val expirationDates: MutableList<MutableList<Date>> = arrayListOf()
         for(i in 0 until priceInfo.size){
@@ -223,6 +273,10 @@ object HospitalParser: ITabletkaHealthParser() {
         }
         return expirationDates
     }
+    /**
+     * Получение количества упаковок препаратов в аптеках
+     * @param table таблица с аптеками
+     */
     private fun parsePackageNumber(priceInfo: MutableList<MutableList<MutableList<String>>>) : MutableList<MutableList<Int>>{
         val packageNumber: MutableList<MutableList<Int>> = arrayListOf()
         for(i in 0 until priceInfo.size){
@@ -239,6 +293,10 @@ object HospitalParser: ITabletkaHealthParser() {
         }
         return packageNumber
     }
+    /**
+     * Парсинг цены на аптеки
+     * @param priceInfo список с информацией о цене в аптеке на препарат
+     */
     private fun parsePrice(priceInfo: MutableList<MutableList<MutableList<String>>>) : MutableList<MutableList<Double>>{
         val pricesList: MutableList<MutableList<Double>> = arrayListOf()
         for(i in 0 until priceInfo.size){

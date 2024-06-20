@@ -6,6 +6,24 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.diplom.tabletkaapp.models.cache_data_models.converters.PriceRangeConverter
 
+/**
+ * Класс, представляющий сущность "Лекарство".
+ *
+ * @param id Уникальный идентификатор лекарства.
+ * @param wish Флаг, указывающий, добавлено ли лекарство в список желаний.
+ * @param name Название лекарства.
+ * @param medicineReference Ссылка на информацию о лекарстве.
+ * @param compound Состав лекарства.
+ * @param compoundReference Ссылка на информацию о составе лекарства.
+ * @param recipe Рецепт лекарства.
+ * @param recipeInfo Дополнительная информация о рецепте.
+ * @param companyName Название компании-производителя.
+ * @param companyReference Ссылка на информацию о компании-производителе.
+ * @param country Страна происхождения лекарства.
+ * @param priceRange Диапазон цен на лекарство.
+ * @param hospitalCount Количество аптек, где есть это лекарство.
+ * @param record_id Идентификатор записи.
+ */
 @Entity(tableName = "medicine")
 data class MedicineEntity(
     @PrimaryKey

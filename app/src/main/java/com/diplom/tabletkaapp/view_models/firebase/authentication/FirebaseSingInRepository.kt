@@ -22,6 +22,13 @@ object FirebaseSingInRepository {
     init {
         _auth = FirebaseAuth.getInstance()
     }
+    /**
+     * Метод для входа в аккаунт связанный с почтой и паролем
+     * @param gmail почта
+     * @param password пароль
+     * @param onCompleteListener слушатель завершения работы
+     * @param onFailrueSignListener слушатель неудачного завершения работы
+     */
     fun signInWithGmailAndPassword(
         gmail: String,
         password: String,
@@ -36,6 +43,11 @@ object FirebaseSingInRepository {
             }
     }
 
+    /**
+     * Метод для отправки верификационного письма на почту
+     * @param onCompleteListener слушатель завершения работы
+     * @param onFailrueSignListener слушатель неудачного завершения работы
+     */
     fun sendVerification(
         onCompleteListener: OnCompleteSignListener?,
         onFailrueSignListener: OnFailrueSignListener?
@@ -49,10 +61,18 @@ object FirebaseSingInRepository {
                 }
             }
     }
+
+    /**
+     * Метод для выхода из аккаунта
+     */
     fun signOut(){
         auth.signOut()
     }
 
+    /**
+     * Метод для удаления аккаунта из Firebase Authentication, а также данных в Firebase Realtime Database
+     * связанных с ней
+     */
     fun deleteAccount(onDeleteAccountListener: OnDeleteAccountListener) {
         FirebaseDatabase.getInstance().reference.child("users")
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -77,6 +97,11 @@ object FirebaseSingInRepository {
             })
     }
 
+    /**
+     * Проверка на существование пользователя
+     * В случае отсутствия почты производится вывод сообщения о том, что аккаунта не существует
+     * @param context контекст, с помощью которого создается сообщение
+     */
     fun checkUserExistWithWarningDialog(context: Context): Boolean{
         if(!isUserExist){
             AlertDialog.Builder(context)

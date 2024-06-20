@@ -7,8 +7,13 @@ import kotlinx.coroutines.flow.first
 import models.Medicine
 import java.util.UUID
 
-
+/**
+ * Утилита написаная для конвертации объектов из формата для кеширования в формат Firebase и наоборот
+ */
 object CacheMedicineConverter {
+    /**
+     * Конвертация из класса для кеша в класс для firebase
+     */
     fun fromEntityToModel(entity: MedicineEntity): Medicine {
         return Medicine(
                         entity.id, entity.wish,
@@ -19,6 +24,9 @@ object CacheMedicineConverter {
                         entity.country, entity.priceRange, entity.hospitalCount
                         )
     }
+    /**
+     * Конвертация из списка классов для кеша в класс для firebase
+     */
     fun fromEntityListToModelList(medicineEntity: List<MedicineEntity>): MutableList<AbstractModel>{
         val medicineList : MutableList<AbstractModel> = mutableListOf()
         for(entity in medicineEntity){

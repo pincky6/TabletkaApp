@@ -15,10 +15,25 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
+/**
+ * Класс модель-представления главного меню
+ */
 class MainMenuViewModel : ViewModel() {
-
+    /**
+     * База данных
+     */
     var database: AppDatabase? = null
+
+    /**
+     * Идентификатор региона
+     */
     var regionId: Int = -1
+
+    /**
+     * Метод добавления запроса в базу данных RoomDatabase
+     * Если не найдены похожие запросы, то добавляем в бд
+     * @param request запрос
+     */
     fun addRequestToDatabase(request: RequestEntity): Long{
         var requestId = 0L
         database?.let {
@@ -30,6 +45,12 @@ class MainMenuViewModel : ViewModel() {
         return requestId
     }
 
+    /**
+     * Метод создающий предположения о том, какой запрос хочет ввести пользователь
+     * Производится чтение всех запросов и производится поиск тех запросов, которые совпадают с переданным текстом
+     * @param binding привязка к элементам макета
+     * @param text текст введенный пользователем
+     */
     suspend fun makeSuggestion(binding: FragmentMainMenuBinding, text: String) {
         val cursor = MatrixCursor(
             arrayOf(

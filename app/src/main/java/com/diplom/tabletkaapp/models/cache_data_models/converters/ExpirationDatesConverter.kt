@@ -7,12 +7,18 @@ import java.util.Date
  * Класс для конвертации даты в строку и обратно в дату(преднгзначен для хранения списка дат в Room Database)
  */
 class ExpirationDatesConverter {
-
+    /**
+     * @param dates список дат
+     * Метод для конвертации списка дат с строку
+     */
     @TypeConverter
     fun fromDateList(dates: MutableList<Date>): String {
         return dates.joinToString(",") { date -> date.time.toString() }
     }
-
+    /**
+     * @param dateString строка
+     * Метод для конвертации строки в список дат
+     */
     @TypeConverter
     fun toDateList(dateString: String): MutableList<Date> {
         return if (dateString.isEmpty()) {
