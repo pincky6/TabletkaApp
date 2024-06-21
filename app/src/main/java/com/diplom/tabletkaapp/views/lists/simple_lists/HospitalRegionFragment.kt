@@ -64,6 +64,7 @@ class HospitalRegionFragment: Fragment() {
         initSearchView()
         initFloatingButton()
         loadData()
+        hideUI()
         return binding.root
     }
     /**
@@ -196,6 +197,9 @@ class HospitalRegionFragment: Fragment() {
                 }
             }
         }
+    }
+    private fun hideUI(){
+        binding.filterPharmacyButton.visibility = View.GONE
     }
 
     /**
