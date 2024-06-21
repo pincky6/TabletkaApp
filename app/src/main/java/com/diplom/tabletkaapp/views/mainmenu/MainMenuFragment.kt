@@ -94,17 +94,19 @@ class MainMenuFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 val regions = RegionParser.parseRegion()
                 val allRegionsString = getString(R.string.all_regions_string)
-                val allRegion = regions.find {
-                    it.name == allRegionsString
+                if(model.region.id == -1) {
+                    val allRegion = regions.find {
+                        it.name == allRegionsString
+                    }
+                    allRegion?.let {
+                        regions.removeAt(regions.indexOf(allRegion))
+                        regions.add(0, allRegion)
+                    }
+                } else {
+                    regions.removeAt(regions.indexOf(model.region))
+                    regions.add(0, model.region)
                 }
-                allRegion?.let {
-                    regions.removeAt(regions.indexOf(allRegion))
-                    regions.add(0, allRegion)
-                }
-                model.regionId.let {
-                    val selectedRegion = regions.removeAt(it)
-                    regions.add(0, selectedRegion)
-                }
+
                 withContext(Dispatchers.Main) {
                     if(_binding == null) return@withContext
                     binding.regionsSpinner.textAlignment = View.TEXT_ALIGNMENT_VIEW_END
@@ -120,7 +122,7 @@ class MainMenuFragment : Fragment() {
                                 position: Int,
                                 id: Long
                             ) {
-                                model.regionId = regions[position].id
+                                model.region = regions[position]
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -206,7 +208,7 @@ class MainMenuFragment : Fragment() {
      */
     private fun navigateToMedicineList(query: String, requestId: Long) {
         findNavController(binding.root).navigate(
-            MainMenuFragmentDirections.showMedicineModelList(query, requestId, model.regionId)
+            MainMenuFragmentDirections.showMedicineModelList(query, requestId, model.region.id)
         )
     }
 

@@ -7,6 +7,7 @@ import android.database.MatrixCursor
 import android.provider.BaseColumns
 import androidx.lifecycle.ViewModel
 import com.diplom.tabletkaapp.databinding.FragmentMainMenuBinding
+import com.diplom.tabletkaapp.models.Region
 import com.diplom.tabletkaapp.models.cache_data_models.RequestEntity
 import com.diplom.tabletkaapp.view_models.cache.AppDatabase
 import com.diplom.tabletkaapp.view_models.cache.RequestDao
@@ -27,7 +28,7 @@ class MainMenuViewModel : ViewModel() {
     /**
      * Идентификатор региона
      */
-    var regionId: Int = -1
+    var region = Region(-1, "")
 
     /**
      * Метод добавления запроса в базу данных RoomDatabase
