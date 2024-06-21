@@ -10,9 +10,18 @@ import com.diplom.tabletkaapp.models.data_models.Note
 import com.diplom.tabletkaapp.view_models.firebase.database.FirebaseNotesDatabase
 import com.diplom.tabletkaapp.views.notes.NotesFragmentDirections
 
+/**
+ * Представление заметки в виде сетки
+ */
 class NoteHolderGrid(
     var binding: ItemNoteGridBinding
 ): RecyclerView.ViewHolder(binding.root) {
+    /**
+     * Привязка текста к представлению
+     * Если заголовка нету, то описание делится на 2 части и 1  устнавливается в заголовок, другая в описание
+     *
+     * Инициализация закрепления заметки
+     */
     fun bind(note: Note, onUpdateUI: () -> Unit){
         binding.title.text = note.name
         binding.text.text  = note.describe
@@ -59,6 +68,9 @@ class NoteHolderGrid(
             true
         }
     }
+    /**
+     * Метод для получения строки о нынешнем состоянии заметки
+     */
     private fun getWishString(note: Note): String{
         return when(note.wish){
             false -> "Закрепить"

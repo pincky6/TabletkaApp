@@ -25,8 +25,16 @@ import kotlinx.coroutines.withContext
 import models.Hospital
 import models.Medicine
 
+/**
+ * Класс для описания списка медикаментов
+ */
 class MedicineModelList:
     AbstractModelList() {
+    /**
+     * Метод для иницализации представления
+     * Также загружаются закешированые медикаменты, производится загрузка с таблетки
+     * и проверка соответствия медикаментов с таблетки с кешем. Если есть не соответствие, то обновляется UI и кеш
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,6 +64,9 @@ class MedicineModelList:
         return binding.root
     }
 
+    /**
+     * Метод для инициализации кнопки фильтра
+     */
     private fun initFilterButton(){
         initFilterButton {
             findNavController(binding.root).navigate(
@@ -71,12 +82,18 @@ class MedicineModelList:
         super.onViewCreated(view, savedInstanceState)
     }
 
+    /**
+     * Метод для того, чтобы спрятать не нужные эдементы интерфейса
+     */
     private fun hideUselessUI(){
         binding.updateButton.visibility = View.GONE
         binding.medicineInfo.visibility = View.GONE
         binding.floatingActionButton.visibility = View.GONE
     }
 
+    /**
+     * Установка желаемых медикаментов в списке медикаментов
+     */
     private fun setWish(medicineList: MutableList<AbstractModel>, query: String, regionId: Int, requestId: Long){
         FirebaseMedicineDatabase.readAll(
             mutableListOf(), object: OnCompleteListener{

@@ -9,7 +9,9 @@ import android.widget.CompoundButton
 import androidx.fragment.app.DialogFragment
 import com.diplom.tabletkaapp.databinding.FragmentListViewSettingsBinding
 //import org.osmdroid.util.GeoPoint
-
+/**
+ * Класс представления диалога филтра
+ */
 class ListFilterDialogFragment: DialogFragment() {
     var _binding: FragmentListViewSettingsBinding? = null
     val binding get() = _binding!!
@@ -18,6 +20,10 @@ class ListFilterDialogFragment: DialogFragment() {
         return super.onCreateDialog(savedInstanceState)
 
     }
+
+    /**
+     * Получение инициализирующих параметров о минимальной и максимальной цене дистанции, маски сортировки
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,6 +44,9 @@ class ListFilterDialogFragment: DialogFragment() {
         return binding.root
     }
 
+    /**
+     * Инициаилзация фильтрации по миниамльной и максимальной цене
+     */
     private fun initTexts(){
         if(listSettings.minPrice == 0.0 &&
             listSettings.maxPrice == 0.0){
@@ -54,6 +63,9 @@ class ListFilterDialogFragment: DialogFragment() {
         _binding = null
     }
 
+    /**
+     * Инициализация чекбоксов для установления сортировочной маски
+     */
     private fun initCheckBoxes(){
         binding.sortByMinPriceCheckBox.isChecked = (listSettings.sortMask and 1) == 1
         binding.sortByTitleCheckBox.isChecked = (listSettings.sortMask and 2) == 2
@@ -92,6 +104,10 @@ class ListFilterDialogFragment: DialogFragment() {
             }
         }
     }
+
+    /**
+     * Инициализация кнопок закрытия и передачи параметров в вызывабщее окно
+     */
     private fun initButtons(){
         binding.cancelButton.setOnClickListener { dismiss() }
         binding.okButton.setOnClickListener {

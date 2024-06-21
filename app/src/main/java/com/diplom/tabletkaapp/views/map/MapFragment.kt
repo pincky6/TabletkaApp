@@ -31,11 +31,19 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import java.text.SimpleDateFormat
 import java.util.Date
 
+/**
+ * Представление карт
+ */
 class MapFragment: Fragment() {
     var _binding: FragmentMapBinding? = null
     val binding get() = _binding!!
     var mapInfoBottomSheetFragment: MapInfoBottomSheetFragment? = null
     val model = MapViewModel()
+
+    /**
+     * Метод создания обхекта.
+     * Также в этом методе мы получаем информацию об геолокации пользователя
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getSystemService(requireContext(), LocationManager::class.java)?.let {
@@ -51,7 +59,7 @@ class MapFragment: Fragment() {
         ) {
             return
         }
-        model.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, object:
+        model.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, object:
             LocationListener {
             override fun onLocationChanged(location: Location){
                 if(model.currentGeoPoint != GeoPoint(location.latitude, location.longitude)) {
@@ -73,11 +81,17 @@ class MapFragment: Fragment() {
             }
         })
         ;
-        val location = model.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        val location = model.locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         if (location != null) {
             model.currentGeoPoint = GeoPoint (location.getLatitude(), location.getLongitude());
         }
     }
+
+    /**
+     * Метод по созданию представления
+     * Инициализируются панели информации, навигации
+     * Инициализация карты и способа взаимодействия с ней(мультитач, повороты)
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -112,6 +126,11 @@ class MapFragment: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
     }
+
+    /**
+     * Инициализация нижнего меню и его слушателей
+     * При запросе аптеки либо ничего не возвращаем либо аптеку
+     */
     private fun initInfoBottomListeners(){
         childFragmentManager.setFragmentResultListener(
             MapInfoBottomSheetFragment.REQUEST_HOSPITAL,
@@ -131,14 +150,22 @@ class MapFragment: Fragment() {
             }
         }
     }
+
+    /**
+     * Получаем геолокацию пользователя
+     */
     private fun initUserLocation(){
         val gpsProvider = GpsMyLocationProvider(context)
-        gpsProvider.locationSources.add(LocationManager.GPS_PROVIDER)
+        gpsProvider.locationSources.add(LocationManager.NETWORK_PROVIDER)
         val locationOverlay = MyLocationNewOverlay(gpsProvider, binding.mapView)
         locationOverlay.enableMyLocation()
         binding.mapView.overlays.add(locationOverlay)
         binding.mapView.invalidate()
     }
+
+    /**
+     * Инициализация кнопки возврата
+     */
     private fun initBackButton(){
         binding.materialToolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
         binding.materialToolbar.setNavigationOnClickListener { v: View ->
@@ -146,6 +173,9 @@ class MapFragment: Fragment() {
         }
     }
 
+    /**
+     * Инициализация слушателя изменения типа маршрута, где собирается пакет данных и отправляется в меню навигации
+     */
     private fun initRoadListeners(){
         childFragmentManager.setFragmentResultListener(
             MapInfoBottomSheetFragment.ROAD_TYPE_CHANGED,
@@ -182,6 +212,9 @@ class MapFragment: Fragment() {
         }
     }
 
+    /**
+     * Иницилизация меню навигации
+     */
     fun initMapNavigationBackButton(){
         childFragmentManager.setFragmentResultListener(
             MapNavigationBottomSheetFragment.BACK_BUTTON_PRESSED,

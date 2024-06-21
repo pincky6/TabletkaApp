@@ -21,6 +21,9 @@ import com.diplom.tabletkaapp.view_models.SettingsViewModel
 import com.diplom.tabletkaapp.views.mainmenu.MainMenuFragment
 import java.util.Locale
 
+/**
+ * Класс отвечающий за навигационную панель приложения
+ */
 class ContentFragment: Fragment() {
     private var _binding: FragmentContentBinding? = null
     val binding get() = _binding!!
@@ -35,6 +38,11 @@ class ContentFragment: Fragment() {
         return binding.root
     }
 
+    /**
+     * Инициализируется перемещение.
+     * Если мы перемещаемся в представление, которое не является заметками, настройками, главным меню или меню списком желаний
+     * то прячем навигационную панель
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController =  Navigation.findNavController(requireActivity(), R.id.content_navigation)

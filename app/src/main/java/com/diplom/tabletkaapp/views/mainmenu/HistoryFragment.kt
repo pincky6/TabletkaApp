@@ -24,11 +24,19 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Класс списка истории
+ */
 class HistoryFragment: Fragment() {
     var binding_: HistoryFragmentBinding? = null
     val binding get() = binding_!!
     var list: MutableList<RequestEntity> = mutableListOf()
     lateinit var database: AppDatabase
+
+    /**
+     * Метод по инициализации базы данных
+     * списка истории и поисковой строки
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -79,6 +87,10 @@ class HistoryFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
+
+    /**
+     * Метод для обновления UI
+     */
     fun updateUI(){
         CoroutineScope(Dispatchers.IO).launch{
             list = database.requestDao().getRequests().first().toMutableList()

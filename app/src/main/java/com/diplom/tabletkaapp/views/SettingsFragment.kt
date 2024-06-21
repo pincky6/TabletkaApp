@@ -29,10 +29,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 
+/**
+ * Класса представление настроек
+ */
 class SettingsFragment: Fragment() {
     var binding_: FragmentSettingsBinding? = null
     val binding get() = binding_!!
     var model: SettingsViewModel = SettingsViewModel()
+
+    /**
+     * Инициализация элементов интерфейса
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,6 +77,9 @@ class SettingsFragment: Fragment() {
         return binding.root
     }
 
+    /**
+     * Инициализация кнопки входа в аккаунт
+     */
     private fun initLoginButton(){
         binding.enterButton.setOnClickListener{
             findNavController(binding.root).navigate(
@@ -78,6 +88,9 @@ class SettingsFragment: Fragment() {
         }
     }
 
+    /**
+     * Инициализация кнопки перемещения на сайт
+     */
     private fun initMoveToSiteButton(){
         binding.moveToSiteButton.setOnClickListener {
             val url = UrlStrings.SITE_REFERENCE
@@ -86,6 +99,9 @@ class SettingsFragment: Fragment() {
         }
     }
 
+    /**
+     * Инициализация кнопки по переустановке пароля
+     */
     private fun initResetPassword(){
         binding.resetPasswordButton.setOnClickListener {
             findNavController(binding.root).navigate(
@@ -94,6 +110,9 @@ class SettingsFragment: Fragment() {
         }
     }
 
+    /**
+     * Инициализация кнопки выхода из аккаунта
+     */
     private fun initExitButton(){
         binding.exitButton.setOnClickListener {
             FirebaseSingInRepository.signOut()
@@ -101,6 +120,9 @@ class SettingsFragment: Fragment() {
         }
     }
 
+    /**
+     * Инициализация кнопки удаления из аккаунта
+     */
     private fun initDeleteButton(){
         binding.deleteButton.setOnClickListener {
             FirebaseSingInRepository.deleteAccount{
@@ -112,6 +134,10 @@ class SettingsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
+
+    /**
+     * Инициализация выпадающего списка выбора вида заметки
+     */
     private fun initNoteModeSpinner(){
         val noteModeAdapter =
             ArrayAdapter(
@@ -146,6 +172,10 @@ class SettingsFragment: Fragment() {
         }
         binding.noteModeSpinner.setSelection(model.settings.notesMode)
     }
+
+    /**
+     * Инициалиазция выпадающего списка тем
+      */
     private fun initThemeModeSpinner() {
         val themeAdapter =
             ArrayAdapter(
@@ -183,6 +213,9 @@ class SettingsFragment: Fragment() {
         binding.themeSpinner.setSelection(model.settings.themeMode)
     }
 
+    /**
+     * Инициализация выпадающего списка смены языков
+     */
     private fun initLanguageModeSpinner() {
         val languageAdapter =
             ArrayAdapter(

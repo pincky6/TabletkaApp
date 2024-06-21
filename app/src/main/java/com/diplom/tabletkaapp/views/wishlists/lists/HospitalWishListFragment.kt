@@ -35,10 +35,16 @@ import models.Hospital
 import models.Medicine
 import org.osmdroid.util.GeoPoint
 
+/**
+ * Представление желаемых аптек
+ */
 class HospitalWishListFragment: AbstractModelList() {
 
     val wishModel: WishListViewModel = WishListViewModel()
 
+    /**
+     * Иницилиазция представления
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,12 +61,20 @@ class HospitalWishListFragment: AbstractModelList() {
         initFloatingButton()
         return binding.root
     }
+
+    /**
+     * Инициализация кнопки обновления
+     */
     private fun initUpdateButton(){
         binding.updateButton.setText(getText(R.string.update_wish_list))
         binding.updateButton.setOnClickListener {
             loadFromFirebase()
         }
     }
+
+    /**
+     * Инициализация кнопки перемещения в фильтр
+     */
     private fun initFilterButton(){
         initFilterButton {
             findNavController(binding.root).navigate(
@@ -72,6 +86,9 @@ class HospitalWishListFragment: AbstractModelList() {
         }
     }
 
+    /**
+     * Инициализация кнопки перемещения на карту
+     */
     private fun initFloatingButton(){
         binding.floatingActionButton.setOnClickListener {
             val geoPointsList = GeoPointsList(model.modelList.flatMap {
@@ -87,10 +104,16 @@ class HospitalWishListFragment: AbstractModelList() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-
+    /**
+     * Прячем бесполезный UI
+     */
     private fun hideUselessUI(){
         binding.medicineInfo.visibility = View.GONE
     }
+
+    /**
+     * Инициализация списка желаемого
+     */
     private fun initFirebaseRecylcerView(){
         wishModel.loadFromDatabase(object : OnCompleteListener {
             override fun complete(list: MutableList<AbstractModel>) {
@@ -109,6 +132,10 @@ class HospitalWishListFragment: AbstractModelList() {
 
             })
     }
+
+    /**
+     * Загрузка аптек из Firebase
+     */
     private fun loadFromFirebase(){
         wishModel.list.clear()
         wishModel.loadFromDatabase(object : OnCompleteListener {
@@ -123,6 +150,10 @@ class HospitalWishListFragment: AbstractModelList() {
 
             })
     }
+
+    /**
+     * Обновление списка желаний аптек
+     */
     fun updateFirebaseUI(list: MutableList<AbstractModel>){
         model.modelList = list
         if(binding != null && binding.recyclerView.adapter != null){

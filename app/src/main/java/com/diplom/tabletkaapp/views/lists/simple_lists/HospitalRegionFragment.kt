@@ -36,11 +36,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import models.Hospital
 import org.osmdroid.util.GeoPoint
-
+/**
+ * Класс для описания списка краткой информации аптек
+ */
 class HospitalRegionFragment: Fragment() {
     var binding_: FragmentHospitalListBinding? = null
     val binding get() = binding_!!
     val model: HospitalRegionListViewModel = HospitalRegionListViewModel()
+
+    /**
+     * Инициализация элементов интерфейса
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,6 +76,9 @@ class HospitalRegionFragment: Fragment() {
         }
     }
 
+    /**
+     * Метод загрузки данных из таблетки
+     */
     fun loadData(){
         CoroutineScope(Dispatchers.IO).launch {
             model.database?.let {
@@ -86,6 +95,10 @@ class HospitalRegionFragment: Fragment() {
         }
     }
 
+    /**
+     * Инициализация поисковой строки
+     * При вводе происходит фильтрация по названию
+     */
     private fun initSearchView(){
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -101,6 +114,10 @@ class HospitalRegionFragment: Fragment() {
             }
         })
     }
+
+    /**
+     * Инициализация слушателя сообщений для получения параметров фильтра
+     */
     protected fun initGetFilter() {
         getParentFragmentManager().setFragmentResultListener(
             ListFilterDialogFragment.LIST_SETTINGS_KEY_ADD, getViewLifecycleOwner()
@@ -118,6 +135,9 @@ class HospitalRegionFragment: Fragment() {
         }
     }
 
+    /**
+     * Инициализация кнопки перехода на окно с картой
+     */
     private fun initFloatingButton(){
         binding.floatingActionButton.setOnClickListener {
             val geoPointsList = GeoPointsList(model.list.flatMap {
@@ -136,6 +156,9 @@ class HospitalRegionFragment: Fragment() {
         }
     }
 
+    /**
+     * Инициализация выпадающего списка про выбору региона
+     */
     private fun initSpinner() {
         context?.let {
             CoroutineScope(Dispatchers.IO).launch {
@@ -174,6 +197,10 @@ class HospitalRegionFragment: Fragment() {
             }
         }
     }
+
+    /**
+     * Инициализация списка
+     */
     private suspend fun initRecyclerView(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>){
         withContext(Dispatchers.Main) {
             if (binding_ == null) return@withContext

@@ -27,11 +27,17 @@ import java.util.Locale
 import java.util.function.Predicate
 import java.util.stream.Collectors
 
+/**
+ * Класс представление списка заметок
+ */
 class NotesFragment: Fragment() {
     var binding_: FragmentNoteListBinding? = null
     val binding get() = binding_!!
     val model: NotesViewModel =  NotesViewModel
 
+    /**
+     * Метод по инициализации элементов списка заметок
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,9 +53,17 @@ class NotesFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initSearchView()
     }
+
+    /**
+     * Кнопка по обновлению ui
+     */
     private fun initNoteList(){
         updateUI()
     }
+
+    /**
+     * Инициализация меню
+     */
     private fun initMenu(){
         binding.floatingActionButton.setOnClickListener {item ->
             val note = Note()
@@ -59,6 +73,10 @@ class NotesFragment: Fragment() {
             )
         }
     }
+
+    /**
+     * Метод по обновлению интерфейса
+     */
     private fun updateUI(){
         model.loadFromFirebase(object : OnCompleteListener{
             override fun complete(list: MutableList<AbstractModel>) {
@@ -101,6 +119,9 @@ class NotesFragment: Fragment() {
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
+    /**
+     * Инициализация поиска аптеки по заголовку
+     */
     private fun initSearchView(){
         binding.noteSearchView.setOnQueryTextListener(object :
             android.widget.SearchView.OnQueryTextListener {

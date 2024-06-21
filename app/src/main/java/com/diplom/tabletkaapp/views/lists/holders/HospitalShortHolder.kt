@@ -9,7 +9,14 @@ import com.diplom.tabletkaapp.models.data_models.HospitalsList
 import com.diplom.tabletkaapp.views.lists.simple_lists.HospitalRegionFragmentDirections
 import org.osmdroid.util.GeoPoint
 
+/**
+ * Класс представления краткой информации об аптеке
+ */
 class HospitalShortHolder(val binding: ItemHospitalShortBinding): RecyclerView.ViewHolder(binding.root) {
+    /**
+     * Привязка модели HospitalShort к представлению элемента
+     * Установка текста и слушателя нажатия на кнопки, при нажатии на которую происходит перенос на окно карты
+     */
     fun bind(hospital: HospitalShort){
         binding.tvHospitalName.text = hospital.name
         binding.tvHospitalAddress.text = hospital.address

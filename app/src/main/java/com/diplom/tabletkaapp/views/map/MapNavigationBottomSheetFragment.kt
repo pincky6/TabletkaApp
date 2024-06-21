@@ -11,9 +11,16 @@ import com.diplom.tabletkaapp.util.MapUtil
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
 import java.util.Locale
 
+/**
+ * Класс панели навигации
+ */
 class MapNavigationBottomSheetFragment: Fragment() {
     var binding_: FragmentMapNavigationSheetBinding? = null
     val binding get() = binding_!!
+
+    /**
+     * Инициализация элементов управления
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,12 +32,18 @@ class MapNavigationBottomSheetFragment: Fragment() {
         return binding.root
     }
 
+    /**
+     * Возврат на панель информации
+     */
     private fun initBackButton(){
         binding_?.backButton?.setOnClickListener {
             parentFragmentManager.setFragmentResult(BACK_BUTTON_PRESSED, Bundle())
         }
     }
 
+    /**
+     * Инициализация слушателя получения инфы об аптеке
+     */
     private fun initParentFragmentListener(){
         parentFragmentManager.setFragmentResultListener(
             MapFragment.SEND_NAVIGATION_DATA,

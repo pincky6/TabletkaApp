@@ -16,10 +16,20 @@ import com.diplom.tabletkaapp.firebase.database.FirebaseMedicineDatabase
 import com.diplom.tabletkaapp.views.lists.simple_lists.MedicineModelListDirections
 import models.Medicine
 
+/**
+ * Класс представления модели Medicine
+ * @param binding привязка к элементам макета
+ * @param isWish флаг обозначающий использования этого элемента в списке желания
+ */
 class MedicineHolder(
     val binding: ItemMedicineBinding,
     val isWish: Boolean
 ): RecyclerView.ViewHolder(binding.root) {
+    /**
+     * Привязка данных модели к представлению
+     * Установка текста
+     * Инициализация кнопки желания и слушателя нажатия на кнопку
+     */
     fun bind(medicine: Medicine, query: String,
              regionId: Int, requestId: Long,
              onWishListClicked: ((Boolean)->Unit)?){
@@ -50,6 +60,15 @@ class MedicineHolder(
             }
         }
     }
+
+    /**
+     * Метод инициализации кнопки списка желания
+     * @param medicine модель медикаментов
+     * @param requestId идентификатор запрос
+     * @param regionId идентификатор региона
+     * @param query запрос
+     * @param onWishListClicked функция которая вызывается при использовании в списке желания
+     */
     private fun initWishButton(medicine: Medicine, requestId: Long,
                                regionId: Int, query: String,
                                onWishListClicked: ((Boolean)->Unit)?){

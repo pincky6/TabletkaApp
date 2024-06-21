@@ -17,11 +17,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
 
+/**
+ * Главное представление приложение
+ * Получает разрешение на использование некоторых возможностей телефона
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var  appDatabase: AppDatabase
     private val permissionManager: PermissionManager = PermissionManager()
+
+    /**
+     * Получение разрешений на использование некоторых возможностей телефона
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -41,6 +49,10 @@ class MainActivity : AppCompatActivity() {
         Configuration.getInstance().userAgentValue = BuildConfig.VERSION_NAME
         Configuration.getInstance().osmdroidBasePath = filesDir
     }
+
+    /**
+     * Запрос на разрешение
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -50,6 +62,9 @@ class MainActivity : AppCompatActivity() {
         permissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
+    /**
+     * Получение результата
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         permissionManager.onActivityResult(requestCode, resultCode)

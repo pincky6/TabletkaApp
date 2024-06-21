@@ -17,6 +17,11 @@ class NotesRedactorFragment: Fragment() {
     var binding_: FragmentReductNoteBinding? = null
     val binding get() = binding_!!
     val model: NotesReductViewModel = NotesReductViewModel()
+
+    /**
+     * Инициализация представления
+     * Установка параметров названия и описания
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

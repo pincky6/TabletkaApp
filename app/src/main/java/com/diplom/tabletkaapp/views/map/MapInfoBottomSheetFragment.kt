@@ -21,6 +21,9 @@ import com.diplom.tabletkaapp.view_models.map.MapBottomSheetViewModel
 import models.Hospital
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
 
+/**
+ * Панель информации об выбранной аптеке
+ */
 class MapInfoBottomSheetFragment: Fragment() {
     var _binding: FragmentMapBottomSheetBinding? = null
     val binding get() = _binding!!
@@ -30,6 +33,11 @@ class MapInfoBottomSheetFragment: Fragment() {
         const val REQUEST_HOSPITAL = "REQUEST_HOSPITAL"
         const val ROAD_TYPE_CHANGED = "ROAD_TYPE_CLICKED"
     }
+
+    /**
+     * Метод по инициализации панели навигации. Инициализируется добавление в список желаний
+     * Скрываются все не нужные элементы
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,6 +61,9 @@ class MapInfoBottomSheetFragment: Fragment() {
         return binding.root
     }
 
+    /**
+     * Инициализация кнопок, слушателей и настройка видимости информации о типе дорог
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initButtons()
@@ -61,6 +72,9 @@ class MapInfoBottomSheetFragment: Fragment() {
         parentFragmentManager.setFragmentResult(REQUEST_HOSPITAL, Bundle())
     }
 
+    /**
+     * Инициализация кнопки списка желаемого
+     */
     private fun initWishButton(){
         binding.hospitalInfoPanel.hospitalWishButton.setImageResource(
             if(model.hospital?.wish ?: false) {
@@ -85,6 +99,9 @@ class MapInfoBottomSheetFragment: Fragment() {
         }
     }
 
+    /**
+     * Вывести информацию об апеке
+     */
     fun setHospital(newHospital: Hospital){
         model.hospital = newHospital
         binding.hospitalInfoPanel.name.text = newHospital.name
@@ -93,6 +110,9 @@ class MapInfoBottomSheetFragment: Fragment() {
         binding.hospitalInfoPanel.root.visibility = View.VISIBLE
     }
 
+    /**
+     * Вывести краткую инфу об аптеке
+     */
     fun setHospitalShort(newHospital: HospitalShort){
         model.hospital = newHospital
         if(_binding == null) return
@@ -104,6 +124,9 @@ class MapInfoBottomSheetFragment: Fragment() {
         //setInfoContent()
     }
 
+    /**
+     * Установка текста
+     */
     private fun setInfoContent(){
         model.hospital?.let {
             if(_binding == null) return
@@ -126,12 +149,18 @@ class MapInfoBottomSheetFragment: Fragment() {
 
     }
 
+    /**
+     * Прячется бесполезный ui
+     */
     fun hideHospitalInfo(){
         if(_binding != null) {
             binding.hospitalInfoPanel.root.visibility = View.GONE
         }
     }
 
+    /**
+     * Показ панели информации
+     */
     private fun expandPanel() {
         val animation = object : Animation() {
             override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
@@ -145,6 +174,10 @@ class MapInfoBottomSheetFragment: Fragment() {
         binding.hospitalInfoPanel.root.visibility = View.VISIBLE
         binding.root.startAnimation(animation)
     }
+
+    /**
+     * Скрытие панели информации
+     */
     private fun collapsePanel() {
         val animation = object : Animation() {
             override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
@@ -160,6 +193,9 @@ class MapInfoBottomSheetFragment: Fragment() {
         binding.root.startAnimation(animation)
     }
 
+    /**
+     * Инициализация кнопок начала маршрута
+     */
     private fun initButtons(){
         _binding?.byCarButton?.setOnClickListener {
             sendMessage(OSRMRoadManager.MEAN_BY_CAR)
@@ -171,6 +207,10 @@ class MapInfoBottomSheetFragment: Fragment() {
             sendMessage(OSRMRoadManager.MEAN_BY_BIKE)
         }
     }
+
+    /**
+     * Отправка сообщения родительскому представлению
+     */
     private fun sendMessage(message: String){
         val bundle = Bundle()
         bundle.putString(ROAD_TYPE_CHANGED, message)
@@ -178,6 +218,9 @@ class MapInfoBottomSheetFragment: Fragment() {
         parentFragmentManager.setFragmentResult(ROAD_TYPE_CHANGED, bundle)
     }
 
+    /**
+     * Инициализация слушателей
+     */
     private fun initHospitalResultListener(){
         parentFragmentManager.setFragmentResultListener(
             MapFragment.HOSPITAL_NULL_SEND,
@@ -215,6 +258,9 @@ class MapInfoBottomSheetFragment: Fragment() {
         }
     }
 
+    /**
+     * Установка видимости необходимых элементов интерфейса
+     */
     private fun setVisibilityRoadPart(visibilityFlag: Int){
         binding.byVeloButton.visibility = visibilityFlag
         binding.byCarButton.visibility = visibilityFlag

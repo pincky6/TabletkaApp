@@ -20,8 +20,14 @@ import com.diplom.tabletkaapp.views.wishlists.lists.MedicineWishListFragmentDire
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Представление желаемых медикаментов
+ */
 class MedicineWishListFragment: AbstractModelList() {
     val wishModel: WishListViewModel = WishListViewModel()
+    /**
+     * Иницилиазция представления
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +43,9 @@ class MedicineWishListFragment: AbstractModelList() {
         initFilterButton()
         return binding.root
     }
+    /**
+     * Инициализация списка желаемого
+     */
     private fun initFirebaseRecylcerView(){
         wishModel.loadFromDatabase(object : OnCompleteListener {
             override fun complete(list: MutableList<AbstractModel>) {
@@ -54,12 +63,18 @@ class MedicineWishListFragment: AbstractModelList() {
 
             })
     }
+    /**
+     * Инициализация кнопки обновления
+     */
     private fun initUpdateButton(){
         binding.updateButton.setText(getText(R.string.update_wish_list))
         binding.updateButton.setOnClickListener {
             loadFromFirebase()
         }
     }
+    /**
+     * Инициализация кнопки перемещения в фильтр
+     */
     private fun initFilterButton(){
         initFilterButton {
             Navigation.findNavController(binding.root).navigate(
@@ -75,11 +90,16 @@ class MedicineWishListFragment: AbstractModelList() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    /**
+     * Прячем бесполезный UI
+     */
     private fun hideUselessUI(){
         binding.medicineInfo.visibility = View.GONE
         binding.floatingActionButton.visibility = View.GONE
     }
-
+    /**
+     * Загрузка аптек из Firebase
+     */
     private fun loadFromFirebase(){
         wishModel.list.clear()
         wishModel.loadFromDatabase(object : OnCompleteListener {
@@ -94,6 +114,9 @@ class MedicineWishListFragment: AbstractModelList() {
 
             })
     }
+    /**
+     * Обновление списка желаний аптек
+     */
     fun updateFirebaseUI(list: MutableList<AbstractModel>){
         model.modelList = list
         if(binding != null && binding.recyclerView.adapter != null){

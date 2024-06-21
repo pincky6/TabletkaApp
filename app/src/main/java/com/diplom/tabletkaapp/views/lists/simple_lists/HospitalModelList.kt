@@ -31,10 +31,17 @@ import kotlinx.coroutines.withContext
 import models.Hospital
 import models.Medicine
 import org.osmdroid.util.GeoPoint
-
+/**
+ * Класс для описания списка аптек
+ */
 class HospitalModelList:
 AbstractModelList() {
     val hospitalModel = HospitalModelListViewModel()
+    /**
+     * Метод для иницализации представления
+     * Также загружаются закешированые аптеки, производится загрузка с таблетки
+     * и проверка соответствия аптеки с таблетки с кешем. Если есть не соответствие, то обновляется UI и кеш
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,7 +83,9 @@ AbstractModelList() {
         initFilterButton()
         return binding.root
     }
-
+    /**
+     * Метод для инициализации кнопки фильтра
+     */
     private fun initFilterButton(){
         initFilterButton {
             Navigation.findNavController(binding.root).navigate(
@@ -91,11 +100,16 @@ AbstractModelList() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-
+    /**
+     * Метод для того, чтобы спрятать не нужные эдементы интерфейса
+     */
     private fun hideUselessUI(){
         binding.updateButton.visibility = View.GONE
     }
 
+    /**
+     * Инициализация информации о выбранном медикаменте
+     */
     private fun initMedicineInfo(){
         binding.medicineTitle.text = hospitalModel.medicine.name
         binding.medicineRecipe.text = hospitalModel.medicine.recipe
@@ -111,6 +125,10 @@ AbstractModelList() {
             )
         }
     }
+
+    /**
+     * Инициализация кнопки списка желаемого, чтобы добавлять медикамент в список желаемого
+     */
     private fun initWishButton(medicine: Medicine, regionId: Int, requestId: Long, query: String){
         binding.wishButton.setImageResource(
             if(medicine.wish) {
@@ -133,6 +151,9 @@ AbstractModelList() {
         }
     }
 
+    /**
+     * Инициализация кнопки перемещения на карты
+     */
     private fun initFloatingButton(){
         binding.floatingActionButton.setOnClickListener {
             val geoPointsList = GeoPointsList(model.modelList.flatMap {
@@ -145,6 +166,10 @@ AbstractModelList() {
             )
         }
     }
+
+    /**
+     * Установка желаемых медикаментов в списке медикаментов
+     */
     private fun setWish(hospitalList: MutableList<AbstractModel>, maxPage: Int, query: String, regionId: Int, requestId: Long){
         FirebaseHospitalDatabase.readAll(
             mutableListOf(), object: OnCompleteListener{

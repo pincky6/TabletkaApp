@@ -44,7 +44,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 
-
+/**
+ * Класс главного меню
+ */
 class MainMenuFragment : Fragment() {
 
     private var _binding: FragmentMainMenuBinding? = null
@@ -52,6 +54,9 @@ class MainMenuFragment : Fragment() {
 
     private val model: MainMenuViewModel = MainMenuViewModel()
 
+    /**
+     * Метод для инициализации базы данных
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context?.let {
@@ -63,6 +68,10 @@ class MainMenuFragment : Fragment() {
 
         }
     }
+
+    /**
+     * Метод для инициализации элементов главного меню
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -77,6 +86,9 @@ class MainMenuFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Инициализация выпадающего списка выбора регионов и настроек приложения
+     */
     private fun initSpinner() {
         context?.let {
             CoroutineScope(Dispatchers.IO).launch {
@@ -88,6 +100,10 @@ class MainMenuFragment : Fragment() {
                 allRegion?.let {
                     regions.removeAt(regions.indexOf(allRegion))
                     regions.add(0, allRegion)
+                }
+                model.regionId.let {
+                    val selectedRegion = regions.removeAt(it)
+                    regions.add(0, selectedRegion)
                 }
                 withContext(Dispatchers.Main) {
                     if(_binding == null) return@withContext
@@ -137,6 +153,11 @@ class MainMenuFragment : Fragment() {
             }
         }
     }
+
+    /**
+     * Инициалиазация посика лекарственных препаратов
+     * Инициализируется список подсказок по введенным символам а также инициализируется перемещение в окно списка аптек
+     */
     private fun initSearchView()
     {
         val from = listOf(SearchManager.SUGGEST_COLUMN_TEXT_1)
@@ -179,11 +200,23 @@ class MainMenuFragment : Fragment() {
 
         })
     }
+
+    /**
+     * Метод по перемещению в список медикаментов
+     */
     private fun navigateToMedicineList(query: String, requestId: Long) {
         findNavController(binding.root).navigate(
             MainMenuFragmentDirections.showMedicineModelList(query, requestId, model.regionId)
         )
     }
+
+    /**
+     * Метод по настройке меню аптек
+     *
+     * Инициализируется кнопки по перемещению на сайт, входа в аккаунт, входа в спискок желаний,
+     * входа в список краткой информации об аптеках и кнопки истории
+     *
+     */
     private fun initButtons(){
         binding.moveToSiteButton.setOnClickListener {
             val url = UrlStrings.SITE_REFERENCE

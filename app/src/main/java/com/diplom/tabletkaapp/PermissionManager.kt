@@ -10,6 +10,9 @@ import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import java.lang.ref.WeakReference
 
+/**
+ * Менеджер по получению разрешений
+ */
 class PermissionManager {
     private val TAG = "PermissionManager"
     private val REQUEST_CODE = 10
@@ -22,6 +25,9 @@ class PermissionManager {
         return ActivityCompat.checkSelfPermission(activity, permission)
     }
 
+    /**
+     * Метод запроса разрешений
+     */
     public fun requestPermissions(
         activity: Activity, vararg permissions: String,
         runThenPermissionGranted: Runnable? = null
@@ -45,6 +51,9 @@ class PermissionManager {
         }
     }
 
+    /**
+     * Метод для построения диалога
+     */
     private fun buildDialog(
         dialogBuilder: AlertDialog.Builder,
         activity: Activity,
@@ -68,6 +77,9 @@ class PermissionManager {
             this.show()
         }
 
+    /**
+     * Метод для обработки не выданных разрешений
+     */
     private fun handleDeniedPermissions(
         activity: Activity,
         permissions: Array<out String>,
@@ -87,6 +99,9 @@ class PermissionManager {
             }
         }
 
+    /**
+     * Выдача результатов запроса разрешений
+     */
     public fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -104,6 +119,9 @@ class PermissionManager {
         }
     }
 
+    /**
+     * Обработка результатов
+     */
     public fun onActivityResult(requestCode: Int, resultCode: Int)
     {
         if (requestCode != REQUEST_CODE)

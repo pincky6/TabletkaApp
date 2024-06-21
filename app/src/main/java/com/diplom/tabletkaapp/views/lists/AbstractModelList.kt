@@ -23,12 +23,24 @@ import com.diplom.tabletkaapp.view_models.lists.AbstractModelViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Абстрактный класс списка элементов
+ */
 abstract class AbstractModelList: Fragment() {
+    /**
+     * Привязка к элементам макета
+     */
     protected var binding_: FragmentListBinding? = null
     val binding get() = binding_!!
 
+    /**
+     * модель представления списка
+     */
     var model: AbstractModelViewModel = AbstractModelViewModel()
 
+    /**
+     * Метод для создания базы данных и инициализации элементов интерфейса
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,22 +69,39 @@ abstract class AbstractModelList: Fragment() {
         super.onDestroyView()
         binding_ = null
     }
+
+    /**
+     * Метод для инициализации списка
+     */
     protected fun initRecyclerView(adapter: RecyclerView.Adapter<ViewHolder>){
         if (binding_ == null) return
         binding.recyclerView.layoutManager = LinearLayoutManager(context, VERTICAL, false)
         binding.recyclerView.adapter = adapter
     }
+
+    /**
+     * Метод для инициализации кнопки обновления
+     */
     protected fun initUpdateButton(update: () -> Unit){
         if (binding_ == null) return
         binding.updateButton.setOnClickListener{
             update()
         }
-    }protected fun initFilterButton(filter: () -> Unit){
+    }
+
+    /**
+     * Метод для инициализации кнопки фильтрации
+     */
+    protected fun initFilterButton(filter: () -> Unit){
         if (binding_ == null) return
         binding.filterButton.setOnClickListener{
             filter()
         }
     }
+
+    /**
+     * Метод для инициализации кнопки выхожа
+     */
     private fun initBackButton(){
         binding.materialToolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24)
         binding.materialToolbar.setNavigationOnClickListener { v: View ->
@@ -80,6 +109,9 @@ abstract class AbstractModelList: Fragment() {
         }
     }
 
+    /**
+     * Метод для инициализации поисковой строки
+     */
     private fun initSearchView(){
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -95,6 +127,10 @@ abstract class AbstractModelList: Fragment() {
             }
         })
     }
+
+    /**
+     * Метод для получения параметров фильтра, которые выбрал пользователь
+     */
     protected fun initGetFilter(listType: Boolean) {
         getParentFragmentManager().setFragmentResultListener(
             ListFilterDialogFragment.LIST_SETTINGS_KEY_ADD, getViewLifecycleOwner()
@@ -111,6 +147,9 @@ abstract class AbstractModelList: Fragment() {
         }
     }
 
+    /**
+     * Метод для инициализации списка в контексте приложения
+     */
     protected suspend fun initRecyclerViewWithMainContext(adapter: AbstractAdapter, medicineList: MutableList<AbstractModel>){
         withContext(Dispatchers.Main){
             model.modelList = medicineList
@@ -119,6 +158,9 @@ abstract class AbstractModelList: Fragment() {
         }
     }
 
+    /**
+     * Метод по обновлению интерфейса
+     */
     fun updateUI(){
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }

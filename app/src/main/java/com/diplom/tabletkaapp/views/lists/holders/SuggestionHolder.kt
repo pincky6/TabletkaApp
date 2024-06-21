@@ -10,7 +10,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * Класс для описания элементов запросов
+ */
 class SuggestionHolder(var binding: SearchItemBinding): RecyclerView.ViewHolder(binding.root) {
+    /**
+     * Метод привзяки данных модели к ее представлению
+     * Установка текста
+     * @param requestEntity  сущность запроса
+     * @param update метод обновления
+     */
     fun bind(requestEntity: RequestEntity, update: () -> Unit){
         binding.searchItemText.text = requestEntity.request
         binding.deleteButton.setOnClickListener {

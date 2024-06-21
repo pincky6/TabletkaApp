@@ -17,6 +17,10 @@ import models.Medicine
 class InfoFragment: Fragment() {
     var binding_: FragmentInfoBinding? = null
     val binding get() = binding_!!
+
+    /**
+     * Метод по установке текста для вывода информации о медикаменте
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +41,9 @@ class InfoFragment: Fragment() {
         return binding.root
     }
 
+    /**
+     * Привязка текста к ссылке на сайт для перехрда на сайт из приложения
+     */
     private fun linkText(textView: TextView, reference: String){
         textView.setText(reference)
         Linkify.addLinks(textView, Linkify.WEB_URLS)
